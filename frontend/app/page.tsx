@@ -21,7 +21,12 @@ export default function Home() {
 
   return (
     <div>
-      <button onClick={fetchData}>AAAA</button>
+      <div>
+        <button onClick={fetchData}>AAAA</button>
+      </div>
+      <div className="border w-fit m-2 p-2 bg-blue-500"> <a href="/FAQ"> FAQ Page </a> </div>
+
     </div>
+
   );
 }
