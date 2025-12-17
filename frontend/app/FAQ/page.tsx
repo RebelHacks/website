@@ -1,23 +1,19 @@
 'use client'
 import Accordion from './Accordion';
 
-
-
-interface Question {
-  question: string;
-  answer: string;
-}
-
 // TODO:
 // - Simplify the logic of the toggle function make it adaptable/easily changeable
 // - Fill out the faq.module.css to deal with more custom stuff related to my page
-// - Reduce the logic in the page mostly simple tailwind and html
 
 // DONE:
 // - Move the accordion logic/structure into a separate component
 // - Toggle added to accordion
 // - Reduced the tailwind used.
 
+interface Question {
+  question: string;
+  answer: string;
+}
 
 const faqQuestions: Question[] = [
   {
