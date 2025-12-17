@@ -1,5 +1,6 @@
 :root {
   --primary: #FEA70A;
+  --background: #111435;
 }
 
 .shadow-border {
@@ -18,8 +19,8 @@
 
 .accordionCard {
   width: 100%;
-  max-width: 42rem; /* This is the equivalent of max-w-2xl */
+  max-width: 42rem; 
   border: 1px solid color-mix(in srgb, var(--primary), transparent 50%);
-  border-radius: 0.75rem; /* This is the equivalent of rounded-xl */
+  border-radius: 0.75rem;
   overflow: hidden;
 }
