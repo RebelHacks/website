@@ -2,13 +2,13 @@
 import Accordion from './Accordion';
 
 // TODO:
-// - Simplify the logic of the toggle function make it adaptable/easily changeable
-// - Fill out the faq.module.css to deal with more custom stuff related to my page
+// - Fill out the faq.module.css to deal with more custom stuff related to my page if needed
 
 // DONE:
 // - Move the accordion logic/structure into a separate component
 // - Toggle added to accordion
 // - Reduced the tailwind used.
+// - Can toggle if multiple questions can be open at once or not
 
 interface Question {
   question: string;
