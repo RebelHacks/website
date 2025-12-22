@@ -1,79 +1,18 @@
 "use client";
+import Accordion from "./Accordion";
 
-import { useState } from "react";
-import styles from "./faq.module.css";
+// TODO:
+// - Fill out the faq.module.css to deal with more custom stuff related to my page if needed
+
+// DONE:
+// - Move the accordion logic/structure into a separate component
+// - Toggle added to accordion
+// - Reduced the tailwind used.
+// - Can toggle if multiple questions can be open at once or not
 
 interface Question {
   question: string;
   answer: string;
-}
-
-interface AccordionProps {
-  questions: Question[];
-  allowMultiple?: boolean;
-  title?: string;
-}
-
-function Accordion({
-  questions,
-  allowMultiple = false,
-  title = "Frequently Asked Questions",
-}: AccordionProps) {
-  const [openIndices, setOpenIndices] = useState<number[]>([]);
-
-  const handleToggle = (index: number) => {
-    const isOpen = openIndices.includes(index);
-
-    if (isOpen) {
-      setOpenIndices(openIndices.filter((i) => i !== index));
-      return;
-    }
-
-    if (allowMultiple) setOpenIndices([...openIndices, index]);
-    else setOpenIndices([index]);
-  };
-
-  return (
-    <div className={styles.accordionCard}>
-      <div className="text-4xl text-center text-(--primary) border-b border-(--primary)/25 font-bold p-6">
-        {title}
-      </div>
-
-      {questions.map((faqQuestion, index) => {
-        const isOpen = openIndices.includes(index);
-
-        return (
-          <div key={index} className="border-b border-(--primary)/25">
-            <button
-              type="button"
-              onClick={() => handleToggle(index)}
-              className="flex items-center w-full text-left hover:bg-(--primary)/10 p-4 "
-            >
-              <div className="flex-1 font-bold text-(--primary)">
-                {faqQuestion.question}
-              </div>
-
-              <div className="w-4 h-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={styles.chevronIcon}
-                  viewBox="0 0 512 512"
-                >
-                  {isOpen ? (
-                    <path d="M112 328l144-144 144 144" />
-                  ) : (
-                    <path d="M112 184l144 144 144-144" />
-                  )}
-                </svg>
-              </div>
-            </button>
-
-            {isOpen && <p className="p-4 pt-0">{faqQuestion.answer}</p>}
-          </div>
-        );
-      })}
-    </div>
-  );
 }
 
 const faqQuestions: Question[] = [
@@ -99,6 +38,10 @@ const faqQuestions: Question[] = [
   },
 ];
 
-export default function Faq() {
-  return <Accordion questions={faqQuestions} allowMultiple />;
+export default function Home() {
+  return (
+    <div className="flex min-h-screen items-start justify-center bg-[var(--background)] p-4">
+      <Accordion questions={faqQuestions} allowMultiple={true} />
+    </div>
+  );
 }
