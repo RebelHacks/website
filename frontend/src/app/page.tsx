@@ -70,7 +70,10 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="mt-12 grid items-center gap-16 grid-cols-[1fr_1.2fr]">
+      <section
+        id="landing-page"
+        className="mt-12 grid items-center gap-16 grid-cols-[1fr_1.2fr]"
+      >
         <div id="heroLeft" className="flex flex-col gap-5 max-w-[420px] pl-10">
           <div id="rebelHacksTitle" className="flex flex-col gap-1">
             <h1 className="font-bold text-[72px] text-[#DF4C21] [-webkit-text-stroke:2px_#FEA70A] m-0">
@@ -101,6 +104,10 @@ export default function Home() {
             className="w-full h-auto max-w-[580px] object-contain"
           />
         </div>
+      </section>
+      <section id="faq" className="flex min-h-screen items-start justify-center bg-[var(--background)] p-4">
+
+        
       </section>
     </main>
   );
