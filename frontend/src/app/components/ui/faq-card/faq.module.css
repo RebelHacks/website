@@ -4,7 +4,8 @@
 }
 
 .shadow-border {
-  box-shadow: 0 0 10px var(--primary);
+  /* nice  */
+  box-shadow: 0 0 10px var(--primary); 
 }
 
 .chevronIcon {

@@ -47,7 +47,7 @@ function Accordion({
             <button
               type="button"
               onClick={() => handleToggle(index)}
-              className="flex items-center w-full text-left hover:bg-(--primary)/10 p-4"
+              className="flex items-center w-full text-left hover:bg-(--primary)/10 p-4 "
             >
               <div className="flex-1 font-bold text-(--primary)">
                 {faqQuestion.question}
@@ -99,6 +99,6 @@ const faqQuestions: Question[] = [
   },
 ];
 
-export default function FAQ() {
+export default function Faq() {
   return <Accordion questions={faqQuestions} allowMultiple />;
 }
