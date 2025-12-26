@@ -4,24 +4,24 @@ import Image from "next/image";
 export default function Header() {
   return (
     <header className="w-full flex justify-center items-center py-8 px-12 fixed z-10">
-      <nav className="flex justify-center items-center gap-8 bg-[#121639] py-3 px-8 rounded-[30px]">
+      <nav className="flex justify-center items-center gap-8 bg-[#121639] py-3 px-8 rounded-[30px] " >
         <a
-          href="#home"
+          href="#landing-page"
           className="no-underline text-[0.95rem] text-white hover:opacity-80 text-[0.95re"
         >
           Home
         </a>
         <a
-          href="#about"
+          href="#faq"
           className="no-underline text-[0.95rem] text-white hover:opacity-80"
         >
           About
         </a>
         <a
-          href="#sponsor"
+          href="#contact"
           className="no-underline text-[0.95rem] text-white hover:opacity-80"
         >
-          Sponsor Us!
+          Contact
         </a>
         <Link
           href="https://discord.gg/Z3WJkPjNsY"
