@@ -1,10 +1,11 @@
 :root {
   --primary: #FEA70A;
-  --background: #111435;
+  --background: #000317;
 }
 
 .shadow-border {
-  box-shadow: 0 0 10px var(--primary);
+  /* nice  */
+  box-shadow: 0 0 10px var(--primary); 
 }
 
 .chevronIcon {
