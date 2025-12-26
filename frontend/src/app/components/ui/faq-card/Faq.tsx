@@ -40,7 +40,7 @@ const faqQuestions: Question[] = [
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-start justify-center bg-[var(--background)] p-4">
+    <div className="flex min-h-screen items-start justify-center bg-background p-4">
       <Accordion questions={faqQuestions} allowMultiple={true} />
     </div>
   );

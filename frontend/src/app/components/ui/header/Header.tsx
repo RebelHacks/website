@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="w-full flex justify-center items-center py-8 px-12 relative z-10">
+    <header className="w-full flex justify-center items-center py-8 px-12 fixed z-10">
       <nav className="flex justify-center items-center gap-8 bg-[#121639] py-3 px-8 rounded-[30px]">
         <a
           href="#home"
