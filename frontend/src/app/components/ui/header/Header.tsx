@@ -23,14 +23,17 @@ export default function Header() {
         >
           Sponsor Us!
         </a>
-        <button className="border-0 text-[1.2rem] text-white cursor-pointer bg-transparent">
+        <Link
+          href="https://discord.gg/Z3WJkPjNsY"
+          className="border-0 text-[1.2rem] text-white cursor-pointer bg-transparent"
+        >
           <Image
             src="/images/discord-white-icon.png"
             alt="Discord"
             width={36}
             height={26}
           />
-        </button>
+        </Link>
       </nav>
       <div
         id="loginRegister"
