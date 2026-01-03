@@ -1,0 +1,26 @@
+:root {
+  --primary: #FEA70A;
+  --background: #111435;
+}
+
+.shadow-border {
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.chevronIcon {
+  width: 1.2rem;
+  height: 1.2rem;
+  stroke-width: 48;
+  stroke: var(--primary);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.accordionCard {
+  width: 100%;
+  max-width: 42rem;
+  border: 1px solid color-mix(in srgb, var(--primary), transparent 50%);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
