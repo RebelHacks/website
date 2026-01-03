@@ -2,6 +2,10 @@
 
 # dependencies
 frontend/node_modules
+<<<<<<< Updated upstream
+=======
+.idea
+>>>>>>> Stashed changes
 /.pnp
 .pnp.*
 .yarn/*
