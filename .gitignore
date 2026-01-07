@@ -3,8 +3,6 @@
 # dependencies
 frontend/node_modules
 node_modules
-<<<<<<< Updated upstream
-=======
 .idea
 >>>>>>> Stashed changes
 /.pnp
