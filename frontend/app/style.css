@@ -1,0 +1,159 @@
+:root {
+  scroll-behavior: smooth;
+}
+
+/* 
+section,
+div {
+  border: 1px solid red;
+} */
+
+/* HERO SECTION */
+.hero-section {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+
+  background-image: radial-gradient(
+    1000px circle at center,
+    #121639 0%,
+    #000000 100%,
+    #1c1f45 100%
+  );
+
+  background-repeat: no-repeat;
+}
+
+/* HEADER FLOATING */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  z-index: 10;
+  padding: 2rem 3rem;
+
+  width: 100%;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  background-color: #121639;
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+}
+
+/* HERO CONTENT WRAPPER */
+.hero-wrapper {
+  display: grid;
+  grid-template-columns: auto 30rem auto;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 60px;
+}
+
+/* LEFT TEXT */
+.hero-title {
+  grid-column: 1;
+  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.title-org,
+.title-school {
+  line-height: 1.1; /* or 1.15 if you want more air */
+  margin: 0;
+}
+
+/* TITLES */
+.title-org {
+  font-size: 72px;
+  font-weight: 700;
+  color: #df4c21;
+  -webkit-text-stroke: 2px #fea70a;
+}
+
+.title-school {
+  font-size: 72px;
+  font-weight: 700;
+  color: #007083;
+  -webkit-text-stroke: 2px #b0f2fe;
+}
+
+/* TEXT */
+.hero-description {
+  font-weight: 600;
+  color: #e99806;
+  width: 350px;
+}
+
+.hero-date {
+  font-size: 20px;
+  color: #00d0f3;
+}
+.hero-image-wrapper-whole {
+  grid-column: 3;
+  justify-self: center;
+}
+
+@media screen {
+  /* Mobile Elements (Hidden) */
+  .hero-image-wrapper-parts {
+    display: none;
+  }
+  .vegas-sign {
+    display: none;
+  }
+}
+
+/* Desktop Size */
+@media (max-width: 1536px) {
+}
+
+@media (max-width: 1280px) {
+}
+
+@media (max-width: 1024px) {
+}
+
+/* Transition between Desktop - Tablet */
+@media (max-width: 768px) {
+}
+
+/* Tablet Size */
+@media (max-width: 640px) {
+  /* Desktop Elements (Hidden) */
+  header {
+    display: none;
+  }
+  .hero-image-wrapper-whole {
+    display: none;
+  }
+  /* ---- */
+
+  /* Mobile Elements (Display) */
+  
+}
+
+/* Mobile */
+@media (max-width: 475px) {
+  .hero-title h1 {
+    font-size: 50px;
+  }
+
+  .hero-title p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+}
