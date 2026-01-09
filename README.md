@@ -1,38 +1,172 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-EDITINGGGGGG
-## Getting Started
+# RebelHacks Website
 
-First, run the development server:
+A monorepo containing a **Next.js** frontend and a **Symfony** backend that communicate via REST API.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📁 Project Structure
+
+```
+website/
+├── frontend/          # Next.js 16 React application
+│   ├── app/           # App router pages
+│   ├── components/    # React components
+│   ├── hooks/         # Custom React hooks
+│   └── lib/           # Utilities and API client
+│
+├── backend/           # Symfony 7.2 PHP application
+│   ├── src/
+│   │   ├── Controller/    # API controllers
+│   │   └── EventListener/ # CORS handling
+│   └── public/        # Web entry point
+│
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Node.js** 18+ and npm
+- **PHP** 8.2+
+- **Composer**
+- **Symfony CLI** (optional, but recommended)
 
-## Learn More
+### 1. Start the Backend (Symfony)
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cd backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Install dependencies
+composer install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Start the Symfony server (default: http://localhost:8000)
+symfony server:start
+# OR use PHP's built-in server:
+php -S localhost:8000 -t public
+```
 
-## Deploy on Vercel
+The API will be available at `https://127.0.0.1:8000/api/`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Start the Frontend (Next.js)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+cd frontend
 
-## Test Commit
+# Install dependencies
+npm install
+
+# Create environment file
+cp .env.local .env.local
+# Or manually create .env.local with:
+# NEXT_PUBLIC_API_URL=https://127.0.0.1:8000/api
+
+# Start the dev server
+npm run dev
+```
+
+The frontend will be available at `http://localhost:3000`
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check / API status |
+| GET | `/api/data` | Fetch sample items |
+| GET | `/api/items/{id}` | Fetch single item by ID |
+| POST | `/api/submit` | Submit form data |
+
+### Example API Call
+
+```typescript
+import api from '@/lib/api';
+
+// GET request
+const data = await api.get('/data');
+
+// POST request
+const response = await api.post('/submit', { name: 'John', email: 'john@example.com' });
+```
+
+## 🎯 API Demo Page
+
+Visit `http://localhost:3000/api-demo` to see a live demo of the frontend-backend integration.
+
+## 📝 Environment Variables
+
+### Frontend (`frontend/.env.local`)
+
+```env
+NEXT_PUBLIC_API_URL=https://127.0.0.1:8000/api
+```
+
+### Backend (`backend/.env.local`)
+
+```env
+CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+```
+
+## 🔧 Development Tips
+
+### Running Both Servers
+
+Open two terminal windows:
+
+**Terminal 1 (Backend):**
+```bash
+cd backend && symfony server:start
+```
+
+**Terminal 2 (Frontend):**
+```bash
+cd frontend && npm run dev
+```
+
+### CORS Configuration
+
+The backend includes a `CorsListener` that automatically handles CORS headers. Configure allowed origins in the backend's `.env.local` file.
+
+### Type Safety
+
+The frontend includes TypeScript types in `frontend/lib/types.ts` that mirror the API responses. Keep these in sync with your Symfony entities/responses.
+
+## 📦 Adding New API Endpoints
+
+### 1. Create a Symfony Controller
+
+```php
+// backend/src/Controller/MyController.php
+#[Route('/api/my-endpoint', name: 'my_endpoint', methods: ['GET'])]
+public function myEndpoint(): JsonResponse
+{
+    return $this->json(['data' => 'Hello!']);
+}
+```
+
+### 2. Add TypeScript Types
+
+```typescript
+// frontend/lib/types.ts
+export interface MyEndpointResponse {
+  data: string;
+}
+```
+
+### 3. Use in React Component
+
+```typescript
+const { data } = useApi<MyEndpointResponse>('/my-endpoint');
+```
+
+## 🚢 Production Deployment
+
+### Frontend
+- Build: `npm run build`
+- Deploy to Vercel, Netlify, or any static host
+
+### Backend
+- Set `APP_ENV=prod` in environment
+- Run `composer install --no-dev --optimize-autoloader`
+- Configure your web server (nginx/Apache) to point to `backend/public/`
+
+## License
+
+See [LICENSE](LICENSE) for details.
