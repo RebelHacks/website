@@ -1,0 +1,93 @@
+/* contact.module.css */
+
+.container {
+  position: relative;
+  background-color: #050d1e;
+  background-image: radial-gradient(circle at center, rgba(0,255,255,0.1), #050d1e 60%);
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  width: 400px;
+  height: 400px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(0,255,255,0.2), transparent 70%);
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.title {
+  position: relative;
+  z-index: 1;
+  color: #cc5500;
+  text-shadow:
+    0 0 2px #ff7f50,
+    0 0 5px #ff7f50,
+    0 0 10px #ff7f50,
+    0 0 20px #ff7f50;
+}
+
+.label {
+  color: #008b8b;
+  text-shadow:
+    0 0 2px #00ffff,
+    0 0 5px #00ffff,
+    0 0 10px #00ffff;
+}
+
+.input, .textarea {
+  border: 2px solid #00ffff;
+  background-color: #0d1b2a;
+  color: #fff;
+  border-radius: 8px;
+  text-shadow: 0 0 2px #00ffff;
+  transition: 0.3s;
+}
+
+.input:focus, .textarea:focus {
+  border-color: #ff7f50;
+  box-shadow: 0 0 5px #ff7f50, 0 0 10px #ff7f50;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.button {
+  border: 2px solid #ff7f50;
+  color: #ff7f50;
+  background: transparent;
+  border-radius: 8px;
+  text-shadow: 0 0 5px #ff7f50, 0 0 10px #ff7f50;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background-color: #ff7f50;
+  color: #0d1b2a;
+  box-shadow: 0 0 10px #ff7f50, 0 0 20px #ff7f50;
+}
+
+/* 
+   Responsive adjustments
+    */
+
+/* Tablet screens: max-width 768px */
+@media (max-width: 768px) {
+  .title { font-size: 2.5rem; } /* Smaller heading */
+  .label { font-size: 1.1rem; } /* Smaller labels */
+  .input, .textarea { padding: 0.7rem; font-size: 0.95rem; } /* Smaller inputs */
+  .button { padding: 0.9rem 1.8rem; font-size: 1.1rem; } /* Smaller button */
+}
+
+/* Mobile screens: max-width 480px */
+@media (max-width: 480px) {
+  .title { font-size: 2rem; } /* Even smaller heading */
+  .label { font-size: 1rem; } /* Smaller labels */
+  .input, .textarea { padding: 0.6rem; font-size: 0.9rem; } /* Adjust inputs for small screens */
+  .button { padding: 0.8rem 1.5rem; font-size: 1rem; } /* Compact button */
+}
