@@ -12,15 +12,15 @@
 }
 
 /* Global setup for font adjustments */
-.title-org,
-.title-school-text {
-  line-height: 1.1; 
+.titleOrg,
+.titleSchoolText {
+  line-height: 1.1;
   margin: 0;
   font-size: var(--step-4);
   font-weight: 700;
 }
 
-.hero-section {
+.heroSection {
   min-height: 100vh;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -42,7 +42,7 @@
   background-repeat: no-repeat;
 }
 
-header {
+.header {
   grid-area: header;
   position: fixed;
 
@@ -54,7 +54,7 @@ header {
   width: 100vw;
 }
 
-nav {
+.nav {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,19 +64,28 @@ nav {
   border-radius: 1rem;
 }
 
-nav a {
+.nav a {
   font-size: 0.95rem;
   text-decoration: none;
   font-weight: 700;
   letter-spacing: 1.15px;
 }
 
-nav a:hover {
+.nav a:hover {
   opacity: 0.8;
 }
 
+.registerBtn {
+  padding: 0.5rem 1.5rem;
+  background-color: #fea70a;
+  border-radius: 0.75rem;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* Hero Left Wrapper*/
-.hero-title {
+.heroTitle {
   grid-area: left;
   justify-self: center;
   justify-items: center;
@@ -90,7 +99,7 @@ nav a:hover {
 }
 
 /* Used on desktop */
-.hero-image-wrapper-whole {
+.heroImageWrapper {
   grid-area: right;
   justify-self: center;
   max-width: 100%;
@@ -98,22 +107,22 @@ nav a:hover {
 }
 
 /* TITLES */
-.title-org {
+.titleOrg {
   color: #df4c21;
   max-width: 90%;
   -webkit-text-stroke: 2px #fea70a;
 }
-.title-school-text {
+.titleSchoolText {
   color: #007083;
   -webkit-text-stroke: 2px #b0f2fe;
 }
-.hero-description {
+.heroDescription {
   font-size: var(--step--2);
   font-weight: 500;
   color: #e99806;
   max-width: 500px;
 }
-.hero-date {
+.heroDate {
   font-size: var(--step--2);
   font-weight: 500;
   color: #00d0f3;
@@ -121,11 +130,11 @@ nav a:hover {
 
 @media screen {
   /* Mobile Elements (Hidden) */
-  .vegas-sign,
-  .red-diamond,
-  .orange-heart,
-  .orange-diamond,
-  .blue-ace {
+  .vegasSign,
+  .redDiamond,
+  .orangeHeart,
+  .orangeDiamond,
+  .blueAce {
     display: none;
   }
 }
@@ -147,30 +156,30 @@ nav a:hover {
 /* Tablet Size */
 @media (max-width: 640px) {
   /* Desktop Elements (Hidden) */
-  .hero-image-wrapper-whole {
+  .heroImageWrapper {
     display: none;
   }
 
   /* Mobile Elements (Display) */
-  .vegas-sign,
-  .red-diamond,
-  .orange-heart,
-  .orange-diamond,
-  .blue-ace {
+  .vegasSign,
+  .redDiamond,
+  .orangeHeart,
+  .orangeDiamond,
+  .blueAce {
     display: block;
   }
 
-  .hero-section {
+  .heroSection {
     grid-template-rows: 10%;
   }
 
-  .hero-section {
+  .heroSection {
     grid-template-areas:
       "header header"
       "left left";
   }
 
-  .title-school-logo-wrapper {
+  .titleSchoolLogoWrapper {
     display: grid;
     grid-template-areas:
       "UNLV2026 VegasSign"
@@ -180,22 +189,31 @@ nav a:hover {
     grid-template-rows: auto auto;
   }
 
-  .title-school-text {
+  .titleSchoolText {
     grid-area: UNLV2026;
   }
 
-  .vegas-sign {
+  .vegasSign {
     grid-area: VegasSign;
     grid-column: 3 / 1;
     margin-left: 14%;
     margin-right: 10%;
   }
-  .red-diamond {
+  .redDiamond {
     grid-area: RedDiamond;
     grid-row: 3 / 1;
     margin-top: 120%;
   }
-  .orange-heart {
+
+  .titleOrgWrapper {
+    display: grid;
+    grid-template-areas: "title heart";
+  }
+  .titleOrg {
+    grid-area: title;
+  }
+
+  .orangeHeart {
     min-width: 100px;
     min-height: 40px;
 
@@ -204,15 +222,7 @@ nav a:hover {
     rotate: z 15deg;
   }
 
-  .title-org-wrapper {
-    display: grid;
-    grid-template-areas: "title heart";
-  }
-  .title-org {
-    grid-area: title;
-  }
-
-  .description-date-wrapper {
+  .descriptionDateWrapper {
     display: grid;
     grid-template-areas:
       "description OrangeDiamond"
@@ -220,34 +230,33 @@ nav a:hover {
       "BlueAce BlueAce";
   }
 
-  .hero-description {
+  .heroDescription {
     grid-area: description;
     font-weight: 600;
   }
 
-  .hero-date {
+  .heroDate {
     grid-area: date;
     margin-top: 3%;
     font-weight: 600;
   }
 
-  .orange-diamond {
+  .orangeDiamond {
     grid-area: OrangeDiamond;
   }
 
-  .blue-ace {
+  .blueAce {
     grid-area: BlueAce;
   }
 }
 
 /* Mobile */
 @media (max-width: 486px) {
-  #home-link,
-  #about-link {
+  .navLink {
     display: none;
   }
 
-  .hero-section {
+  .heroSection {
     grid-template-rows: 10%;
   }
 }
