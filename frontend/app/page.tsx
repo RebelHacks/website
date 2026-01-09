@@ -115,7 +115,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className={styles.faqSection}>
+      <section id="about">
         <Faq />
       </section>
     </main>

@@ -1,12 +1,11 @@
 @import "tailwindcss";
 
 :root {
-   scroll-behavior: smooth;
-  
+  scroll-behavior: smooth;
+
   --background: #ffffff;
   --foreground: #171717;
 
- 
   /* Scaleable text font calculator (Utopia) */
   --step--2: clamp(1rem, 0.5rem + 1.0038vw, 1.2rem);
   --step--1: clamp(1.25rem, 0.9543rem + 1.3143vw, 2.4rem);
