@@ -1,0 +1,34 @@
+.aboutWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #080808;
+}
+.introWrapper {
+ 
+}
+
+.tracks {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  gap: 2rem; /* space between the two cards */
+  flex-wrap: wrap; /* allows wrapping on mobile */
+  margin-top: 2rem;
+  
+}
+
+.trackCS,
+.trackCE {
+  background-color: var(--primary); /* neon orange for your theme */
+  color: var(--foreground);
+  padding: 2rem;
+  border-radius: 1rem;
+  min-width: 250px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(254, 167, 10, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}

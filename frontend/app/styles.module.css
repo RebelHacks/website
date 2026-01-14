@@ -22,6 +22,7 @@
 
   background-size: cover;
   background-repeat: no-repeat;
+  height: 100vh;
 }
 
 .header {
@@ -116,6 +117,8 @@
   color: #00d0f3;
 }
 
+
+
 @media screen {
   /* Mobile Elements (Hidden) */
   .vegasSign,
@@ -165,7 +168,11 @@
   }
 
   .header {
-    padding: 0.75rem 1.25rem;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .header > * {
+    font-size: small;
   }
 
   .heroTitle {
@@ -179,19 +186,18 @@
       "UNLV2026 VegasSign"
       "RedDiamond VegasSign";
 
-    grid-template-columns: min-content 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
   }
 
   .titleSchoolText {
     grid-area: UNLV2026;
   }
-
+  
   .vegasSign {
     grid-area: VegasSign;
-    grid-column: 3 / 1;
-    margin-left: 14%;
-    margin-right: 10%;
+    grid-column: 3/1;
+    margin-left: 20%;
   }
   .redDiamond {
     grid-area: RedDiamond;
@@ -242,6 +248,12 @@
 
   .blueAce {
     grid-area: BlueAce;
+  }
+}
+
+@media (max-width: 536px) {
+  .nav a {
+    display: none;
   }
 }
 

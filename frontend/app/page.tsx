@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { useState } from "react";
+
 import styles from "./styles.module.css";
 
 // import Header from "./components/ui/Header";
-import FAQ from "./components/ui/FAQ/FAQ";
+import FAQ from "./components/ui/faq/Faq";
+import About from "./components/ui/about/About";
 
 interface Question {
   question: string;
@@ -97,7 +99,7 @@ export default function Home() {
               className={styles.orangeHeart}
             />
           </div>
-
+          
           <div className={styles.titleSchoolLogoWrapper}>
             <h1 className={styles.titleSchoolText}>UNLV 2026</h1>
 
@@ -113,8 +115,9 @@ export default function Home() {
               src="/images/vegas-sign.png"
               alt="Las Vegas Neon Sign"
               width={400}
-              height={120}
+              height={100}
               className={styles.vegasSign}
+            
             />
           </div>
 
@@ -131,7 +134,7 @@ export default function Home() {
               Come together to design, develop, and present projects that tackle
               real-world problems!
             </p>
-
+            {/* make this a countdown */}
             <p className={styles.heroDate}>FRI & SAT February 20–21, 2026</p>
 
             <Image
@@ -153,6 +156,10 @@ export default function Home() {
             className={styles.heroImage}
           />
         </div>
+      </section>
+
+      <section id="about">
+       <About />
       </section>
 
       <section id="faq">
