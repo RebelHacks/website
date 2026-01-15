@@ -1,27 +1,59 @@
 .about {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
-  align-items: center;
-  justify-content: center;
+
   padding: 1rem;
   background-color: #080808;
 
-  /* background-image: radial-gradient(
-    circle at bottom left,
+  background-image: radial-gradient(
+    circle at 125% 100%,
     #111435 0%,
-    transparent 50%
-  ); */
+    transparent 40%
+  );
+
+  
 }
+
 .intro {
   min-height: 50vh;
-  h1 {
-    color: #ffffff;
-  }
-  p {
-    color: #e0e0e0;
-    
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.intro h1 {
+  color: #00d0f3;
+  font-size: var(--step-0);
+  font-weight: 700;
+  margin-bottom: 30px;
+  display: inline-block;
+ 
+}
+
+.cardWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.card1,
+.card2,
+.card3 {
+  width: 180px;
+  height: 260px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(to bottom, #0b0b0b, #121212, #0b0b0b);
+
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .tracks {

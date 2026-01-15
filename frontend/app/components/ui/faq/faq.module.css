@@ -5,12 +5,17 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  /* background-color: #080808; */
-  /* background-image: radial-gradient(
-    circle at center left,
-    #111435 0%,
-    transparent 50%
-  ); */
+  background-color: #080808;
+  background-image: radial-gradient(
+      circle at bottom left,
+      #111435 0%,
+      transparent 40%
+    ),
+    radial-gradient(circle at 125% 15%, #111435 0%, transparent 40%);
+}
+
+.accordionItem {
+  margin-bottom: 1rem;
 }
 
 .accordionHeader {
@@ -25,6 +30,7 @@
   width: 100%;
   max-width: 42rem;
   overflow: hidden;
+  gap: 5px;
 }
 
 .accordionButton {
@@ -35,6 +41,7 @@
   padding: 1rem; /* p-4 */
   cursor: pointer;
   transition: background 0.2s ease;
+  background-color: red;
 }
 
 .accordionQuestion {

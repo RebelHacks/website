@@ -44,7 +44,7 @@ export default function Accordion({ questions, allowMultiple }: AccordionArgs) {
           const isOpen: boolean = openIndices.includes(index);
 
           return (
-            <div key={index}>
+            <div key={index} className={styles.accordionItem}>
               <button
                 onClick={() => handleToggle(index)}
                 className={styles.accordionButton}
