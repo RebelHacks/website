@@ -36,7 +36,7 @@ export default function Accordion({ questions, allowMultiple }: AccordionArgs) {
 
   return (
     <div className={styles.faqWrapper}>
-      <div className={styles.faqHeader}>Frequently Asked Questions</div>
+      <div className={styles.faqHeader}>FAQs</div>
 
       <div className={styles.accordionCardWrapper}>
         {questions.map((faqQuestion, index) => {
