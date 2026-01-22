@@ -1,0 +1,253 @@
+:root {
+  scroll-behavior: smooth;
+  /* Scaleable text font calculator (Utopia) */
+  --step--2: clamp(1rem, 0.5rem + 1.0038vw, 1.2rem);
+  --step--1: clamp(1.25rem, 0.9543rem + 1.3143vw, 2.4rem);
+  --step-0: clamp(1.5rem, 1.1143rem + 1.7143vw, 3rem);
+  --step-1: clamp(1.8rem, 1.2986rem + 2.2286vw, 3.75rem);
+  --step-2: clamp(2.16rem, 1.5101rem + 2.8886vw, 4.6875rem);
+  --step-3: clamp(2.592rem, 1.7518rem + 3.7341vw, 5.8594rem);
+  --step-4: clamp(2.9rem, 2.0268rem + 4.8158vw, 6.3rem);
+  --step-5: clamp(3.7325rem, 2.338rem + 6.1975vw, 9.1553rem);
+}
+
+/* Global setup for font adjustments */
+.title-org,
+.title-school-text {
+  line-height: 1.1; 
+  margin: 0;
+  font-size: var(--step-4);
+  font-weight: 700;
+}
+
+.hero-section {
+  min-height: 100vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  display: grid;
+  grid-template-rows: 15%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "header header"
+    "left right";
+
+  background-image: radial-gradient(
+    1000px circle at center,
+    #121639 0%,
+    #000000 100%,
+    #1c1f45 100%
+  );
+
+  background-repeat: no-repeat;
+}
+
+header {
+  grid-area: header;
+  position: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 2rem 3rem;
+  width: 100vw;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  background-color: #121639;
+  padding: 0.5rem 1.5rem;
+  border-radius: 1rem;
+}
+
+nav a {
+  font-size: 0.95rem;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1.15px;
+}
+
+nav a:hover {
+  opacity: 0.8;
+}
+
+/* Hero Left Wrapper*/
+.hero-title {
+  grid-area: left;
+  justify-self: center;
+  justify-items: center;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25em;
+  height: auto;
+  padding-top: 5%;
+}
+
+/* Used on desktop */
+.hero-image-wrapper-whole {
+  grid-area: right;
+  justify-self: center;
+  max-width: 100%;
+  height: auto;
+}
+
+/* TITLES */
+.title-org {
+  color: #df4c21;
+  max-width: 90%;
+  -webkit-text-stroke: 2px #fea70a;
+}
+.title-school-text {
+  color: #007083;
+  -webkit-text-stroke: 2px #b0f2fe;
+}
+.hero-description {
+  font-size: var(--step--2);
+  font-weight: 500;
+  color: #e99806;
+  max-width: 500px;
+}
+.hero-date {
+  font-size: var(--step--2);
+  font-weight: 500;
+  color: #00d0f3;
+}
+
+@media screen {
+  /* Mobile Elements (Hidden) */
+  .vegas-sign,
+  .red-diamond,
+  .orange-heart,
+  .orange-diamond,
+  .blue-ace {
+    display: none;
+  }
+}
+
+/* Desktop Size */
+@media (max-width: 1536px) {
+}
+
+@media (max-width: 1280px) {
+}
+
+@media (max-width: 1024px) {
+}
+
+/* Transition between Desktop - Tablet */
+@media (max-width: 768px) {
+}
+
+/* Tablet Size */
+@media (max-width: 640px) {
+  /* Desktop Elements (Hidden) */
+  .hero-image-wrapper-whole {
+    display: none;
+  }
+
+  /* Mobile Elements (Display) */
+  .vegas-sign,
+  .red-diamond,
+  .orange-heart,
+  .orange-diamond,
+  .blue-ace {
+    display: block;
+  }
+
+  .hero-section {
+    grid-template-rows: 10%;
+  }
+
+  .hero-section {
+    grid-template-areas:
+      "header header"
+      "left left";
+  }
+
+  .title-school-logo-wrapper {
+    display: grid;
+    grid-template-areas:
+      "UNLV2026 VegasSign"
+      "RedDiamond VegasSign";
+
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .title-school-text {
+    grid-area: UNLV2026;
+  }
+
+  .vegas-sign {
+    grid-area: VegasSign;
+    grid-column: 3 / 1;
+    margin-left: 14%;
+    margin-right: 10%;
+  }
+  .red-diamond {
+    grid-area: RedDiamond;
+    grid-row: 3 / 1;
+    margin-top: 120%;
+  }
+  .orange-heart {
+    min-width: 100px;
+    min-height: 40px;
+
+    grid-area: heart;
+    align-self: end;
+    rotate: z 15deg;
+  }
+
+  .title-org-wrapper {
+    display: grid;
+    grid-template-areas: "title heart";
+  }
+  .title-org {
+    grid-area: title;
+  }
+
+  .description-date-wrapper {
+    display: grid;
+    grid-template-areas:
+      "description OrangeDiamond"
+      "date OrangeDiamond"
+      "BlueAce BlueAce";
+  }
+
+  .hero-description {
+    grid-area: description;
+    font-weight: 600;
+  }
+
+  .hero-date {
+    grid-area: date;
+    margin-top: 3%;
+    font-weight: 600;
+  }
+
+  .orange-diamond {
+    grid-area: OrangeDiamond;
+  }
+
+  .blue-ace {
+    grid-area: BlueAce;
+  }
+}
+
+/* Mobile */
+@media (max-width: 486px) {
+  #home-link,
+  #about-link {
+    display: none;
+  }
+
+  .hero-section {
+    grid-template-rows: 10%;
+  }
+}
