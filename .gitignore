@@ -2,10 +2,9 @@
 
 # dependencies
 frontend/node_modules
-<<<<<<< Updated upstream
+node_modules
 =======
 .idea
->>>>>>> Stashed changes
 /.pnp
 .pnp.*
 .yarn/*
@@ -14,21 +13,12 @@ frontend/node_modules
 !.yarn/releases
 !.yarn/versions
 frontend/.next/*
-backend
 
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
+frontend/.env.local
+backend/.env
 
 # debug
 npm-debug.log*
