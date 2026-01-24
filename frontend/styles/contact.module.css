@@ -43,7 +43,7 @@
   background-color: #0d1b2a;
   color: #fff;
   border-radius: 8px;
-  text-shadow: 0 0 2px #ffffff;
+  /* text-shadow: 0 0 2px #ffffff; */
   transition: 0.3s;
 }
 
@@ -62,7 +62,7 @@
   color: #ffffff;
   background: transparent;
   border-radius: 8px;
-  text-shadow: 0 0 5px #ffffff, 0 0 10px #ff7f50;
+  /* text-shadow: 0 0 5px #ffffff, 0 0 10px #ff7f50; */
   transition: 0.3s;
 }
 
