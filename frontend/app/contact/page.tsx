@@ -20,42 +20,6 @@ export default function Contact() {
     <div
   className={`${styles.container} min-h-screen flex flex-col items-center justify-center p-8 text-white font-sans`}
     >
-        <Image
-          src="/images/ace.png"
-          alt="Ace of Spades"
-          width={200}
-          height={200}
-          style={{
-            position: 'fixed',
-            top: '3rem',
-            right: '6rem',
-            zIndex: 9999,
-          }}
-        /> 
-        <Image
-          src="/images/diamond.png"
-          alt="Diamond"
-          width={200}
-          height={200}
-          style={{
-            position: 'fixed',
-            top: '10rem',
-            left: '6rem',
-            zIndex: 9999,
-          }}
-        />
-        <Image
-          src="/images/heart.png"
-          alt="Heart"
-          width={200}
-          height={200}
-          style={{
-            position: 'fixed',
-            top: '20rem',
-            right: '6rem',
-            zIndex: 9999,
-          }}
-          />
         <h1 className={`${styles.title} text-5xl md:text-4xl sm:text-3xl font-black text-center mb-8`}>
         Contact Us
         </h1>
