@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-// API Configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://127.0.0.1:8000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Create axios instance with default config
 const apiClient: AxiosInstance = axios.create({
@@ -55,57 +54,38 @@ apiClient.interceptors.response.use(
   }
 );
 
-// Generic API response type
-export interface ApiResponse<T> {
-  data: T;
-  status: number;
-  message?: string;
-}
-
-// API methods
 export const api = {
-  /**
-   * GET request
-   */
+  // GET request
   async get<T>(endpoint: string, config?: AxiosRequestConfig): Promise<T> {
     const response: AxiosResponse<T> = await apiClient.get(endpoint, config);
     return response.data;
   },
 
-  /**
-   * POST request
-   */
+  // POST request
   async post<T>(endpoint: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     const response: AxiosResponse<T> = await apiClient.post(endpoint, data, config);
     return response.data;
   },
 
-  /**
-   * PUT request
-   */
+  // PUT request
   async put<T>(endpoint: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     const response: AxiosResponse<T> = await apiClient.put(endpoint, data, config);
     return response.data;
   },
 
-  /**
-   * PATCH request
-   */
+  // PATCH request
   async patch<T>(endpoint: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     const response: AxiosResponse<T> = await apiClient.patch(endpoint, data, config);
     return response.data;
   },
 
-  /**
-   * DELETE request
-   */
+  // DELETE request
   async delete<T>(endpoint: string, config?: AxiosRequestConfig): Promise<T> {
     const response: AxiosResponse<T> = await apiClient.delete(endpoint, config);
     return response.data;
   },
 };
 
-// Export the axios instance for advanced usage
 export { apiClient };
 export default api;
 

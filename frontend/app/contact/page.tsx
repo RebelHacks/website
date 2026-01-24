@@ -1,20 +1,35 @@
 'use client';
 import Image from "next/image";
-// import { useState } from 'react';
 import styles from '@/styles/contact.module.css';
+import {useState} from "react";
+import {useMutation} from "@/hooks/useApi";
+import type {EmailResponse} from "@/lib/types";
 
 export default function Contact() {
-    // const [error, setError] = useState(''); // state to show error message
-    // const handleSubmit = (e: any) => {
-    //     e.preventDefault(); // this prevents the default form submission
-    //     const email = e.target.email.value;
-    //     if(!email.endsWith('@unlv.nevada.edu')) {
-    //         setError('Please use your UNLV email.');
-    //         return;
-    //     }
-    //     setError('');//clear error if email is valid
-    //     alert('Form submitted!');
-    // }
+  const [emailFormData, setEmailFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const {mutate: sendEmail, loading: isSendingEmail, data: emailResponse, error: emailError } = useMutation<typeof emailFormData, EmailResponse>('post', '/contact-email');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Handling submit");
+    console.log('emailFormData', emailFormData);
+    console.log('loading', isSendingEmail);
+    console.log('data', emailResponse);
+    console.log('error', emailError);
+
+    try {
+      const result = await sendEmail(emailFormData);
+      console.log('Email sent result:', result);
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  };
+
   return (
     <>
     <div
@@ -59,13 +74,15 @@ export default function Contact() {
         <h1 className={`${styles.title} text-5xl md:text-4xl sm:text-3xl font-black text-center mb-8`}>
         Contact Us
         </h1>
-       <form className="relative z-10 flex flex-col gap-6 w-full max-w-md">{/*onSubmit={handleSubmit}> */}
+       <form className="relative z-10 flex flex-col gap-6 w-full max-w-md" onSubmit={handleSubmit}>
        <label className={`${styles.label} flex flex-col text-lg font-bold`}>
           Name:
           <input
           type="text"
           className={`${styles.input} mt-2 w-full p-3 text-base focus:outline-none`}
+          required
           placeholder="Your Name"
+          onChange={(e) => setEmailFormData(prev => ({ ...prev, name: e.target.value }))}
         />
         </label>
         <label className={`${styles.label} flex flex-col text-lg font-bold`}>
@@ -74,7 +91,9 @@ export default function Contact() {
            <input
           type="text"
           className={`${styles.input} mt-2 w-full p-3 text-base focus:outline-none`}
+          required
           placeholder="email@example.com"
+          onChange={(e) => setEmailFormData(prev => ({ ...prev, email: e.target.value }))}
         />
         </label>
         {/* shows error message */}
@@ -83,16 +102,29 @@ export default function Contact() {
           Message:
           <textarea 
           className={`${styles.textarea} mt-2 w-full p-3 text-base`} 
-          placeholder="Your message..." 
+          placeholder="Your message..."
+          required
+          onChange={(e) => setEmailFormData(prev => ({ ...prev, message: e.target.value }))}
           />
         </label>
       <button
-      type="submit"
-      className={`${styles.button} mx-auto px-8 py-4 text-lg font-bold cursor-pointer`}
-      > 
-      Send
+        type="submit"
+        className={`${styles.button} mx-auto px-8 py-4 text-lg font-bold cursor-pointer`}
+        disabled={isSendingEmail}
+      >
+        {isSendingEmail ? 'Sending...' : 'Submit'}
       </button>
       </form>
+      {emailResponse?.success && (
+        <div>
+          ✓ {emailResponse.message}
+        </div>
+      )}
+      {(emailResponse?.success === false || emailError) && (
+        <div>
+          ✗ Error sending email, please double-check your email and try again
+        </div>
+      )}
     </div>
   </>
   );

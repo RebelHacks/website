@@ -36,7 +36,6 @@ export interface EmailResponse {
   success: boolean;
   message: string;
   data?: Record<string, unknown>;
-  error?: string;
 }
 
 // API Error response
