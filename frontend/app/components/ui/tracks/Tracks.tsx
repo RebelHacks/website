@@ -1,4 +1,5 @@
 import styles from "./tracks.module.css";
+import Link from 'next/link'
 
 export default function Tracks() {
   return (
@@ -7,7 +8,7 @@ export default function Tracks() {
         <h2 className={styles.tracksTitle}>Tracks</h2>
 
         <p className={styles.tracksSubtitle}>
-          Choose the track that best matches your experience and project type.
+          The tracks you are eligible to win depend on your final project and whether you completed your degree&apos;s <Link href={"https://www.unlv.edu/provost/gen-ed/milestone"} target="_blank" className="text-blue-200 underline">milestone course</Link>
         </p>
       </header>
 
@@ -24,11 +25,11 @@ export default function Tracks() {
                 </svg>
               </span>
               <h2 className={styles.cardTitleText}>Beginner Software</h2>
+              <h2 className={`${styles.cardTitleText} ml-auto`}>$250</h2>
             </div>
             <hr className={styles.lineBreak} />
             <p className={styles.cardDesc}>
-              For teams building a software-only project who have not yet
-              completed their milestone course.
+              For teams building software projects where no member has completed their degree&apos;s milestone course
             </p>
           </div>
           <div className={styles.trackCard}>
@@ -43,11 +44,11 @@ export default function Tracks() {
               </span>
 
               <h2 className={styles.cardTitleText}>Beginner Hardware</h2>
+              <h2 className={`${styles.cardTitleText} ml-auto`}>$250</h2>
             </div>
             <hr className={styles.lineBreak} />
             <p className={styles.cardDesc}>
-              For teams new to hardware who want to build a project with
-              electronics or physical components, with minimal prior experience.
+              For teams building hardware projects where no member has completed their degree&apos;s milestone course
             </p>
           </div>
           <div className={styles.trackCard}>
@@ -61,11 +62,11 @@ export default function Tracks() {
                 </svg>
               </span>
               <h2 className={styles.cardTitleText}>Advanced Software</h2>
+              <h2 className={`${styles.cardTitleText} ml-auto`}>$500</h2>
             </div>
             <hr className={styles.lineBreak} />
             <p className={styles.cardDesc}>
-              For experienced teams developing a software-only project with more
-              complex systems, features, or technical depth.
+              For teams building software projects where at least one member has completed their degree&apos;s milestone course
             </p>
           </div>
           <div className={styles.trackCard}>
@@ -79,11 +80,11 @@ export default function Tracks() {
                 </svg>
               </span>
               <h2 className={styles.cardTitleText}>Advanced Hardware</h2>
+              <h2 className={`${styles.cardTitleText} ml-auto`}>$500</h2>
             </div>
             <hr className={styles.lineBreak} />
             <p className={styles.cardDesc}>
-              For experienced builders creating projects that include
-              electronics, hardware integration, or physical builds.
+              For teams building hardware projects where at least one member has completed their degree&apos;s milestone course
             </p>
           </div>
         </div>
@@ -100,11 +101,11 @@ export default function Tracks() {
                 </svg>
               </span>
               <h2 className={styles.cardTitleText}>Grand Prize</h2>
+              <h2 className={`${styles.cardTitleText} ml-auto`}>$1,000</h2>
             </div>
             <hr className={styles.lineBreak} />
             <p className={styles.cardDesc}>
-              Awarded to the best project of the entire hackathon, regardless of
-              track or category.
+              Awarded to the best project of the entire hackathon
             </p>
           </div>
         </div>

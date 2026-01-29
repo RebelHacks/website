@@ -39,20 +39,6 @@ const faqQuestions: Question[] = [
 ];
 
 export default function Home() {
-  const [data, setData] = useState(null);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.post("/sample", {
-        key: "value",
-      });
-      setData(response.data);
-      console.log("Data: ", data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <main>
       <section id="home" className={styles.heroSection}>
