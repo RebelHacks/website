@@ -348,18 +348,6 @@ export default function ApiExample() {
             ✓ {sendEmailResponse.message}
           </div>
         )}
-        {sendEmailResponse?.error && (
-          <div style={{
-            padding: '1rem',
-            borderRadius: '8px',
-            background: 'rgba(239, 68, 68, 0.15)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            color: '#ef4444',
-            marginTop: '1rem'
-          }}>
-            ✗ {sendEmailResponse.error}
-          </div>
-        )}
       </div>
 
     </div>
