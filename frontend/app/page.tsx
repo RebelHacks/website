@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import styles from "./styles.module.css";
 import FAQ from "./components/ui/faq/Faq";
+import Contact from "./components/ui/contact/page";
 import Hamburger from "./components/ui/hamburger/Hamburger";
 import Tracks from "./components/ui/tracks/Tracks";
 import Footer from "./components/ui/footer/Footer";
@@ -152,6 +153,9 @@ export default function Home() {
       <section id="faq">
         <FAQ questions={faqQuestions} allowMultiple={true} />
       </section>
+      <section id="contact">
+      <Contact />
+      </section>  
 
       <Footer />
     </main>

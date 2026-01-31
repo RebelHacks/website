@@ -1,6 +1,6 @@
 'use client';
-import Image from "next/image";
-import styles from '@/styles/contact.module.css';
+//import Image from "next/image";
+import styles from '@/app/components/ui/contact/contact.module.css';
 import {useState} from "react";
 import {useMutation} from "@/hooks/useApi";
 import type {EmailResponse} from "@/lib/types";
@@ -35,7 +35,7 @@ export default function Contact() {
     <div
   className={`${styles.container} min-h-screen flex flex-col items-center justify-center p-8 text-white font-sans`}
     >
-        <h1 className={`${styles.title} text-5xl md:text-4xl sm:text-3xl font-black text-center mb-8`}>
+        <h1 className={`${styles.title}`}>
         Contact Us
         </h1>
        <form className="relative z-10 flex flex-col gap-6 w-full max-w-md" onSubmit={handleSubmit}>
@@ -65,8 +65,8 @@ export default function Contact() {
         <label className={`${styles.label} flex flex-col text-lg font-bold`}>
           Message:
           <textarea 
-          className={`${styles.textarea} mt-2 w-full p-3 text-base`} 
-          placeholder="Your message..."
+          className={`${styles.textarea}  mt-2 w-full p-3 text-base focus:outline-none resize-none h-32`} 
+          placeholder="Your message here..."
           required
           onChange={(e) => setEmailFormData(prev => ({ ...prev, message: e.target.value }))}
           />
