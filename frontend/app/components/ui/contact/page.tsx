@@ -4,6 +4,7 @@ import styles from '@/app/components/ui/contact/contact.module.css';
 import {useState} from "react";
 import {useMutation} from "@/hooks/useApi";
 import type {EmailResponse} from "@/lib/types";
+import FlashMessage from '@/app/components/ui/FlashMessage';
 
 export default function Contact() {
   const [emailFormData, setEmailFormData] = useState({
@@ -11,6 +12,7 @@ export default function Contact() {
     email: '',
     message: ''
   });
+  const [flashMessage, setFlashMessage] = useState<{type: 'success' | 'error', message: string, id: number} | null>(null);
 
   const {mutate: sendEmail, loading: isSendingEmail, data: emailResponse, error: emailError } = useMutation<typeof emailFormData, EmailResponse>('post', '/contact-email');
 
@@ -25,8 +27,27 @@ export default function Contact() {
     try {
       const result = await sendEmail(emailFormData);
       console.log('Email sent result:', result);
+      
+      if (result?.success) {
+        setFlashMessage({
+          type: 'success',
+          message: result.message || 'Email sent successfully!',
+          id: Date.now()
+        });
+      } else {
+        setFlashMessage({
+          type: 'error',
+          message: 'Error sending email, please double-check your email and try again',
+          id: Date.now()
+        });
+      }
     } catch (error) {
       console.error('Error sending email:', error);
+      setFlashMessage({
+        type: 'error',
+        message: 'Error sending email, please double-check your email and try again',
+        id: Date.now()
+      });
     }
   };
 
@@ -38,6 +59,14 @@ export default function Contact() {
         <h1 className={`${styles.title}`}>
         Contact Us
         </h1>
+        {flashMessage && (
+        <FlashMessage 
+          key={flashMessage.id}
+          type={flashMessage.type} 
+          message={flashMessage.message}
+          onClose={() => setFlashMessage(null)}
+        />
+      )}
        <form className="relative z-10 flex flex-col gap-6 w-full max-w-md" onSubmit={handleSubmit}>
        <label className={`${styles.label} flex flex-col text-lg font-bold`}>
           Name:
@@ -79,16 +108,6 @@ export default function Contact() {
         {isSendingEmail ? 'Sending...' : 'Submit'}
       </button>
       </form>
-      {emailResponse?.success && (
-        <div>
-          ✓ {emailResponse.message}
-        </div>
-      )}
-      {(emailResponse?.success === false || emailError) && (
-        <div>
-          ✗ Error sending email, please double-check your email and try again
-        </div>
-      )}
     </div>
   </>
   );
