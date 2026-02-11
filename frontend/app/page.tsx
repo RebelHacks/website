@@ -70,9 +70,7 @@ export default function Home() {
             {/*  <Link href="https://portal.rebelhacks.com">Login</Link>*/}
             {/*</button>*/}
 
-            <button className={styles.registerBtn}>
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSeFAlZq_eHapn4nbZYeT-hm2yVlY9VGzhzqVd7bWeyDQJ1c9Q/viewform?usp=header">Register</a>
-            </button>
+            <a className={styles.registerBtn} target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header">Register</a>
           </div>
         </header>
 
