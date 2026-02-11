@@ -167,6 +167,7 @@
 
   .header {
     padding: 1rem 0.75rem;
+    gap: 1rem;
   }
 
   .heroTitle {
@@ -247,9 +248,18 @@
   .nav a {
     display: none;
   }
-  .loginBtn,
-  .registerBtn {
+  .loginBtn {
     display: none;
+  }
+
+  /* Keep register button visible on mobile */
+  .buttonWrapper {
+    gap: 0.5rem;
+  }
+
+  .registerBtn {
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
   }
 
   .titleSchoolLogoWrapper {
@@ -269,6 +279,12 @@
 
   .vegasSign {
     margin-left: 26%;
+  }
+
+  /* Further adjust register button for smaller screens */
+  .registerBtn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -312,5 +328,11 @@
   }
   .heroDate {
     font-size: 18px;
+  }
+
+  /* Optimize button for very small screens */
+  .registerBtn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
   }
 }
