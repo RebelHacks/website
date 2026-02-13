@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./styles.module.css";
 import FAQ from "./components/ui/faq/Faq";
+import Contact from "./components/ui/contact/page";
 import Hamburger from "./components/ui/hamburger/Hamburger";
 import Tracks from "./components/ui/tracks/Tracks";
 import Footer from "./components/ui/footer/Footer";
@@ -63,13 +64,11 @@ export default function Home() {
             </a>
           </nav>
           <div className={styles.buttonWrapper}>
-            <button className={styles.loginBtn}>
-              <Link href="#">Login</Link>
-            </button>
+            {/*<button className={styles.loginBtn}>*/}
+            {/*  <Link href="https://portal.rebelhacks.com">Login</Link>*/}
+            {/*</button>*/}
 
-            <button className={styles.registerBtn}>
-              <Link href="#">Register</Link>
-            </button>
+            <a className={styles.registerBtn} target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header">Register</a>
           </div>
         </header>
 
@@ -150,6 +149,9 @@ export default function Home() {
       <section id="faq">
         <FAQ questions={faqQuestions} allowMultiple={true} />
       </section>
+      <section id="contact">
+      <Contact />
+      </section>  
 
       <Footer />
     </main>

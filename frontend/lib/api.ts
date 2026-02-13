@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const CORS_ALLOWED_ORIGINS = process.env.CORS_ALLOWED_ORIGINS;
 
 // Create axios instance with default config
 const apiClient: AxiosInstance = axios.create({
@@ -9,6 +10,7 @@ const apiClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'Access-Control-Allow-Origin': CORS_ALLOWED_ORIGINS,
   },
   withCredentials: true,
 });
