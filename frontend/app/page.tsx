@@ -62,7 +62,7 @@ export default function Home() {
               FAQ
             </a>
           </nav>
-          <div className={styles.buttonWrapper}>
+          <div className={`${styles.buttonWrapper} ${styles.headerButtons}`}>
             <button className={styles.loginBtn}>
               <Link href="#">Login</Link>
             </button>
@@ -121,13 +121,24 @@ export default function Home() {
             {/* make this a countdown */}
             <p className={styles.heroDate}>FRI & SAT February 20–21, 2026</p>
 
-            <Image
-              src="/images/blue-ace.svg"
-              alt="blue ace"
-              width={120}
-              height={40}
-              className={styles.blueAce}
-            />
+            <div className={styles.blueAceRow}>
+              <Image
+                src="/images/blue-ace.svg"
+                alt="blue ace"
+                width={120}
+                height={40}
+                className={styles.blueAce}
+              />
+              <div className={`${styles.buttonWrapper} ${styles.mobileButtons}`}>
+                <button className={styles.loginBtn}>
+                  <Link href="#">Login</Link>
+                </button>
+
+                <button className={styles.registerBtn}>
+                  <Link href="#">Register</Link>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 

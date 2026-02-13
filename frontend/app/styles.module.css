@@ -54,11 +54,33 @@
 
 .buttonWrapper {
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 2rem;
 }
 
+.headerButtons {
+  display: flex;
+}
+
+.mobileButtons {
+  display: none;
+  margin-top: 0.75rem;
+}
+
+.blueAceRow {
+  display: none;
+}
+
 .loginBtn {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.75rem;
+  background: transparent;
   color: #ffffff;
+  font-size: var(--step--2);
+  font-family: inherit;
+  font-weight: 600;
 }
 
 .registerBtn {
@@ -68,6 +90,9 @@
   border-radius: 0.75rem;
   color: #ffffff;
   cursor: pointer;
+  font-size: var(--step--2);
+  font-family: inherit;
+  font-weight: 600;
 }
 
 .heroTitle {
@@ -163,6 +188,7 @@
     grid-template-areas:
       "header"
       "left";
+    padding-bottom: 1.25rem;
   }
 
   .header {
@@ -223,6 +249,15 @@
     margin-bottom: 10%;
   }
 
+  .blueAceRow {
+    grid-area: BlueAce;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
   .heroDescription {
     grid-area: description;
     font-weight: 400;
@@ -239,7 +274,8 @@
   }
 
   .blueAce {
-    grid-area: BlueAce;
+    order: 2;
+    margin: 0;
   }
 }
 
@@ -247,9 +283,29 @@
   .nav a {
     display: none;
   }
+
+  .headerButtons {
+    display: none;
+  }
+
+  .mobileButtons {
+    display: flex;
+    order: 1;
+    justify-content: flex-start;
+    align-self: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .buttonWrapper {
+    gap: 0.6rem;
+    align-items: center;
+  }
+
   .loginBtn,
   .registerBtn {
-    display: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.6rem;
   }
 
   .titleSchoolLogoWrapper {
@@ -275,7 +331,17 @@
 /* Mobile */
 @media (max-width: 390px) {
   .heroSection {
-    grid-template-rows: 10%;
+    grid-template-rows: auto auto;
+    padding-bottom: 1.5rem;
+  }
+
+  .buttonWrapper {
+    gap: 0.45rem;
+  }
+
+  .loginBtn,
+  .registerBtn {
+    padding: 0.35rem 0.65rem;
   }
   /* Fixes viewport on iphone se */
   @media (max-height: 670px) {
