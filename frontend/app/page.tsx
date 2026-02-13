@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
-import { useState } from "react";
 import styles from "./styles.module.css";
 import FAQ from "./components/ui/faq/Faq";
 import Hamburger from "./components/ui/hamburger/Hamburger";
@@ -28,8 +26,7 @@ const faqQuestions: Question[] = [
   },
   {
     question: "How many people can be in a team?",
-    answer:
-      "Teams will range from 1 - 5 people",
+    answer: "Teams will range from 1 - 5 people",
   },
   {
     question: "Who can join?",
@@ -38,12 +35,13 @@ const faqQuestions: Question[] = [
   },
   {
     question: "Will there be food?",
-    answer: "Yes! We will be serving breakfast, lunch, and dinner for free. We will also provide caffeinated drinks"
+    answer:
+      "Yes! We will be serving breakfast, lunch, and dinner for free. We will also provide caffeinated drinks",
   },
   {
     question: "How much does it cost to join?",
-    answer: "RebelHacks is 100% free to join"
-  }
+    answer: "RebelHacks is 100% free to join",
+  },
 ];
 
 export default function Home() {

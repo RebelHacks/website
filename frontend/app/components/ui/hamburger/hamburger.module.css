@@ -8,11 +8,13 @@
 }
 
 .option {
+  display: block;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   margin-bottom: 0.5rem;
   color: #94a3b8;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .option:hover {
