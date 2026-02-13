@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import styles from "./styles.module.css";
 import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/page";
@@ -51,7 +50,6 @@ export default function Home() {
       <section id="home" className={styles.heroSection}>
         <header className={styles.header}>
           <Hamburger />
-
           <nav className={styles.nav}>
             <a href="#home" className={styles.navLink}>
               Home
@@ -62,13 +60,19 @@ export default function Home() {
             <a href="#faq" className={styles.navLink}>
               FAQ
             </a>
+            <a href="#contact" className={styles.navLink}>
+              Contact
+            </a>
           </nav>
           <div className={styles.buttonWrapper}>
-            {/*<button className={styles.loginBtn}>*/}
-            {/*  <Link href="https://portal.rebelhacks.com">Login</Link>*/}
-            {/*</button>*/}
-
-            <a className={styles.registerBtn} target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header">Register</a>
+            <a
+              className={styles.registerBtn}
+              target="_blank"
+              rel="noreferrer"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header"
+            >
+              Register
+            </a>
           </div>
         </header>
 
@@ -120,24 +124,13 @@ export default function Home() {
             {/* make this a countdown */}
             <p className={styles.heroDate}>FRI & SAT February 20–21, 2026</p>
 
-            <div className={styles.blueAceRow}>
-              <Image
-                src="/images/blue-ace.svg"
-                alt="blue ace"
-                width={120}
-                height={40}
-                className={styles.blueAce}
-              />
-              <div className={`${styles.buttonWrapper} ${styles.mobileButtons}`}>
-                <button className={styles.loginBtn}>
-                  <Link href="#">Login</Link>
-                </button>
-
-                <button className={styles.registerBtn}>
-                  <Link href="#">Register</Link>
-                </button>
-              </div>
-            </div>
+            <Image
+              src="/images/blue-ace.svg"
+              alt="blue ace"
+              width={120}
+              height={40}
+              className={styles.blueAce}
+            />
           </div>
         </div>
 
@@ -151,9 +144,6 @@ export default function Home() {
           />
         </div>
       </section>
-      {/* <section id="about">
-        <About />
-      </section> */}
       <section id="tracks">
         <Tracks />
       </section>
@@ -161,10 +151,9 @@ export default function Home() {
         <FAQ questions={faqQuestions} allowMultiple={true} />
       </section>
       <section id="contact">
-      <Contact />
-      </section>  
-
-      <Footer />
+        <Contact />
+      </section>
+      <section><Footer /></section>
     </main>
   );
 }

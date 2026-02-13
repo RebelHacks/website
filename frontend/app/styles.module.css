@@ -59,30 +59,6 @@
   gap: 2rem;
 }
 
-.headerButtons {
-  display: flex;
-}
-
-.mobileButtons {
-  display: none;
-  margin-top: 0.75rem;
-}
-
-.blueAceRow {
-  display: none;
-}
-
-.loginBtn {
-  padding: 0.5rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 0.75rem;
-  background: transparent;
-  color: #ffffff;
-  font-size: var(--step--2);
-  font-family: inherit;
-  font-weight: 600;
-}
-
 .registerBtn {
   padding: 0.5rem 1.5rem;
   background-color: #fea70a;
@@ -250,15 +226,6 @@
     margin-bottom: 10%;
   }
 
-  .blueAceRow {
-    grid-area: BlueAce;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
-    width: 100%;
-  }
-
   .heroDescription {
     grid-area: description;
     font-weight: 400;
@@ -275,7 +242,7 @@
   }
 
   .blueAce {
-    order: 2;
+    grid-area: BlueAce;
     margin: 0;
   }
 }
@@ -285,30 +252,6 @@
     display: none;
   }
 
-  .headerButtons {
-    display: none;
-  }
-
-  .mobileButtons {
-    display: flex;
-    order: 1;
-    justify-content: flex-start;
-    align-self: auto;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  .buttonWrapper {
-    gap: 0.6rem;
-    align-items: center;
-  }
-
-  .loginBtn {
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.6rem;
-  }
-
-  /* Keep register button visible on mobile */
   .buttonWrapper {
     gap: 0.5rem;
   }
@@ -339,8 +282,8 @@
 
   /* Further adjust register button for smaller screens */
   .registerBtn {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.8rem;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -355,7 +298,6 @@
     gap: 0.45rem;
   }
 
-  .loginBtn,
   .registerBtn {
     padding: 0.35rem 0.65rem;
   }
