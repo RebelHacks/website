@@ -9,7 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "RebelHacks",
-  description: "RebelHacks at UNLV: build, collaborate, and compete in our student hackathon.",
+  description: "Welcome to UNLV's first hackathon! Come together to plan, build, and showcase your 24-hour project!",
 };
 
 export default function RootLayout({
