@@ -2,10 +2,14 @@
 import style from "./hamburger.module.css";
 import { useState } from "react";
 
-const TABS = ["Home", "Tracks", "FAQ"];
+const TABS = [
+  { label: "Home", href: "#home" },
+  { label: "Tracks", href: "#tracks" },
+  { label: "FAQ", href: "#faq" },
+];
 
 export default function Hamburger() {
-  const [activeTab, setActiveTab] = useState("Team");
+  const [activeTab, setActiveTab] = useState("Home");
 
   // State for the Drawer
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -37,17 +41,18 @@ export default function Hamburger() {
 
             {/* Drawer Navigation */}
             <nav className="space-y-2">
-              {TABS.map((option) => (
-                <div
-                  key={option}
+              {TABS.map(({ label, href }) => (
+                <a
+                  key={label}
+                  href={href}
                   onClick={() => {
-                    setActiveTab(option);
+                    setActiveTab(label);
                     setIsDrawerOpen(false);
                   }}
-                  className={`${style.option} ${activeTab === option ? style.active : ""} px-4 py-3 rounded text-lg`}
+                  className={`${style.option} ${activeTab === label ? style.active : ""} px-4 py-3 rounded text-lg`}
                 >
-                  {option}
-                </div>
+                  {label}
+                </a>
               ))}
             </nav>
           </aside>

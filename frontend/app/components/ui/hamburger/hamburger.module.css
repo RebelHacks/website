@@ -8,11 +8,13 @@
 }
 
 .option {
+  display: block;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   margin-bottom: 0.5rem;
   color: #94a3b8;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .option:hover {
@@ -27,11 +29,12 @@
 }
 
 .hamburgerButton {
-  padding: 0.5rem;
-  border: 1px solid var(--border-subtle);
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 0.375rem;
   color: var(--primary);
-  background: transparent;
+  background: rgba(10, 12, 32, 0.92);
   cursor: pointer;
   transition: background-color 0.2s;
   display: flex;
@@ -44,7 +47,7 @@
 }
 
 .hamburgerButton:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(18, 21, 55, 0.98);
 }
 
 .drawerBackdrop {
@@ -61,7 +64,7 @@
   left: 0;
   height: 100%;
   width: 18rem;
-  background-color: var(--background-dark);
+  background-color: rgba(8, 10, 28, 0.98);
   z-index: 50;
   box-shadow: 10px 0 25px -5px rgba(0, 0, 0, 0.5);
   display: flex;

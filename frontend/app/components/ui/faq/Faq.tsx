@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import styles from "./faq.module.css";
@@ -22,7 +22,7 @@ export default function Accordion({ questions, allowMultiple }: AccordionArgs) {
     if (openIndices.includes(index)) {
       // This will filter out the index and return an array without it
       setOpenIndices(
-        openIndices.filter((indices: number) => indices !== index)
+        openIndices.filter((indices: number) => indices !== index),
       );
     } else {
       // If allowing multiple, add to array, else replace
