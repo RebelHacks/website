@@ -64,7 +64,7 @@
   left: 0;
   height: 100%;
   width: 18rem;
-  background-color: var(--background-dark);
+  background-color: rgba(8, 10, 28, 0.98);
   z-index: 50;
   box-shadow: 10px 0 25px -5px rgba(0, 0, 0, 0.5);
   display: flex;
