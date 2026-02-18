@@ -1,9 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import axios from "axios";
-import { useState } from "react";
 import styles from "./styles.module.css";
 import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/page";
@@ -29,8 +26,7 @@ const faqQuestions: Question[] = [
   },
   {
     question: "How many people can be in a team?",
-    answer:
-      "Teams will range from 1 - 5 people",
+    answer: "Teams will range from 1 - 5 people",
   },
   {
     question: "Who can join?",
@@ -39,12 +35,13 @@ const faqQuestions: Question[] = [
   },
   {
     question: "Will there be food?",
-    answer: "Yes! We will be serving breakfast, lunch, and dinner for free. We will also provide caffeinated drinks"
+    answer:
+      "Yes! We will be serving breakfast, lunch, and dinner for free. We will also provide caffeinated drinks",
   },
   {
     question: "How much does it cost to join?",
-    answer: "RebelHacks is 100% free to join"
-  }
+    answer: "RebelHacks is 100% free to join",
+  },
 ];
 
 export default function Home() {
@@ -53,7 +50,6 @@ export default function Home() {
       <section id="home" className={styles.heroSection}>
         <header className={styles.header}>
           <Hamburger />
-
           <nav className={styles.nav}>
             <a href="#home" className={styles.navLink}>
               Home
@@ -64,13 +60,19 @@ export default function Home() {
             <a href="#faq" className={styles.navLink}>
               FAQ
             </a>
+            <a href="#contact" className={styles.navLink}>
+              Contact
+            </a>
           </nav>
           <div className={styles.buttonWrapper}>
-            {/*<button className={styles.loginBtn}>*/}
-            {/*  <Link href="https://portal.rebelhacks.com">Login</Link>*/}
-            {/*</button>*/}
-
-            <a className={styles.registerBtn} target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header">Register</a>
+            <a
+              className={styles.registerBtn}
+              target="_blank"
+              rel="noreferrer"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header"
+            >
+              Register
+            </a>
           </div>
         </header>
 
@@ -142,9 +144,6 @@ export default function Home() {
           />
         </div>
       </section>
-      {/* <section id="about">
-        <About />
-      </section> */}
       <section id="tracks">
         <Tracks />
       </section>
@@ -152,10 +151,9 @@ export default function Home() {
         <FAQ questions={faqQuestions} allowMultiple={true} />
       </section>
       <section id="contact">
-      <Contact />
-      </section>  
-
-      <Footer />
+        <Contact />
+      </section>
+      <section><Footer /></section>
     </main>
   );
 }
