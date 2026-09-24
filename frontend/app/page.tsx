@@ -89,7 +89,7 @@ export default function Home() {
           </div>
 
           <div className={styles.titleSchoolLogoWrapper}>
-            <h1 className={styles.titleSchoolText}>UNLV 2026</h1>
+            <h1 className={styles.titleSchoolText}>UNLV 2027</h1>
 
             <Image
               src="/images/red-diamond.svg"
@@ -122,7 +122,7 @@ export default function Home() {
               real-world problems!
             </p>
             {/* make this a countdown */}
-            <p className={styles.heroDate}>FRI & SAT February 20–21, 2026</p>
+            <p className={styles.heroDate}>FRI & SAT February 20–21, 2027</p>
 
             <Image
               src="/images/blue-ace.svg"
