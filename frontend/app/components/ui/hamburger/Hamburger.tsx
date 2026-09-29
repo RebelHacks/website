@@ -5,6 +5,7 @@ import { useState } from "react";
 const TABS = [
   { label: "Home", href: "#home" },
   { label: "Tracks", href: "#tracks" },
+  { label: "Photos", href: "#photos" },
   { label: "FAQ", href: "#faq" },
 ];
 

@@ -6,6 +6,7 @@ import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/page";
 import Hamburger from "./components/ui/hamburger/Hamburger";
 import Tracks from "./components/ui/tracks/Tracks";
+import Photos from "./components/ui/photos/Photos";
 import Footer from "./components/ui/footer/Footer";
 
 interface Question {
@@ -56,6 +57,9 @@ export default function Home() {
             </a>
             <a href="#tracks" className={styles.navLink}>
               Tracks
+            </a>
+            <a href="#photos" className={styles.navLink}>
+              Photos
             </a>
             <a href="#faq" className={styles.navLink}>
               FAQ
@@ -146,6 +150,9 @@ export default function Home() {
       </section>
       <section id="tracks">
         <Tracks />
+      </section>
+      <section id="photos" aria-labelledby="photos-heading">
+        <Photos />
       </section>
       <section id="faq">
         <FAQ questions={faqQuestions} allowMultiple={true} />
