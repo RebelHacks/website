@@ -122,7 +122,7 @@ export default function Home() {
               real-world problems!
             </p>
             {/* make this a countdown */}
-            <p className={styles.heroDate}>FRI & SAT February 20–21, 2027</p>
+            <p className={styles.heroDate}>SAT & SUN February 20–21, 2027</p>
 
             <Image
               src="/images/blue-ace.svg"

@@ -10,7 +10,7 @@ export default function Footer() {
           </p>
           <div className={styles.meta}>
             <p className={styles.copy}>
-              © 2027 RebelHacks. All rights reserved.
+              © 2026 RebelHacks. All rights reserved.
             </p>
           </div>
         </div>
