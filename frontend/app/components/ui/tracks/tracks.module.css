@@ -6,112 +6,124 @@
 .tracksTitle {
   color: var(--sub-header);
   font-size: var(--step-3);
-  text-shadow: 0 0 16px rgba(0, 208, 243, 0.35);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--sub-header) 35%, transparent);
 }
 
 .tracksSubtitle {
   max-width: 720px;
   margin: 0.75rem auto 1.5rem;
-  color: white;
+  color: var(--foreground);
   font-size: var(--step--1);
 }
 
 .tracksContainer {
   max-width: 1200px;
   margin: 0 auto;
-
-  padding: 0 1.5rem ;
+  padding: 0 1.5rem;
 }
 
-/* Overall stacking */
 .tracksGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-/* Beginner + Advanced row */
-.trackUpper {
+  --card-gap: 1.25rem;
+  /* Three standard cards share a row, with two gaps between them. */
+  --card-width: calc((100% - 2 * var(--card-gap)) / 3);
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+  gap: var(--card-gap);
 }
 
-/* Individual track cards */
-.trackCard {
-  background: rgba(15, 15, 30, 0.85);
-  border-radius: 18px;
-  padding: 1rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  position: relative;
-}
-
-/* Track titles */
-.cardTitle {
+.trackRow {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  gap: var(--card-gap);
+}
+
+.trackCard {
+  width: var(--card-width);
+  min-width: 0;
+  background: color-mix(in srgb, var(--background) 85%, transparent);
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+/* First place is centered on its own row at 1.5 times the standard width. */
+.trackRow:first-child .trackCard {
+  width: calc(var(--card-width) * 1.5);
+}
+
+.hiddenTrack {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--sub-header) 55%, transparent);
+}
+
+.hiddenTrack .cardTitleIcon {
+  fill: var(--sub-header);
+}
+
+.featuredTrack {
+  border-color: var(--primary);
+}
+
+.featuredLabel {
+  margin-bottom: 0.75rem;
+  color: var(--primary);
+  font-size: var(--step--2);
+}
+
+.cardTitle {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 20px;
+  gap: 0.75rem;
   margin-bottom: 1rem;
 }
 
-.cardTitleText {
+.cardTitleText,
+.cardPrize {
   color: var(--card-header);
   font-size: var(--step-0);
+}
+
+.cardPrize {
+  white-space: nowrap;
+}
+
+.cardTitleIcon {
+  width: 36px;
+  height: 36px;
+  fill: var(--primary);
 }
 
 .lineBreak {
   color: var(--primary);
   margin-top: 10px;
   margin-bottom: 20px;
-  width: 70%;
+  width: 100%;
 }
 
-/* Track descriptions */
 .cardDesc {
   line-height: 1.6;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
   color: var(--sub-text);
   font-size: var(--step--1);
 }
 
-.cardTitleIcon {
-  width: 48px;
-  height: 48px;
-  fill: var(--primary);
+/* Put prizes below the title when cards have less room. */
+@media (max-width: 1024px) {
+  .cardTitle {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .cardPrize {
+    grid-column: 2;
+  }
 }
 
-/* Grand Track wrapper */
-.trackLower {
-  display: flex;
-  justify-content: center;
-}
-
-/* Grand Track card itself */
-.trackLower .trackCard {
-  max-width: 720px; /* controls how narrow it is */
-  width: 100%;
-}
-.trackLower .lineBreak {
-  width: 100%;
-}
-
-/* Mobile */
 @media (max-width: 768px) {
-  .trackUpper {
-    grid-template-columns: 1fr;
-  }
-
-  .lineBreak {
-    width: 100%;
-  }
-  .cardDesc {
+  .trackRow {
     flex-direction: column;
   }
 
-  .icon {
-    margin-left: 0;
+  .trackCard,
+  .trackRow:first-child .trackCard {
+    width: 100%;
   }
 }
