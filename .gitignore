@@ -46,3 +46,7 @@ yarn-error.log*
 frontend/next-env.d.ts
 
 .idea/*
+
+# Share safe setup templates while keeping real environment files ignored.
+!frontend/.env.example
+!backend/.env.example

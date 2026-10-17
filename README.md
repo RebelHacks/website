@@ -1,172 +1,103 @@
 # RebelHacks Website
 
-A monorepo containing a **Next.js** frontend and a **Symfony** backend that communicate via REST API.
+The public RebelHacks website uses a Next.js frontend and a Symfony API. You can work on the homepage without running the API or installing a database. The contact form and API demo need the backend.
 
-## 📁 Project Structure
+New to the team? Start with [developer onboarding](docs/ONBOARDING.md) to install the tools, find your way around the code, and see what to check before a pull request.
 
-```
-website/
-├── frontend/          # Next.js 16 React application
-│   ├── app/           # App router pages
-│   ├── components/    # React components
-│   ├── hooks/         # Custom React hooks
-│   └── lib/           # Utilities and API client
-│
-├── backend/           # Symfony 7.2 PHP application
-│   ├── src/
-│   │   ├── Controller/    # API controllers
-│   │   └── EventListener/ # CORS handling
-│   └── public/        # Web entry point
-│
-└── README.md
-```
+## Development setup
 
-## 🚀 Getting Started
+Use Node.js 24 and npm for the frontend. Backend work also needs PHP 8.3, its extensions, and Composer 2; installation instructions are in the onboarding guide.
 
-### Prerequisites
+These commands are for a fresh clone. Keep your existing environment files if you already have a working setup. On Windows, run the commands inside Ubuntu/WSL.
 
-- **Node.js** 18+ and npm
-- **PHP** 8.2+
-- **Composer**
-- **Symfony CLI** (optional, but recommended)
+### Start the frontend
 
-### 1. Start the Backend (Symfony)
-
-```bash
-cd backend
-
-# Install dependencies
-composer install
-
-# Start the Symfony server (default: http://localhost:8000)
-symfony server:start
-# OR use PHP's built-in server:
-php -S localhost:8000 -t public
-```
-
-The API will be available at `https://127.0.0.1:8000/api/`
-
-### 2. Start the Frontend (Next.js)
+From the website repository root:
 
 ```bash
 cd frontend
-
-# Install dependencies
-npm install
-
-# Create environment file
-cp .env .env
-# Or manually create .env with:
-# NEXT_PUBLIC_API_URL=https://127.0.0.1:8000/api
-
-# Start the dev server
-npm run dev
+cp .env.example .env.local
+npm ci
+npm run dev -- --port 3000
 ```
 
-The frontend will be available at `http://localhost:3000`
+Open **http://localhost:3000**. Keep this terminal running; Ctrl+C stops the server. Editing a homepage component should update the browser automatically.
 
-## 🔌 API Endpoints
+`NEXT_PUBLIC_API_URL` tells the frontend where to send API requests. The example uses `http://127.0.0.1:8000/api`. Restart the frontend after editing `.env.local`. Visitors can read values beginning with `NEXT_PUBLIC_`, so keep passwords and private keys out of them.
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/health` | Health check / API status |
-| GET | `/api/data` | Fetch sample items |
-| GET | `/api/items/{id}` | Fetch single item by ID |
-| POST | `/api/submit` | Submit form data |
+### Start the backend when needed
 
-### Example API Call
+In another terminal, start from the website repository root:
 
-```typescript
-import api from '@/lib/api';
-
-// GET request
-const data = await api.get('/data');
-
-// POST request
-const response = await api.post('/submit', { name: 'John', email: 'john@example.com' });
-```
-
-## 🎯 API Demo Page
-
-Visit `http://localhost:3000/api-demo` to see a live demo of the frontend-backend integration.
-
-## 📝 Environment Variables
-
-### Frontend (`frontend/.env.local`)
-
-```env
-NEXT_PUBLIC_API_URL=https://127.0.0.1:8000/api
-```
-
-### Backend (`backend/.env.local`)
-
-```env
-CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-```
-
-## 🔧 Development Tips
-
-### Running Both Servers
-
-Open two terminal windows:
-
-**Terminal 1 (Backend):**
 ```bash
-cd backend && symfony server:start
+cd backend
+cp .env.example .env
+php -r 'echo bin2hex(random_bytes(32)), PHP_EOL;'
 ```
 
-**Terminal 2 (Frontend):**
+Copy the generated value into `APP_SECRET` in `backend/.env`, replacing the placeholder. Then run:
+
 ```bash
-cd frontend && npm run dev
+composer install
+composer check-platform-reqs
+php bin/console about
+php -S 127.0.0.1:8000 -t public
 ```
 
-### CORS Configuration
+In another terminal, check:
 
-The backend includes a `CorsListener` that automatically handles CORS headers. Configure allowed origins in the backend's `.env.local` file.
-
-### Type Safety
-
-The frontend includes TypeScript types in `frontend/lib/types.ts` that mirror the API responses. Keep these in sync with your Symfony entities/responses.
-
-## 📦 Adding New API Endpoints
-
-### 1. Create a Symfony Controller
-
-```php
-// backend/src/Controller/MyController.php
-#[Route('/api/my-endpoint', name: 'my_endpoint', methods: ['GET'])]
-public function myEndpoint(): JsonResponse
-{
-    return $this->json(['data' => 'Hello!']);
-}
+```bash
+curl http://127.0.0.1:8000/api/health
 ```
 
-### 2. Add TypeScript Types
+Expect JSON containing `"status":"ok"`. Open **http://localhost:3000/api-demo** to check a browser request to the backend.
 
-```typescript
-// frontend/lib/types.ts
-export interface MyEndpointResponse {
-  data: string;
-}
+`MAILER_DSN=null://null` turns off email delivery. You can submit the contact form, but it won't send an email. Ask a maintainer for mail-server settings if your task involves sending email.
+
+### Starting again tomorrow
+
+From `website/frontend`, run `npm run dev -- --port 3000`. If your task needs the backend, run `php -S 127.0.0.1:8000 -t public` from `website/backend` in a second terminal. You do not need to copy environment files or reinstall dependencies every day.
+
+## Quick Links
+
+| Path | Purpose |
+| --- | --- |
+| `frontend/app/page.tsx` | Puts the homepage sections together |
+| `frontend/app/components/ui/` | Homepage sections, including tracks and photos |
+| `frontend/app/globals.css` | Shared styles and CSS variables |
+| `frontend/public/images/` | The site's image files |
+| `frontend/lib/api.ts` | Sends requests to the backend |
+| `frontend/hooks/` | React hooks for loading API data |
+| `backend/src/Controller/` | Handles API requests |
+| `backend/src/EventListener/` | Allows the frontend to call the API from a different port |
+
+## Checks before a pull request
+
+From `frontend`, run each check separately:
+
+```bash
+npm run lint
+npx next typegen
+npx tsc --noEmit --incremental false
+npm run build
 ```
 
-### 3. Use in React Component
+There is no `npm test` script. `npm run lint` already reports an error on a fresh clone, so run it once before you start your task: whatever shows up then was there before you. If a check fails, paste its output in the pull request description and say whether it was already failing before your change.
 
-```typescript
-const { data } = useApi<MyEndpointResponse>('/my-endpoint');
-```
+For backend changes, run `composer check-platform-reqs` and `php bin/console lint:container` from `backend`, then try the API route you changed.
 
-## 🚢 Production Deployment
+Also check the affected page at desktop and mobile widths, use keyboard navigation for interactive elements, and inspect `git diff` before staging files. See the [onboarding guide](docs/ONBOARDING.md#6-before-you-open-a-pull-request) for what to keep out of a commit.
 
-### Frontend
-- Build: `npm run build`
-- Deploy to Vercel, Netlify, or any static host
+## API reference
 
-### Backend
-- Set `APP_ENV=prod` in environment
-- Run `composer install --no-dev --optimize-autoloader`
-- Configure your web server (nginx/Apache) to point to `backend/public/`
+| Method | Route | Purpose |
+| --- | --- | --- |
+| GET | `/api/health` | API status |
+| GET | `/api/data` | Sample items |
+| GET | `/api/items/{id}` | One sample item |
+| POST | `/api/submit` | Demo form submission |
+| POST | `/api/contact-email` | Contact form |
 
 ## License
 
-See [LICENSE](LICENSE) for details.
+See [LICENSE](LICENSE).
