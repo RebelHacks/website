@@ -17,15 +17,37 @@
 }
 
 .tracksContainer {
+  --card-gap: 1.25rem;
+  /* Three standard cards share a row, with two gaps between them. */
+  --card-width: calc((100% - 2 * var(--card-gap)) / 3);
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
+/* Prizes and tracks are listed separately so placements don't read as tracks. */
+.group + .group {
+  margin-top: 3rem;
+}
+
+.groupHeader {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.groupTitle {
+  color: var(--primary);
+  font-size: var(--step-2);
+}
+
+.groupSubtitle {
+  max-width: 640px;
+  margin: 0.5rem auto 0;
+  color: var(--sub-text);
+  font-size: var(--step--1);
+}
+
 .tracksGrid {
-  --card-gap: 1.25rem;
-  /* Three standard cards share a row, with two gaps between them. */
-  --card-width: calc((100% - 2 * var(--card-gap)) / 3);
   display: grid;
   gap: var(--card-gap);
 }
@@ -43,11 +65,6 @@
   border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
   border-radius: 18px;
   padding: 1rem;
-}
-
-/* First place is centered on its own row at 1.5 times the standard width. */
-.trackRow:first-child .trackCard {
-  width: calc(var(--card-width) * 1.5);
 }
 
 .hiddenTrack {
@@ -106,6 +123,63 @@
   font-size: var(--step--1);
 }
 
+/* Prize cards center their content around a large prize amount. */
+.podiumCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.podiumCard .cardTitleIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.podiumCard .lineBreak {
+  margin: 0.5rem 0 0.75rem;
+}
+
+.podiumCard .cardDesc {
+  font-size: var(--step--2);
+}
+
+.podiumPrize {
+  color: var(--primary);
+  font-size: var(--step-1);
+  white-space: nowrap;
+}
+
+/*
+  On wider screens, prizes stand on a podium: 2nd | 1st | 3rd.
+  `order` moves 1st into the middle, and extra bottom padding
+  makes each step taller than the one after it.
+*/
+@media (min-width: 769px) {
+  .podium {
+    align-items: flex-end;
+  }
+
+  .podiumCard {
+    max-width: 18rem;
+  }
+
+  .podiumCard:nth-child(1) {
+    order: 2;
+    padding-bottom: 2.5rem;
+  }
+
+  .podiumCard:nth-child(2) {
+    order: 1;
+    padding-bottom: 1.75rem;
+  }
+
+  .podiumCard:nth-child(3) {
+    order: 3;
+  }
+}
+
 /* Put prizes below the title when cards have less room. */
 @media (max-width: 1024px) {
   .cardTitle {
@@ -122,8 +196,7 @@
     flex-direction: column;
   }
 
-  .trackCard,
-  .trackRow:first-child .trackCard {
+  .trackCard {
     width: 100%;
   }
 }
