@@ -1,0 +1,84 @@
+.page {
+  padding: 8rem var(--page-gutter) var(--section-space);
+}
+
+/* a plain white sheet over the grid, sized for comfortable reading */
+.document {
+  display: grid;
+  gap: 2.5rem;
+  max-width: 46rem;
+  margin-inline: auto;
+  padding: clamp(1.75rem, 6vw, 4rem);
+}
+
+.intro {
+  display: grid;
+  gap: 1.25rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 2px solid var(--color-rule);
+}
+
+.title {
+  font-size: var(--step-4);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.lead {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+  text-wrap: pretty;
+}
+
+.rule {
+  display: grid;
+  gap: 0.85rem;
+  line-height: 1.6;
+}
+
+.rule h2 {
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.rule p,
+.rule li {
+  text-wrap: pretty;
+}
+
+.rule ul {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+/* small red dashes instead of bullets */
+.rule li {
+  position: relative;
+}
+
+.rule li::before {
+  content: "";
+  position: absolute;
+  top: 0.75em;
+  left: -1.25rem;
+  width: 0.6rem;
+  height: 2px;
+  background-color: var(--color-red);
+}
+
+.rule a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.rule a:hover {
+  color: var(--color-red);
+}

@@ -1,0 +1,39 @@
+.container {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 1rem;
+}
+
+.sponsor {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 2;
+  transition: border-color var(--duration-quick) var(--ease-out);
+}
+
+.sponsor:hover {
+  border-color: var(--color-rule);
+}
+
+.logo {
+  object-fit: contain;
+  padding: 1.5rem;
+  filter: grayscale(1);
+  opacity: 0.8;
+  transition:
+    filter 200ms var(--ease-out),
+    opacity 200ms var(--ease-out);
+}
+
+.sponsor:hover .logo {
+  filter: none;
+  opacity: 1;
+}

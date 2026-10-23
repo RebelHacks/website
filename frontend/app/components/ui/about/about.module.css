@@ -1,0 +1,64 @@
+.container {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+/* the name inside the heading, sized to sit on the heading's baseline */
+.name {
+  font-size: 0.92em;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  align-items: start;
+  gap: clamp(2rem, 6vw, 6rem);
+}
+
+.story {
+  display: grid;
+  gap: 1.1rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* a spec sheet: label on the left, detail on the right, hairlines between */
+.facts {
+  padding: 0.25rem clamp(1.25rem, 3vw, 2rem);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1rem;
+  padding-block: 0.85rem;
+}
+
+.fact + .fact {
+  border-top: 1px solid var(--color-rule-soft);
+}
+
+.fact dt {
+  color: var(--color-ink-soft);
+}
+
+.fact dd {
+  font-weight: 700;
+}
+
+/* dates use the flair font, like the hero */
+.date {
+  font-family: var(--font-display);
+  color: var(--color-red);
+}
+
+@media (max-width: 860px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,129 @@
+.container {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+/* four steps in a row, joined by a line that runs through the markers */
+.timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0.75rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-rule);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.marker {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-bottom: 0.4rem;
+  fill: var(--color-page);
+  stroke: var(--color-rule);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* the overnight step: a filled marker and a dark card */
+.step[data-night] .marker {
+  fill: var(--color-rule);
+}
+
+.step[data-night] .details {
+  border-color: var(--color-ink);
+  background-color: var(--color-ink);
+}
+
+.step[data-night] .when {
+  color: var(--color-on-red);
+}
+
+.step[data-night] .what {
+  color: rgb(255 255 255 / 0.72);
+}
+
+/* each step's text sits on a small white card under its marker */
+.details {
+  display: grid;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1.1rem 1.25rem 1.25rem;
+}
+
+/* times are flair, so they use the mono font like the dates */
+.when {
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-red);
+}
+
+.what {
+  color: var(--color-ink-soft);
+  text-wrap: pretty;
+}
+
+/* the steps pop in left to right, like the track cards */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .step {
+    opacity: 0;
+  }
+
+  [data-revealed] .step {
+    animation: pop-up 95ms var(--ease-out) both;
+    animation-delay: calc(var(--i) * 60ms);
+  }
+}
+
+@keyframes pop-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* on narrow screens the line runs down the left side instead */
+@media (max-width: 760px) {
+  .timeline {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    padding-left: 2.5rem;
+  }
+
+  .timeline::before {
+    top: 1.35rem;
+    bottom: 1.35rem;
+    left: 0.7rem;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .marker {
+    position: absolute;
+    top: 1.1rem;
+    left: -2.5rem;
+    margin: 0;
+  }
+}
