@@ -1,53 +1,161 @@
 @import "tailwindcss";
 
+/*
+  Site-wide design tokens. Components should use these variables instead of
+  hard-coded colors, so a dark theme later only has to redefine this block.
+*/
 :root {
   scroll-behavior: smooth;
+  /* keeps anchored sections from hiding under the fixed header */
+  scroll-padding-top: 5rem;
+  /* lets <details> and other elements animate to height: auto */
+  interpolate-size: allow-keywords;
 
-  --foreground: #ffffff;
-  --background: #111435;
-  --primary: #fea70a;
-  --sub-header: #00d0f3;
-  --sub-text: #cfcfcf;
-  --card-header: #f5f5f5;
+  /* ---------- colors ---------- */
+  --color-page: #ebebeb; /* page background, between the grid lines */
+  --color-grid: #dbdbdb; /* resting honeycomb lines */
+  --color-grid-trace: #a3a3a3; /* lines drawn by the grid animation */
+  --color-surface: #ffffff; /* cards and panels */
+  --color-surface-muted: #f5f5f5; /* inputs, quiet panels */
+  --color-ink: #141414; /* main text */
+  --color-ink-soft: #4f4f4f; /* secondary text */
+  --color-rule: #141414; /* strong borders */
+  --color-rule-soft: #d0d0d0; /* light borders and dividers */
+  --color-red: #c50909; /* brand red */
+  --color-red-deep: #9c0707; /* red hover / pressed */
+  --color-on-red: #ffffff; /* text on red */
+  --color-gold: #e9a400;
+  --color-silver: #a9a9a9;
+  --color-bronze: #a74000;
+  --color-success: #1b7a3a; /* confirmation messages */
 
-  /* Utopia scale */
+  /* ---------- type ---------- */
+  /* Plex Mono is only for flair: the hero, dates and the RebelHacks name. */
+  --font-display: var(--font-plex-mono), ui-monospace, monospace;
+  --font-body: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
 
+  /* Utopia fluid type scale. step--2 is body text, step--1 is lead text. */
   --step--2: clamp(0.95rem, 0.88rem + 0.3vw, 1.05rem);
   --step--1: clamp(1.1rem, 1.02rem + 0.45vw, 1.35rem);
-  --step-0: clamp(1.25rem, 1.15rem + 0.6vw, 1.6rem); /* body */
+  --step-0: clamp(1.25rem, 1.15rem + 0.6vw, 1.6rem);
   --step-1: clamp(1.55rem, 1.35rem + 0.9vw, 2.1rem);
   --step-2: clamp(1.95rem, 1.65rem + 1.3vw, 2.8rem);
   --step-3: clamp(2.45rem, 2rem + 1.9vw, 3.8rem);
   --step-4: clamp(3.1rem, 2.5rem + 2.8vw, 5.2rem);
-  --step-5: clamp(3.9rem, 3.1rem + 4vw, 7.5rem); /* hero */
-  
+  --step-5: clamp(3.9rem, 3.1rem + 4vw, 7.5rem);
+
+  /* ---------- layout ---------- */
+  --page-max: 75rem; /* widest content column (1200px) */
+  --page-gutter: clamp(1rem, 4vw, 3rem); /* side padding on every section */
+  --section-space: clamp(5rem, 12vw, 10rem); /* gap between sections */
+  --radius: 6px;
+
+  /* ---------- halo ---------- */
+  /*
+    A glow in the page color around text that sits on the honeycomb, so the
+    grid (and anything drawn on it) fades out behind the letters instead of
+    crossing them. Use it as `filter: var(--halo)`.
+
+    Put it on the element that wraps a whole cluster of text (a heading and
+    its intro line, the hero's name and dates), not on each piece: a filter
+    draws its glow underneath everything inside the element, so one shared
+    halo can never fog the neighbouring text. (A per-element halo, or a
+    text-shadow, paints each glow over whatever came before it.)
+
+    Each drop-shadow builds on the ones before it, so the area right around
+    the letters is solid and the edge is soft.
+  */
+  --halo:
+    drop-shadow(0 0 1px var(--color-page)) drop-shadow(0 0 3px var(--color-page))
+    drop-shadow(0 0 6px var(--color-page)) drop-shadow(0 0 12px var(--color-page))
+    drop-shadow(0 0 20px var(--color-page));
+  /* a wider one for the very large hero text */
+  --halo-large:
+    drop-shadow(0 0 2px var(--color-page)) drop-shadow(0 0 6px var(--color-page))
+    drop-shadow(0 0 12px var(--color-page)) drop-shadow(0 0 24px var(--color-page))
+    drop-shadow(0 0 40px var(--color-page));
+
+  /* ---------- motion ---------- */
+  /* quick start, soft landing: used for nearly every transition */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-quick: 120ms;
 }
 
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --font-sans: var(--font-inter);
-} */
-
 body {
-  background-color: #080808;
-  background-image: radial-gradient(
-      circle at 60% 0%,
-      rgba(17, 20, 53, 0.85) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      circle at 0% 100%,
-      rgba(0, 208, 243, 0.1) 0%,
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 100% 100%,
-      rgba(254, 167, 10, 0.08) 0%,
-      transparent 38%
-    );
+  background-color: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+::selection {
+  background-color: var(--color-red);
+  color: var(--color-on-red);
+}
+
+/*
+  Shared building blocks. Add these class names next to a component's own
+  CSS module class (className={`card ${styles.story}`}), and keep only the
+  differences in the module.
+*/
+
+/* a white card: reading text that sits on the honeycomb goes on one of these */
+.card {
+  border: 1px solid var(--color-rule-soft);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+}
+
+/* the red button */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-radius: var(--radius);
+  background-color: var(--color-red);
+  color: var(--color-on-red);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--duration-quick) var(--ease-out);
+}
+
+.button:hover {
+  background-color: var(--color-red-deep);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* one focus style for every interactive element, keyboard only */
+:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+/* respect the OS "reduce motion" setting everywhere */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
 }

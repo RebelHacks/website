@@ -1,0 +1,35 @@
+/* the title and intro line share one halo (see --halo in globals.css) */
+.heading {
+  display: grid;
+  gap: 1rem;
+  filter: var(--halo);
+}
+
+.title {
+  font-size: var(--step-4);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+}
+
+.lead {
+  max-width: 40ch;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--color-ink-soft);
+  text-wrap: pretty;
+}
+
+/* after jumping here from a nav link, the heading flashes red so you can
+   see where you landed (long enough to outlast the smooth scroll) */
+:target .title {
+  animation: landed 1.8s var(--ease-out);
+}
+
+@keyframes landed {
+  0%,
+  55% {
+    color: var(--color-red);
+  }
+}
