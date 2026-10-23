@@ -1,12 +1,12 @@
-"use client";
-
-import Image from "next/image";
+import type { ReactNode } from "react";
 import styles from "./styles.module.css";
-import FAQ from "./components/ui/faq/Faq";
-import Contact from "./components/ui/contact/page";
-import Hamburger from "./components/ui/hamburger/Hamburger";
+import HexGrid from "./components/ui/hexgrid/HexGrid";
+import Header from "./components/ui/header/Header";
+import Hero from "./components/ui/hero/Hero";
 import Tracks from "./components/ui/tracks/Tracks";
 import Photos from "./components/ui/photos/Photos";
+import FAQ from "./components/ui/faq/Faq";
+import Contact from "./components/ui/contact/page";
 import Footer from "./components/ui/footer/Footer";
 
 interface Question {
@@ -45,122 +45,40 @@ const faqQuestions: Question[] = [
   },
 ];
 
+// A page section. Each one's heading has the id "<section id>-heading".
+function Section({ id, children }: { id: string; children: ReactNode }) {
+  return (
+    <section
+      id={id}
+      className={styles.section}
+      aria-labelledby={`${id}-heading`}
+    >
+      {children}
+    </section>
+  );
+}
+
 export default function Home() {
   return (
-    <main>
-      <section id="home" className={styles.heroSection}>
-        <header className={styles.header}>
-          <Hamburger />
-          <nav className={styles.nav}>
-            <a href="#home" className={styles.navLink}>
-              Home
-            </a>
-            <a href="#tracks" className={styles.navLink}>
-              Tracks
-            </a>
-            <a href="#photos" className={styles.navLink}>
-              Photos
-            </a>
-            <a href="#faq" className={styles.navLink}>
-              FAQ
-            </a>
-            <a href="#contact" className={styles.navLink}>
-              Contact
-            </a>
-          </nav>
-          <div className={styles.buttonWrapper}>
-            <a
-              className={styles.registerBtn}
-              target="_blank"
-              rel="noreferrer"
-              href="https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header"
-            >
-              Register
-            </a>
-          </div>
-        </header>
-
-        <div className={styles.heroTitle}>
-          <div className={styles.titleOrgWrapper}>
-            <h1 className={styles.titleOrg}>REBEL HACKS</h1>
-            <Image
-              src="/images/org-heart.svg"
-              alt="orange heart"
-              width={120}
-              height={40}
-              className={styles.orangeHeart}
-            />
-          </div>
-
-          <div className={styles.titleSchoolLogoWrapper}>
-            <h1 className={styles.titleSchoolText}>UNLV 2027</h1>
-
-            <Image
-              src="/images/red-diamond.svg"
-              alt="red diamond"
-              width={120}
-              height={40}
-              className={styles.redDiamond}
-            />
-
-            <Image
-              src="/images/vegas-sign.png"
-              alt="Las Vegas Neon Sign"
-              width={400}
-              height={100}
-              className={styles.vegasSign}
-            />
-          </div>
-
-          <div className={styles.descriptionDateWrapper}>
-            <Image
-              src="/images/org-diamond.svg"
-              alt="orange diamond"
-              width={100}
-              height={40}
-              className={styles.orangeDiamond}
-            />
-
-            <p className={styles.heroDescription}>
-              Come together to design, develop, and present projects that tackle
-              real-world problems!
-            </p>
-            {/* make this a countdown */}
-            <p className={styles.heroDate}>SAT & SUN February 20–21, 2027</p>
-
-            <Image
-              src="/images/blue-ace.svg"
-              alt="blue ace"
-              width={120}
-              height={40}
-              className={styles.blueAce}
-            />
-          </div>
-        </div>
-
-        <div className={styles.heroImageWrapper}>
-          <Image
-            src="/images/hero-image.svg"
-            alt="Las Vegas neon sign"
-            width={600}
-            height={100}
-            className={styles.heroImage}
-          />
-        </div>
-      </section>
-      <section id="tracks">
-        <Tracks />
-      </section>
-      <section id="photos" aria-labelledby="photos-heading">
-        <Photos />
-      </section>
-      <section id="faq">
-        <FAQ questions={faqQuestions} allowMultiple={true} />
-      </section>
-      <section id="contact">
-        <Contact />
-      </section>
-      <section><Footer /></section>
-    </main>
+    <>
+      <HexGrid />
+      <Header />
+      <main id="main">
+        <Hero />
+        <Section id="tracks">
+          <Tracks />
+        </Section>
+        <Section id="photos">
+          <Photos />
+        </Section>
+        <Section id="faq">
+          <FAQ questions={faqQuestions} allowMultiple={true} />
+        </Section>
+        <Section id="contact">
+          <Contact />
+        </Section>
+      </main>
+      <Footer />
+    </>
   );
 }

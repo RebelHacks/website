@@ -1,75 +1,55 @@
 "use client";
-import style from "./hamburger.module.css";
-import { useState } from "react";
 
-const TABS = [
-  { label: "Home", href: "#home" },
-  { label: "Tracks", href: "#tracks" },
-  { label: "Photos", href: "#photos" },
-  { label: "FAQ", href: "#faq" },
-];
+import type { CSSProperties, MouseEvent } from "react";
+import { NAV_LINKS, sectionHref } from "../header/navLinks";
+import { useActiveSection } from "../header/useActiveSection";
+import styles from "./hamburger.module.css";
 
+// Phone menu. It uses the browser's built-in popover: the button opens and
+// closes it, and Esc or a tap outside closes it, with no React state needed.
 export default function Hamburger() {
-  const [activeTab, setActiveTab] = useState("Home");
+  const activeSection = useActiveSection();
 
-  // State for the Drawer
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // jumping to a section doesn't close a popover by itself, so close it here
+  const closeMenu = (event: MouseEvent<HTMLAnchorElement>) => {
+    const menu = event.currentTarget.closest<HTMLElement>("[popover]");
+    menu?.hidePopover();
+  };
 
   return (
     <>
-      {/* DRAWER / SIDEBAR OVERLAY */}
-      {isDrawerOpen && (
-        <>
-          <div
-            className={style.drawerBackdrop}
-            onClick={() => setIsDrawerOpen(false)}
-          />
+      <button
+        type="button"
+        className={styles.menuButton}
+        popoverTarget="site-menu"
+        aria-label="Menu"
+      >
+        <span className={styles.bars} aria-hidden="true" />
+      </button>
 
-          {/* Drawer Panel */}
-          <aside className={style.drawerPanel}>
-            {/* Drawer Header */}
-            <div className={style.drawerHeader}>
-              <div className="text-xl font-bold tracking-widest text-(--primary)">
-                MENU
-              </div>
-              <button
-                onClick={() => setIsDrawerOpen(false)}
-                className={style.closeButton}
+      <nav
+        id="site-menu"
+        popover="auto"
+        className={styles.menu}
+        aria-label="Main"
+      >
+        <ul className={styles.list}>
+          {NAV_LINKS.map(({ label, section }, index) => (
+            <li key={section} style={{ "--index": index } as CSSProperties}>
+              <a
+                href={sectionHref(section)}
+                className={styles.link}
+                aria-current={
+                  section === activeSection ? "location" : undefined
+                }
+                onClick={closeMenu}
               >
-                ✕
-              </button>
-            </div>
-
-            {/* Drawer Navigation */}
-            <nav className="space-y-2">
-              {TABS.map(({ label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={() => {
-                    setActiveTab(label);
-                    setIsDrawerOpen(false);
-                  }}
-                  className={`${style.option} ${activeTab === label ? style.active : ""} px-4 py-3 rounded text-lg`}
-                >
-                  {label}
-                </a>
-              ))}
-            </nav>
-          </aside>
-        </>
-      )}
-
-      {/* Hamburger Button */}
-      {!isDrawerOpen && (
-        <button
-          onClick={() => setIsDrawerOpen(true)}
-          className={style.hamburgerButton}
-          type="button"
-        >
-          <span className="text-xl leading-none">☰</span>
-        </button>
-      )}
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </>
   );
 }
