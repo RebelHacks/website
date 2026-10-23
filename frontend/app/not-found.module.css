@@ -1,0 +1,36 @@
+.page {
+  /* one halo under all the text */
+  filter: var(--halo-large);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1rem;
+  min-height: 85svh;
+  padding: 7rem var(--page-gutter) 4rem;
+  text-align: center;
+}
+
+.code {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 22vw, 14rem);
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--color-red);
+}
+
+.title {
+  font-size: var(--step-2);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.text {
+  max-width: 34ch;
+  color: var(--color-ink-soft);
+}
+
+.home {
+  margin-top: 1rem;
+  padding: 0.8rem 1.4rem;
+}
