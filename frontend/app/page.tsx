@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import styles from "./styles.module.css";
+import Link from "next/link";
 import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/page";
 import Hamburger from "./components/ui/hamburger/Hamburger";
@@ -67,6 +68,9 @@ export default function Home() {
             <a href="#contact" className={styles.navLink}>
               Contact
             </a>
+            <Link href="/past-projects" className={styles.navLink}>
+              Past Projects 
+            </Link>
           </nav>
           <div className={styles.buttonWrapper}>
             <a

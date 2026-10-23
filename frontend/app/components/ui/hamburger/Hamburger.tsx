@@ -7,6 +7,7 @@ const TABS = [
   { label: "Tracks", href: "#tracks" },
   { label: "Photos", href: "#photos" },
   { label: "FAQ", href: "#faq" },
+  { label: "Past Projects", href: "/past-projects" },
 ];
 
 export default function Hamburger() {
