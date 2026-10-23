@@ -1,232 +1,114 @@
-/* FlashMessage.module.css */
-
 .flashMessage {
-  position: relative;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  margin-top: 1.5rem;
-  border-radius: 12px;
-  border: 2px solid;
-  background: linear-gradient(
-    135deg,
-    rgba(18, 22, 57, 0.95),
-    rgba(8, 8, 8, 0.95)
-  );
-  backdrop-filter: blur(10px);
-  max-width: 500px;
+  gap: 0.75rem;
   width: 100%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  padding: 0.85rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule-soft);
+  border-left-width: 4px;
+  border-radius: var(--radius);
 }
 
-.flashMessage::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 12px;
-  padding: 2px;
-  background: linear-gradient(135deg, currentColor, transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-/* Success variant */
 .success {
-  border-color: rgba(0, 208, 243, 0.5);
-  color: #00d0f3;
+  border-left-color: var(--color-success);
+}
+
+.error {
+  border-left-color: var(--color-red);
+}
+
+.iconWrapper {
+  display: flex;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .success .iconWrapper {
-  background: rgba(0, 208, 243, 0.15);
-  box-shadow: 0 0 15px rgba(0, 208, 243, 0.3);
-}
-
-.success:hover {
-  border-color: rgba(0, 208, 243, 0.7);
-  box-shadow: 0 0 20px rgba(0, 208, 243, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Error variant */
-.error {
-  border-color: rgba(254, 167, 10, 0.5);
-  color: #fea70a;
+  color: var(--color-success);
 }
 
 .error .iconWrapper {
-  background: rgba(254, 167, 10, 0.15);
-  box-shadow: 0 0 15px rgba(254, 167, 10, 0.3);
+  color: var(--color-red);
 }
 
-.error:hover {
-  border-color: rgba(254, 167, 10, 0.7);
-  box-shadow: 0 0 20px rgba(254, 167, 10, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Icon wrapper */
-.iconWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
+/* every icon here is a line drawing */
+.flashMessage svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
-  color: currentColor;
+  width: 20px;
+  height: 20px;
 }
 
-/* Content */
 .content {
   flex: 1;
+  min-width: 0;
 }
 
 .message {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-ink);
   font-size: 1rem;
-  font-weight: 500;
   line-height: 1.5;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  overflow-wrap: anywhere;
 }
 
-/* Close button */
 .closeButton {
   display: flex;
+  flex: 0 0 32px;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  color: rgba(255, 255, 255, 0.6);
+  border: 0;
+  border-radius: var(--radius);
+  color: var(--color-ink-soft);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color var(--duration-quick) var(--ease-out);
 }
 
 .closeButton svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .closeButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  transform: scale(1.05);
+  color: var(--color-ink);
 }
 
-.closeButton:active {
-  transform: scale(0.95);
-}
-
-/* Animations */
 @keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
-@keyframes slideOutDown {
+@keyframes fadeOut {
   from {
     opacity: 1;
-    transform: translateY(0) scale(1);
   }
   to {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
   }
 }
 
 .animateIn {
-  animation: slideInUp 0.3s ease forwards;
+  animation: slideInUp var(--duration-quick) var(--ease-out) forwards;
 }
 
 .animateOut {
-  animation: slideOutDown 0.3s ease forwards;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .flashMessage {
-    padding: 0.875rem 1.25rem;
-    gap: 0.875rem;
-  }
-
-  .iconWrapper {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-  }
-
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .message {
-    font-size: 0.95rem;
-  }
-
-  .closeButton {
-    width: 26px;
-    height: 26px;
-    min-width: 26px;
-  }
-
-  .closeButton svg {
-    width: 14px;
-    height: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .flashMessage {
-    padding: 0.75rem 1rem;
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  .iconWrapper {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-  }
-
-  .icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .message {
-    font-size: 0.9rem;
-  }
-
-  .closeButton {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-  }
-
-  .closeButton svg {
-    width: 12px;
-    height: 12px;
-  }
+  animation: fadeOut var(--duration-quick) var(--ease-out) forwards;
 }

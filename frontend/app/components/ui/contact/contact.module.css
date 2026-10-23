@@ -1,92 +1,81 @@
-/* contact.module.css */
-
 .container {
-  position: relative;
-  background-color: transparent;
-  padding: 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+.form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 75vh;
-}
-
-.container::before {
-  content: '';
-  position: absolute;
-  /* inset: 50%; */
-  /* width: 400px;
-  height: 400px; */
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.title {
-  font-size: var(--step-3);
-  font-weight: 450;
-  text-shadow: 0 0 16px rgba(0, 208, 243, 0.35);
-  color: var(--sub-header);
-  margin-bottom: 2rem;
+  gap: 1.25rem;
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
 }
 
 .label {
-  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-.input, .textarea {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(
-    135deg,
-    rgba(18, 22, 57, 0.9),
-    rgba(8, 8, 8, 0.9)
-  );
-  color: #fff;
-  border-radius: 8px;
-  /* text-shadow: 0 0 2px #ffffff; */
-  transition: 0.3s;
+.input,
+.textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-ink);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-rule-soft);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  transition:
+    border-color var(--duration-quick) var(--ease-out),
+    background var(--duration-quick) var(--ease-out);
 }
 
-.input:focus, .textarea:focus {
-  border-color:#fea70a99;
-  box-shadow: 0 0 5px #fea70a99, 0 0 10px #fea70a99;
+.input::placeholder,
+.textarea::placeholder {
+  color: #8a8a8a;
+  opacity: 1;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: var(--color-ink-soft);
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--color-ink);
+  background: var(--color-surface);
 }
 
 .textarea {
-  min-height: 120px;
-  resize: none;
+  resize: vertical;
 }
 
-.button {
-  border: 2px solid  #fea70a99;
-  color: #ffffff;
-  background: transparent;
-  border-radius: 8px;
-  /* text-shadow: 0 0 5px #ffffff, 0 0 10px #ff7f50; */
-  transition: 0.3s;
+.submit {
+  align-self: flex-start;
+  padding: 0.8rem 1.4rem;
 }
 
-.button:hover {
-  background-color: #fea70a;
-  color: #0d1b2a;
-  box-shadow: 0 0 14px #fea70a99;
-}
+@media (min-width: 900px) {
+  .container {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
 
-/* 
-   Responsive adjustments
-    */
-
-/* Tablet screens: max-width 768px */
-@media (max-width: 768px) {
-  /* .title { font-size: 2.5rem; } Smaller heading */
-  .label { font-size: 1.1rem; } /* Smaller labels */
-  .input, .textarea { padding: 0.7rem; font-size: 0.95rem; } /* Smaller inputs */
-  .button { padding: 0.9rem 1.8rem; font-size: 1.1rem; } /* Smaller button */
-}
-
-/* Mobile screens: max-width 480px */
-@media (max-width: 480px) {
-  /* .title { font-size: 2rem; } Even smaller heading */
-  .label { font-size: 1rem; } /* Smaller labels */
-  .input, .textarea { padding: 0.6rem; font-size: 0.9rem; } /* Adjust inputs for small screens */
-  .button { padding: 0.8rem 1.5rem; font-size: 1rem; } /* Compact button */
+  /* the heading stays in view beside the form, like Photos and FAQ */
+  .container > :first-child {
+    position: sticky;
+    top: 6.5rem;
+  }
 }

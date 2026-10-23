@@ -1,0 +1,55 @@
+.glyph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.empty {
+  fill: var(--color-grid);
+}
+
+.filled {
+  fill: var(--color-ink);
+}
+
+/* a few cells blink red for a moment, each on its own slow cycle */
+.filled[data-blink] {
+  animation: blink var(--blink-period) steps(1, end) var(--blink-delay) infinite;
+}
+
+@keyframes blink {
+  0% {
+    fill: var(--color-red);
+  }
+  1%,
+  100% {
+    fill: var(--color-ink);
+  }
+}
+
+/*
+  When the cards pop into view (Reveal sets data-revealed), the glyph forms
+  itself: each filled cell starts as an empty one and fills in, in a
+  scattered order. --i is the card's position, set on the card.
+*/
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-revealed] .filled {
+    animation: fill-in 120ms var(--ease-out)
+      calc(var(--i, 0) * 45ms + 100ms + var(--delay) * 1.6) both;
+  }
+
+  /* blinking cells keep their blink alongside the fill-in */
+  [data-revealed] .filled[data-blink] {
+    animation:
+      fill-in 120ms var(--ease-out)
+        calc(var(--i, 0) * 45ms + 100ms + var(--delay) * 1.6) both,
+      blink var(--blink-period) steps(1, end) var(--blink-delay) infinite;
+  }
+}
+
+@keyframes fill-in {
+  from {
+    fill: var(--color-grid);
+  }
+}

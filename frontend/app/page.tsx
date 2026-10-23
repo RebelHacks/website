@@ -12,42 +12,7 @@ import { sponsors } from "./components/ui/sponsors/sponsorData";
 import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/page";
 import Footer from "./components/ui/footer/Footer";
-
-interface Question {
-  question: string;
-  answer: string;
-}
-
-const faqQuestions: Question[] = [
-  {
-    question: "What is a hackathon?",
-    answer:
-      "A hackathon is an event where teams come together to collaborate on software or hardware projects within a set time frame to be formally judged.",
-  },
-  {
-    question: "Is there a theme?",
-    answer:
-      "Yes, the theme will be released on-site after the opening ceremony",
-  },
-  {
-    question: "How many people can be in a team?",
-    answer: "Teams will range from 1 - 5 people",
-  },
-  {
-    question: "Who can join?",
-    answer:
-      "Any UNLV and CSN student enrolled during the spring semester can attend. All majors are welcome.",
-  },
-  {
-    question: "Will there be food?",
-    answer:
-      "Yes! We will be serving breakfast, lunch, and dinner for free. We will also provide caffeinated drinks",
-  },
-  {
-    question: "How much does it cost to join?",
-    answer: "RebelHacks is 100% free to join",
-  },
-];
+import { faqQuestions } from "./components/ui/faq/faqData";
 
 // A page section. Each one's heading has the id "<section id>-heading".
 function Section({ id, children }: { id: string; children: ReactNode }) {
