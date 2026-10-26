@@ -1,10 +1,11 @@
-/* ---------- the CAPTCHA window (the photo viewer uses the same frame) ---------- */
+/* ---------- CAPTCHA box (the viewer reuses the frame) ---------- */
 .captcha,
-.viewer {
+.viewerWindow {
   padding: 0.4rem;
   border: 1px solid var(--color-rule-soft);
   border-radius: 3px;
   background-color: var(--color-surface);
+  box-shadow: var(--shadow);
 }
 
 .captcha {
@@ -14,7 +15,7 @@
 
 .banner,
 .viewerBanner {
-  background-color: var(--color-red);
+  background-color: var(--color-red-fill);
   color: var(--color-on-red);
 }
 
@@ -41,7 +42,7 @@
 }
 
 .promptHint {
-  font-size: 0.95rem;
+  font-size: var(--step--3);
   opacity: 0.85;
 }
 
@@ -51,7 +52,6 @@
   gap: 0.4rem;
 }
 
-/* each tile is a button that opens the photo full size */
 .tile {
   position: relative;
   display: block;
@@ -74,55 +74,10 @@
   transform: scale(1.03);
 }
 
-/* opened photos shrink inside a white frame and get a tick, like the real thing */
-.tile[data-seen] .photo {
-  transform: scale(0.84);
-}
-
 .tile:focus-visible {
   outline-offset: -2px;
 }
 
-.tick {
-  position: absolute;
-  top: 0.4rem;
-  left: 0.4rem;
-  display: grid;
-  place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: 50%;
-  background-color: var(--color-red);
-  opacity: 0;
-  transform: scale(0.4);
-  transition:
-    opacity 120ms var(--ease-out),
-    transform 160ms var(--ease-out);
-}
-
-/* every icon here is a line drawing */
-.tick svg,
-.iconButton svg {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.tick svg {
-  width: 1rem;
-  height: 1rem;
-  color: var(--color-on-red);
-  stroke-width: 2.25;
-}
-
-.tile[data-seen] .tick {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* tiles deal in one by one: on first view, and again after a shuffle */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .grid li {
     opacity: 0;
@@ -130,7 +85,7 @@
 
   [data-revealed] .grid li {
     animation: deal-in 150ms var(--ease-out) both;
-    animation-delay: calc(var(--i) * 40ms);
+    animation-delay: calc(var(--index) * 40ms);
   }
 }
 
@@ -177,15 +132,19 @@
 .iconButton svg {
   width: 1.4rem;
   height: 1.4rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   transition: transform 300ms var(--ease-out);
 }
 
-/* the shuffle arrow (the toolbar's own icon button) spins a quarter turn on hover */
-.toolbar > .iconButton:hover svg {
+.shuffle:hover svg {
   transform: rotate(90deg);
 }
 
-/* the close button sits on the red banner */
+/* the close button, on the red banner */
 .onRed,
 .onRed:hover {
   color: var(--color-on-red);
@@ -195,7 +154,7 @@
   background-color: rgb(255 255 255 / 0.15);
 }
 
-/* a red button (see .button in globals.css), styled like the real CAPTCHA's */
+/* uppercase, like the real CAPTCHA button */
 .more {
   padding: 0.75rem 1.75rem;
   border-radius: 3px;
@@ -203,19 +162,38 @@
   text-transform: uppercase;
 }
 
-/* ---------- photo viewer (the same window, one photo at a time) ---------- */
+/* ---------- photo viewer ---------- */
+/* the <dialog> is an invisible wrapper, so clicks on it are backdrop clicks
+   (see Photos.tsx) */
 .viewer {
   width: min(92vw, 62rem);
   max-width: none;
   max-height: none;
   margin: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow: visible; /* so the window's shadow isn't cut off */
   color: var(--color-ink);
+  /* target of the "open window" view transition (see Photos.tsx) */
+  view-transition-name: photo-window;
 }
 
-.viewer[open] {
+.viewerWindow {
   display: grid;
   gap: 0.4rem;
-  animation: viewer-in 160ms var(--ease-out);
+}
+
+/* lock page scroll while the viewer is open */
+:global(:root):has(.viewer[open]) {
+  overflow: hidden;
+}
+
+/* fallback for browsers without view transitions */
+@supports not (view-transition-name: none) {
+  .viewer[open] {
+    animation: viewer-in 160ms var(--ease-out);
+  }
 }
 
 .viewer::backdrop {
@@ -250,17 +228,16 @@
   letter-spacing: -0.02em;
 }
 
+/* fixed height so the controls don't move between photos */
 .viewerFigure {
-  display: grid;
-  place-items: center;
+  height: min(68svh, 42rem);
   background-color: var(--color-surface-muted);
 }
 
 .viewerPhoto {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 68svh;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   animation: fade-in 180ms var(--ease-out);
 }
 

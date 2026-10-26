@@ -2,7 +2,7 @@
   padding: 8rem var(--page-gutter) var(--section-space);
 }
 
-/* a plain white sheet over the grid, sized for comfortable reading */
+/* narrow column for easier reading */
 .document {
   display: grid;
   gap: 2.5rem;

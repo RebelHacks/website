@@ -29,3 +29,26 @@
   filter: none;
   opacity: 1;
 }
+
+.invite {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  font-size: var(--step--1);
+  text-wrap: pretty;
+}
+
+.inviteTitle {
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.inviteButton {
+  margin-top: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  font-size: var(--step--2);
+}

@@ -1,5 +1,5 @@
 .footer {
-  background-color: var(--color-red);
+  background-color: var(--color-red-fill);
   color: var(--color-on-red);
 }
 
@@ -19,22 +19,22 @@
   gap: 2rem 3rem;
 }
 
-/* on red, the name flips to white REBEL and black HACKS */
+/* REBEL can't be red on the red footer */
 .brand {
   --wordmark-rebel: var(--color-on-red);
-  --wordmark-hacks: var(--color-ink);
+  --wordmark-hacks: var(--color-black);
 
-  font-size: clamp(2.5rem, 7.5vw, 5.5rem);
+  font-size: var(--step-4);
   text-decoration: none;
 }
 
-/* site links (two columns, read top to bottom) next to the social links */
 .linkGroups {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem 4rem;
 }
 
+/* four links per column, read top to bottom */
 .links {
   display: grid;
   grid-template-rows: repeat(4, auto);
@@ -44,7 +44,20 @@
   font-weight: 600;
 }
 
+.bottomLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+}
+
+/* button styled as a link */
+.motionToggle {
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .links a,
+.motionToggle,
 .backToTop {
   color: inherit;
   text-decoration: underline;
@@ -55,6 +68,7 @@
 }
 
 .links a:hover,
+.motionToggle:hover,
 .backToTop:hover {
   text-decoration-color: currentColor;
 }
@@ -66,7 +80,7 @@
   gap: 0.75rem 2rem;
   padding-top: 1.25rem;
   border-top: 1px solid rgb(255 255 255 / 0.3);
-  font-size: 0.9rem;
+  font-size: var(--step--3);
 }
 
 .backToTop {

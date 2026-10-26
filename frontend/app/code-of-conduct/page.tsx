@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     "The rules everyone at RebelHacks agrees to: be respectful, no harassment, build fairly, and how to report a problem.",
 };
 
-// First draft, written for the organizers to review before launch.
+// TODO: first draft, needs organizer review before launch
 export default function CodeOfConductPage() {
   return (
     <>
       <HexGrid quiet />
-      <Header alwaysShowBrand />
+      <Header />
       <main id="main" className={styles.page}>
         <article className={`card ${styles.document}`}>
           <header className={styles.intro}>

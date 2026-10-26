@@ -3,22 +3,32 @@
   display: block;
 }
 
-/* the invisible copy: same text, same layout, only its glow shows */
-.copy {
+/*
+  Blurred copy of the text in the page color. z-index -1 puts it behind
+  nearby text. The section's isolation: isolate keeps it above the honeycomb.
+*/
+.glow {
+  --spread: 20px; /* outline width */
+  --blur: 7px;
+
   position: absolute;
   inset: 0;
   z-index: -1;
-  text-shadow: var(--halo);
+  -webkit-text-fill-color: var(--color-page);
+  -webkit-text-stroke: var(--spread) var(--color-page);
+  filter: blur(var(--blur));
   pointer-events: none;
   user-select: none;
 }
 
 .large {
-  text-shadow: var(--halo-large);
+  --spread: 40px;
+  --blur: 13px;
 }
 
-/* !important so colored text inside (like the RebelHacks name) stays invisible */
-.copy,
-.copy * {
+/* also hides underlines. !important overrides colored text inside, like
+   the RebelHacks name. */
+.glow,
+.glow * {
   color: transparent !important;
 }

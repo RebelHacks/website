@@ -1,12 +1,10 @@
 /*
-  How the asterisk effect works:
-  Each letter cell stacks the real letter and a "*" in the same spot, and two
-  numbers decide which one shows (1 = asterisk, 0 = letter):
-  - --wordmark-masked is driven by the load and ambient animations
-  - --wordmark-touched is driven by the cursor
-  The asterisk shows if either one is 1. Keeping them separate means the
-  cursor and the animations never overwrite each other.
-  The font is monospaced, so the swap never changes the name's width.
+  Each letter cell has the letter and a "*" stacked in the same spot.
+  1 = show "*", 0 = show the letter:
+  - --wordmark-masked: set by the intro and flicker animations
+  - --wordmark-touched: set on hover
+  Separate variables so hover and the animations don't overwrite each other.
+  The font is monospaced, so the swap doesn't change the width.
 */
 @property --wordmark-masked {
   syntax: "<number>";
@@ -55,15 +53,14 @@
 }
 
 .hacks {
-  color: var(--wordmark-hacks, var(--color-ink));
+  color: var(--wordmark-hacks, var(--color-secondary));
 }
 
-/* ---------- load + ambient ---------- */
+/* ---------- intro + flickers ---------- */
 
 /*
-  Holds the "*" for the whole duration, then flips to the letter at the very
-  end (steps(1, end)). Setting the duration to the per-letter delay gives each
-  letter its own flip time.
+  "*" for the whole duration, then the letter at the end (steps(1, end)).
+  The duration is each letter's intro delay.
 */
 @keyframes mask-until-end {
   from {
@@ -74,7 +71,7 @@
   }
 }
 
-/* a single short "*" at the start of each cycle, letter for the rest */
+/* "*" for the first 0.5% of each cycle */
 @keyframes flicker {
   0% {
     --wordmark-masked: 1;
@@ -88,23 +85,21 @@
   animation: mask-until-end var(--intro-delay) steps(1, end);
 }
 
-.ambient .cell {
+.flickers .cell {
   animation:
     mask-until-end var(--intro-delay) steps(1, end),
-    flicker var(--ambient-period) steps(1, end) var(--ambient-delay) infinite;
+    flicker var(--flicker-period) steps(1, end) var(--flicker-delay) infinite;
 }
 
 /* ---------- cursor ---------- */
 
 /*
-  A letter (and its neighbours) flips to "*" the moment the cursor touches it,
-  then holds for a beat after the cursor moves on, so a sweep across the name
-  leaves a short trail. Only on devices with a real hover, so a tap on a phone
-  doesn't leave a letter stuck as an asterisk.
+  The hovered letter and its neighbors show "*", and stay that way for 420ms
+  after the cursor leaves. Real mouse only, or a tap on a phone would leave
+  a letter stuck as "*".
 */
 @media (hover: hover) {
   .cell {
-    /* when the cursor leaves: wait 420ms, then flip back in one step */
     transition: --wordmark-touched 0s 420ms;
   }
 

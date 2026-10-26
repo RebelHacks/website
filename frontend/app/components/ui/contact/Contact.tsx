@@ -1,10 +1,11 @@
 "use client";
-import styles from "@/app/components/ui/contact/contact.module.css";
+
 import { useState, type FormEvent } from "react";
 import { useMutation } from "@/hooks/useApi";
 import type { EmailResponse } from "@/lib/types";
-import FlashMessage from "@/app/components/ui/FlashMessage";
-import SectionHeading from "@/app/components/ui/section/SectionHeading";
+import FlashMessage from "../FlashMessage";
+import Section from "../section/Section";
+import styles from "./contact.module.css";
 
 interface ContactForm {
   name: string;
@@ -12,50 +13,64 @@ interface ContactForm {
   message: string;
 }
 
+interface Flash {
+  type: "success" | "error";
+  message: string;
+  // used as the key, so a new id replays the entrance animation
+  id: number;
+}
+
+// Same message for every failure. The visitor's fix is the same either way.
 const ERROR_MESSAGE =
-  "Error sending email, please double-check your email and try again";
+  "Your message couldn't be sent. Please try again in a moment.";
 
 export default function Contact() {
-  const [flashMessage, setFlashMessage] = useState<{
-    type: "success" | "error";
-    message: string;
-    id: number;
-  } | null>(null);
+  const [flashMessage, setFlashMessage] = useState<Flash | null>(null);
 
-  const { mutate: sendEmail, loading: isSendingEmail } = useMutation<
+  const { mutate: sendEmail, loading: isSending } = useMutation<
     ContactForm,
     EmailResponse
   >("post", "/contact-email");
 
-  // The fields aren't tracked in state: their values are read from the form
-  // (by their `name`) when it's submitted.
+  // Fields are read on submit. Nothing needs them in state while typing.
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const fields = Object.fromEntries(formData) as unknown as ContactForm;
-
-    const result = await sendEmail(fields).catch((error) => {
-      console.error("Error sending email:", error);
-      return null;
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const result = await sendEmail({
+      name: String(formData.get("name")),
+      email: String(formData.get("email")),
+      message: String(formData.get("message")),
     });
 
-    setFlashMessage(
-      result?.success
-        ? {
-            type: "success",
-            message: result.message || "Email sent successfully!",
-            id: Date.now(),
-          }
-        : { type: "error", message: ERROR_MESSAGE, id: Date.now() },
-    );
+    if (result?.success) {
+      form.reset(); // so it isn't sent twice by accident
+      setFlashMessage({
+        type: "success",
+        message: result.message || "Email sent successfully!",
+        id: Date.now(),
+      });
+      return;
+    }
+
+    // Failed requests are already logged by lib/api.ts. This is for a normal
+    // reply with success: false.
+    if (result) console.error("The contact form was refused:", result);
+    setFlashMessage({ type: "error", message: ERROR_MESSAGE, id: Date.now() });
   };
 
   return (
-    <div className="columns sticky">
-      <SectionHeading id="contact-heading" title="Contact">
-        Have a question that isn&apos;t answered above? Send us a message and an
-        organizer will get back to you.
-      </SectionHeading>
+    <Section
+      id="contact"
+      title="Contact"
+      lead={
+        <>
+          Have a question that isn&apos;t answered above? Send us a message and
+          an organizer will get back to you.
+        </>
+      }
+      stickyHeading
+    >
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
         {flashMessage && (
           <FlashMessage
@@ -100,11 +115,11 @@ export default function Contact() {
         <button
           type="submit"
           className={`button ${styles.submit}`}
-          disabled={isSendingEmail}
+          disabled={isSending}
         >
-          {isSendingEmail ? "Sending…" : "Send message"}
+          {isSending ? "Sending…" : "Send message"}
         </button>
       </form>
-    </div>
+    </Section>
   );
 }

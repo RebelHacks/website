@@ -1,13 +1,13 @@
-import SectionHeading from "../section/SectionHeading";
+import Section from "../section/Section";
 import Wordmark from "../wordmark/Wordmark";
 import styles from "./about.module.css";
 
-// The short version, for anyone skimming. Keep these to confirmed details.
+// confirmed details only
 const FACTS = [
   { label: "When", value: "Sat–Sun, Feb 20–21, 2027", isDate: true },
   { label: "Where", value: "SEB Auditorium, UNLV" },
   { label: "Overnight", value: "AEB, first floor" },
-  { label: "Who", value: "College students, any major" },
+  { label: "Who", value: "University students, any major" },
   { label: "Cost", value: "Free!" },
   { label: "Teams", value: "1 to 5 people" },
   { label: "Hosted by", value: "SEC, GWC and LAVA" },
@@ -15,21 +15,22 @@ const FACTS = [
 
 export default function About() {
   return (
-    <div className="columns">
-      <SectionHeading
-        id="about-heading"
-        title={
-          <>
-            What is <Wordmark className={styles.name} />?
-          </>
-        }
-      >
-        RebelHack&apos;s is UNLV&apos;s first large-scale student hackathon and
-        we&apos;re still continuing - bigger and better! You&apos;ve only 24
-        hours to team up for a prize, build something new, and show your project
-        to the judges.
-      </SectionHeading>
-
+    <Section
+      id="about"
+      title={
+        <>
+          What is <Wordmark className={styles.name} />?
+        </>
+      }
+      lead={
+        <>
+          RebelHacks is UNLV&apos;s first large-scale student hackathon and
+          we&apos;re still continuing - bigger and better! You&apos;ve only 24
+          hours to team up for a prize, build something new, and show your
+          project to the judges.
+        </>
+      }
+    >
       <div className={`card ${styles.story}`}>
         <p>
           The theme drops at the opening ceremony. From there, you have until
@@ -52,6 +53,6 @@ export default function About() {
           </div>
         ))}
       </dl>
-    </div>
+    </Section>
   );
 }

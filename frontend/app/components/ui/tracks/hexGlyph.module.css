@@ -13,7 +13,6 @@
   fill: var(--color-ink);
 }
 
-/* a few cells blink red for a moment, each on its own slow cycle */
 .filled[data-blink] {
   animation: blink var(--blink-period) steps(1, end) var(--blink-delay) infinite;
 }
@@ -29,21 +28,20 @@
 }
 
 /*
-  When the cards pop into view (Reveal sets data-revealed), the glyph forms
-  itself: each filled cell starts as an empty one and fills in, in a
-  scattered order. --i is the card's position, set on the card.
+  Filled cells start empty and fill in once Reveal sets data-revealed.
+  --index is the card's position, set on the card in Tracks.tsx.
 */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   [data-revealed] .filled {
     animation: fill-in 120ms var(--ease-out)
-      calc(var(--i, 0) * 45ms + 100ms + var(--delay) * 1.6) both;
+      calc(var(--index, 0) * 45ms + 100ms + var(--fill-delay) * 1.6) both;
   }
 
-  /* blinking cells keep their blink alongside the fill-in */
+  /* repeats the blink, or this animation list would replace it */
   [data-revealed] .filled[data-blink] {
     animation:
       fill-in 120ms var(--ease-out)
-        calc(var(--i, 0) * 45ms + 100ms + var(--delay) * 1.6) both,
+        calc(var(--index, 0) * 45ms + 100ms + var(--fill-delay) * 1.6) both,
       blink var(--blink-period) steps(1, end) var(--blink-delay) infinite;
   }
 }

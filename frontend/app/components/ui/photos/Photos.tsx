@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { flushSync } from "react-dom";
 import {
   useEffect,
   useRef,
@@ -9,77 +10,49 @@ import {
   type KeyboardEvent,
   type MouseEvent,
 } from "react";
+import { prefersLessMotion } from "@/lib/motion";
 import Reveal from "../reveal/Reveal";
-import SectionHeading from "../section/SectionHeading";
+import Section from "../section/Section";
 import { photos, type Photo } from "./photoData";
 import styles from "./photos.module.css";
 
-// a shuffled copy of the list (Fisher-Yates)
-function shuffled<T>(items: T[]): T[] {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
-// a square button holding one line icon (24x24 path)
-interface IconButtonProps {
-  label: string;
-  path: string;
-  onClick: () => void;
-  className?: string;
-}
-
-function IconButton({ label, path, onClick, className = "" }: IconButtonProps) {
-  return (
-    <button
-      type="button"
-      className={`${styles.iconButton} ${className}`}
-      onClick={onClick}
-      aria-label={label}
-    >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d={path} />
-      </svg>
-    </button>
-  );
-}
-
 // -------------- photos, as a CAPTCHA ---------------
-// Clicking a tile opens it full size. Tiles you've opened get ticked, like
-// selecting images in a real CAPTCHA. "More" opens the next one you haven't seen.
 export default function Photos() {
   const [order, setOrder] = useState(photos);
-  // srcs of the photos opened so far (they get the tick)
-  const [seen, setSeen] = useState<string[]>([]);
-  // position in `order` of the photo open in the viewer, or null while closed
+  // index in `order` of the open photo, or null when the viewer is closed
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
 
-  const showPhoto = (index: number) => {
-    setViewerIndex(index);
-    const { src } = order[index];
-    if (!seen.includes(src)) setSeen([...seen, src]);
-  };
+  const handleShuffle = () => setOrder(shuffled(photos));
 
-  const handleMore = () => {
-    const firstUnseen = order.findIndex((photo) => !seen.includes(photo.src));
-    showPhoto(firstUnseen === -1 ? 0 : firstUnseen);
-  };
-
-  const handleShuffle = () => {
-    setOrder(shuffled(photos));
-    setSeen([]);
+  // "Open window" animation from Lauren's notes: the viewer grows from the
+  // clicked tile. A view transition animates between two elements with the same
+  // view-transition-name, so the tile has the name until the viewer takes it.
+  const openViewer = (index: number, tile?: HTMLElement) => {
+    if (!document.startViewTransition || prefersLessMotion()) {
+      setViewerIndex(index);
+      return;
+    }
+    if (tile) tile.style.viewTransitionName = "photo-window";
+    document.startViewTransition(() => {
+      // only one element can have the name at a time
+      if (tile) tile.style.viewTransitionName = "";
+      // flushSync renders now, so the transition sees where the viewer ends up
+      flushSync(() => setViewerIndex(index));
+    });
   };
 
   return (
-    <div className="columns sticky">
-      <SectionHeading id="photos-heading" title="Photos">
-        Moments from RebelHacks 2026. Tap a photo to see it full size, or hit
-        More to flip through them.
-      </SectionHeading>
-
+    <Section
+      id="photos"
+      title="Photos"
+      lead={
+        <>
+          Moments from RebelHacks 2026. Tap a photo to see it full size, or hit
+          More to flip through them.
+        </>
+      }
+      stickyHeading
+    >
       <div className={styles.captcha}>
         <header className={styles.banner}>
           <p className={styles.prompt}>
@@ -91,20 +64,18 @@ export default function Photos() {
           </p>
         </header>
 
-        {/* the tiles deal in when the box scrolls into view, and again after
-            each shuffle (a new order is a new key, so the list is re-created) */}
+        {/* new key on shuffle so the entrance animation runs again */}
         <Reveal>
           <ul
             key={order.map((photo) => photo.src).join()}
             className={styles.grid}
           >
             {order.map((photo, index) => (
-              <li key={photo.src} style={{ "--i": index } as CSSProperties}>
+              <li key={photo.src} style={{ "--index": index } as CSSProperties}>
                 <button
                   type="button"
                   className={styles.tile}
-                  data-seen={seen.includes(photo.src) || undefined}
-                  onClick={() => showPhoto(index)}
+                  onClick={(event) => openViewer(index, event.currentTarget)}
                   aria-label={`Open photo: ${photo.caption || photo.alt}`}
                 >
                   <Image
@@ -115,11 +86,6 @@ export default function Photos() {
                     className={styles.photo}
                     style={{ objectPosition: photo.cropPosition }}
                   />
-                  <span className={styles.tick} aria-hidden="true">
-                    <svg viewBox="0 0 16 16">
-                      <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
-                    </svg>
-                  </span>
                 </button>
               </li>
             ))}
@@ -129,13 +95,14 @@ export default function Photos() {
         <footer className={styles.toolbar}>
           <IconButton
             label="Shuffle photos"
-            path="M20 12a8 8 0 1 1-2.34-5.66M20 4v4.5h-4.5"
+            iconPath="M20 12a8 8 0 1 1-2.34-5.66M20 4v4.5h-4.5"
             onClick={handleShuffle}
+            className={styles.shuffle}
           />
           <button
             type="button"
             className={`button ${styles.more}`}
-            onClick={handleMore}
+            onClick={() => openViewer(0)}
           >
             More
           </button>
@@ -146,44 +113,36 @@ export default function Photos() {
         <PhotoViewer
           photos={order}
           index={viewerIndex}
-          onShow={showPhoto}
+          onShow={setViewerIndex}
           onClose={() => setViewerIndex(null)}
         />
       )}
-    </div>
+    </Section>
   );
 }
 
 // --------------------- photo viewer ---------------------
 interface PhotoViewerProps {
   photos: Photo[];
-  // which photo is showing; the parent owns this so it can tick seen photos
+  // in the parent so the grid can open any photo
   index: number;
   onShow: (index: number) => void;
   onClose: () => void;
 }
 
-// Mounted only while open.
+// Mounted only while a photo is open.
 function PhotoViewer({ photos, index, onShow, onClose }: PhotoViewerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const photo = photos[index];
-  // closing fires the dialog's close event, which calls onClose
-  const close = () => dialogRef.current?.close();
+  // dialog.close() triggers onClose through the close event
+  const close = () => dialogRef.current!.close();
 
-  // open as a modal once mounted; let the browser handle Esc and focus!
-  // (no close() in the cleanup: the dialog leaves the page when this unmounts,
-  // and closing it there would fire onClose during React's dev double-run)
+  // showModal() handles Esc and keeps focus inside.
+  // Don't close() in a cleanup: React's dev-mode double run would call onClose.
+  // The `open` check is for that double run too.
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (dialog === null) return;
-
+    const dialog = dialogRef.current!;
     if (!dialog.open) dialog.showModal();
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
   }, []);
 
   const showPrevious = () =>
@@ -195,6 +154,7 @@ function PhotoViewer({ photos, index, onShow, onClose }: PhotoViewerProps) {
     if (event.key === "ArrowRight") showNext();
   };
 
+  // The window fills the <dialog>, so a dialog click is a backdrop click.
   const handleBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
     if (event.target === event.currentTarget) close();
   };
@@ -208,54 +168,95 @@ function PhotoViewer({ photos, index, onShow, onClose }: PhotoViewerProps) {
       onKeyDown={handleKeyDown}
       onClose={onClose}
     >
-      <header className={styles.viewerBanner}>
-        <p id="photo-viewer-caption" className={styles.viewerCaption}>
-          {photo.caption || photo.alt}
-        </p>
-        <IconButton
-          label="Close photo"
-          path="M7 7l10 10M17 7 7 17"
-          onClick={close}
-          className={styles.onRed}
-        />
-      </header>
-
-      <figure className={styles.viewerFigure}>
-        <Image
-          key={photo.src}
-          src={photo.src}
-          alt={photo.alt}
-          width={photo.width}
-          height={photo.height}
-          sizes="(max-width: 768px) 92vw, 1000px"
-          className={styles.viewerPhoto}
-        />
-      </figure>
-
-      <footer className={styles.toolbar}>
-        <div className={styles.viewerNav}>
+      <div className={styles.viewerWindow}>
+        <header className={styles.viewerBanner}>
+          <p id="photo-viewer-caption" className={styles.viewerCaption}>
+            {photo.caption || photo.alt}
+          </p>
           <IconButton
-            label="Previous photo"
-            path="M15 5l-7 7 7 7"
-            onClick={showPrevious}
+            label="Close photo"
+            iconPath="M7 7l10 10M17 7 7 17"
+            onClick={close}
+            className={styles.onRed}
           />
-          <IconButton
-            label="Next photo"
-            path="M9 5l7 7-7 7"
-            onClick={showNext}
+        </header>
+
+        <figure className={styles.viewerFigure}>
+          <Image
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+            width={photo.width}
+            height={photo.height}
+            sizes="(max-width: 768px) 92vw, 1000px"
+            className={styles.viewerPhoto}
           />
-          <span className={styles.viewerCount}>
-            {index + 1} / {photos.length}
-          </span>
-        </div>
-        <button
-          type="button"
-          className={`button ${styles.more}`}
-          onClick={close}
-        >
-          Done
-        </button>
-      </footer>
+        </figure>
+
+        <footer className={styles.toolbar}>
+          <div className={styles.viewerNav}>
+            <IconButton
+              label="Previous photo"
+              iconPath="M15 5l-7 7 7 7"
+              onClick={showPrevious}
+            />
+            <IconButton
+              label="Next photo"
+              iconPath="M9 5l7 7-7 7"
+              onClick={showNext}
+            />
+            <span className={styles.viewerCount}>
+              {index + 1} / {photos.length}
+            </span>
+          </div>
+          <button
+            type="button"
+            className={`button ${styles.more}`}
+            onClick={close}
+          >
+            Done
+          </button>
+        </footer>
+      </div>
     </dialog>
   );
+}
+
+// --------------------- shared ---------------------
+interface IconButtonProps {
+  label: string;
+  // SVG path in a 24x24 viewBox
+  iconPath: string;
+  onClick: () => void;
+  className?: string;
+}
+
+function IconButton({
+  label,
+  iconPath,
+  onClick,
+  className = "",
+}: IconButtonProps) {
+  return (
+    <button
+      type="button"
+      className={`${styles.iconButton} ${className}`}
+      onClick={onClick}
+      aria-label={label}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d={iconPath} />
+      </svg>
+    </button>
+  );
+}
+
+// Fisher-Yates shuffle, on a copy
+function shuffled<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
 }

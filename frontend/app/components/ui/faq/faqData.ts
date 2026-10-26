@@ -3,8 +3,8 @@ export interface Question {
   answer: string;
 }
 
-// Ordered the way people tend to ask: what is it, can I come, what does it
-// take, then the details. Only add answers organizers have confirmed.
+// Order: what it is, who can come, what it takes, then details.
+// Only add answers the organizers have confirmed.
 export const faqQuestions: Question[] = [
   {
     question: "What is a hackathon?",
@@ -13,8 +13,7 @@ export const faqQuestions: Question[] = [
   },
   {
     question: "Who can join?",
-    answer:
-      "Any UNLV or CSN student enrolled during the spring semester. All majors are welcome.",
+    answer: "Any university student. All majors are welcome.",
   },
   {
     question: "How much does it cost to join?",
@@ -50,7 +49,6 @@ export const faqQuestions: Question[] = [
   },
   {
     question: "Will there be food?",
-    answer:
-      "Yes! Breakfast, lunch, and dinner are free, along with caffeinated drinks.",
+    answer: "Yes! There's free food during the event.",
   },
 ];

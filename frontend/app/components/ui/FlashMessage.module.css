@@ -8,6 +8,7 @@
   border: 1px solid var(--color-rule-soft);
   border-left-width: 4px;
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .success {
@@ -33,7 +34,6 @@
   color: var(--color-red);
 }
 
-/* every icon here is a line drawing */
 .flashMessage svg {
   fill: none;
   stroke: currentColor;
@@ -55,7 +55,7 @@
 .message {
   margin: 0;
   color: var(--color-ink);
-  font-size: 1rem;
+  font-size: var(--step--2);
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
@@ -85,7 +85,7 @@
   color: var(--color-ink);
 }
 
-@keyframes slideInUp {
+@keyframes slide-in-up {
   from {
     opacity: 0;
     transform: translateY(4px);
@@ -96,7 +96,7 @@
   }
 }
 
-@keyframes fadeOut {
+@keyframes fade-out {
   from {
     opacity: 1;
   }
@@ -106,9 +106,9 @@
 }
 
 .animateIn {
-  animation: slideInUp var(--duration-quick) var(--ease-out) forwards;
+  animation: slide-in-up var(--duration-quick) var(--ease-out) forwards;
 }
 
 .animateOut {
-  animation: fadeOut var(--duration-quick) var(--ease-out) forwards;
+  animation: fade-out var(--duration-quick) var(--ease-out) forwards;
 }

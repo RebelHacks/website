@@ -7,33 +7,23 @@ interface FlashMessageProps {
   message: string;
   type: "success" | "error";
   onClose?: () => void;
+  // on by default for success only, so errors aren't missed
   autoClose?: boolean;
   duration?: number;
 }
 
-// line icons (24x24): a tick for success, an X for errors and the close button
 const TICK = "M5 13l4 4L19 7";
 const CROSS = "M6 18L18 6M6 6l12 12";
 
-function Icon({ path, className }: { path: string; className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path d={path} />
-    </svg>
-  );
-}
-
-// A dismissible message. The parent gives each new message a fresh `key`, so
-// every message mounts on its own and plays the entrance animation.
+// Give each new message a new `key` so the entrance animation replays.
 export default function FlashMessage({
   message,
   type,
   onClose,
-  autoClose = true,
+  autoClose = type === "success",
   duration = 5000,
 }: FlashMessageProps) {
-  // true once it's been dismissed; it plays the exit animation, and when that
-  // ends it asks the parent to remove it
+  // set on dismiss. onClose runs after the exit animation.
   const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
@@ -70,5 +60,19 @@ export default function FlashMessage({
         <Icon path={CROSS} />
       </button>
     </div>
+  );
+}
+
+interface IconProps {
+  // SVG path in a 24x24 viewBox
+  path: string;
+  className?: string;
+}
+
+function Icon({ path, className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path d={path} />
+    </svg>
   );
 }

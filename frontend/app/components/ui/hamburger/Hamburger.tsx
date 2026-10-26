@@ -2,18 +2,19 @@
 
 import type { CSSProperties, MouseEvent } from "react";
 import { NAV_LINKS, sectionHref } from "../header/navLinks";
-import { useActiveSection } from "../header/useActiveSection";
 import styles from "./hamburger.module.css";
 
-// Phone menu. It uses the browser's built-in popover: the button opens and
-// closes it, and Esc or a tap outside closes it, with no React state needed.
-export default function Hamburger() {
-  const activeSection = useActiveSection();
+interface HamburgerProps {
+  activeSection: string;
+}
 
-  // jumping to a section doesn't close a popover by itself, so close it here
-  const closeMenu = (event: MouseEvent<HTMLAnchorElement>) => {
-    const menu = event.currentTarget.closest<HTMLElement>("[popover]");
-    menu?.hidePopover();
+// Phone menu. Uses the popover attribute, so the browser handles opening,
+// closing, Esc and outside taps.
+export default function Hamburger({ activeSection }: HamburgerProps) {
+  // popovers don't close on in-page navigation
+  const handleLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const menu = event.currentTarget.closest<HTMLElement>("[popover]")!;
+    menu.hidePopover();
   };
 
   return (
@@ -42,7 +43,7 @@ export default function Hamburger() {
                 aria-current={
                   section === activeSection ? "location" : undefined
                 }
-                onClick={closeMenu}
+                onClick={handleLinkClick}
               >
                 {label}
               </a>

@@ -10,12 +10,11 @@ export const metadata: Metadata = {
   title: "Page not found · RebelHacks 2027",
 };
 
-// Shown for any URL that doesn't exist.
 export default function NotFound() {
   return (
     <>
       <HexGrid />
-      <Header alwaysShowBrand />
+      <Header />
       <main id="main" className={styles.page}>
         <p className={styles.code} aria-hidden="true">
           <Halo large>404</Halo>

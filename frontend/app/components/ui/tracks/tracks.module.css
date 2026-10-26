@@ -3,8 +3,6 @@
   gap: 1.75rem;
 }
 
-/* a subsection heading: title and description on the honeycomb (with halos),
-   the description one section column wide */
 .groupHeader {
   display: grid;
   gap: 0.75rem;
@@ -21,13 +19,14 @@
   color: var(--color-ink-soft);
 }
 
+/* one section column wide, like a section's lead */
 @media (min-width: 860px) {
   .groupText {
     max-width: calc((100% - var(--column-gap)) / 2);
   }
 }
 
-/* "$" set smaller and raised, so the digits carry the number */
+/* small raised "$" */
 .currency {
   font-size: 0.6em;
   vertical-align: 0.55em;
@@ -41,13 +40,12 @@
 }
 
 /*
-  One row per prize: the bar, then the amount right where the bar ends.
-  The bar's length is its share of the top prize (--share, set in Tracks.tsx),
-  with a minimum so the label always fits.
+  The bar, then the amount right after it. The bar's width is --share (set in
+  Tracks.tsx) of the space left, with a minimum so the label fits.
 */
 .prize {
   --metal: var(--color-gold);
-  --on-metal: var(--color-ink);
+  --on-metal: var(--color-black);
   --bar-height: 3.75rem;
   --amount-room: 9rem; /* space kept on the right for the amount */
   --min-bar: 12rem;
@@ -74,7 +72,13 @@
   --on-metal: var(--color-on-red);
 }
 
-/* a long hexagon: the pointed ends have the same angle as a honeycomb cell */
+/* drop-shadow follows the hexagon's shape. Zero blur keeps it hard. */
+.barShadow {
+  filter: drop-shadow(var(--shadow));
+}
+
+/* long hexagon. 0.2887 (tan 30° / 2) gives the ends the same angle as a
+   honeycomb cell. */
 .bar {
   --tip: calc(var(--bar-height) * 0.2887);
 
@@ -159,6 +163,13 @@
   line-height: 1.1;
 }
 
+/* mystery track asterisks, in the mono font like the name */
+.masked {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
 .trackDescription {
   color: var(--color-ink-soft);
   text-wrap: pretty;
@@ -176,7 +187,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* a track alone in its row lays out sideways: photo left, details right */
+/* a card alone in its row: art left, details right */
 .wideTrack {
   grid-template-rows: none;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -193,7 +204,7 @@
   padding: clamp(1.25rem, 3vw, 2rem);
 }
 
-/* on phones the bars keep their order of length but leave less room */
+/* phones: smaller bars and less room for the amount */
 @media (max-width: 600px) {
   .prize {
     --bar-height: 3.25rem;
@@ -218,7 +229,7 @@
 }
 
 @media (max-width: 760px) {
-  /* shorter art on phones, so each card isn't a full screen tall */
+  /* shorter art on phones, so a card isn't a full screen tall */
   .trackArt {
     aspect-ratio: 5 / 2;
   }
@@ -237,12 +248,11 @@
 }
 
 /*
-  Snappy entrance: rows and cards pop up into place the first time the list
-  scrolls into view (Reveal sets data-revealed). Only when JavaScript is on,
-  so the content never stays hidden without it.
+  Entrance animations, started by Reveal's data-revealed. Only with JavaScript
+  on, so nothing stays hidden without it.
 */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  /* the bars grow in from the left, then each amount appears at its bar's end */
+  /* bars grow from the left, then the amounts fade in */
   .bar {
     width: 0;
   }
@@ -254,17 +264,17 @@
 
   [data-revealed] .bar {
     animation: grow 420ms var(--ease-out) both;
-    animation-delay: calc(var(--i) * 90ms);
+    animation-delay: calc(var(--index) * 90ms);
   }
 
   [data-revealed] .prizeAmount {
     animation: fade-in 200ms ease-out both;
-    animation-delay: calc(var(--i) * 90ms + 330ms);
+    animation-delay: calc(var(--index) * 90ms + 330ms);
   }
 
   [data-revealed] .track {
     animation: pop-up 95ms var(--ease-out) both;
-    animation-delay: calc(var(--i) * 45ms);
+    animation-delay: calc(var(--index) * 45ms);
   }
 }
 

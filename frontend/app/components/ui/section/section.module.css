@@ -1,8 +1,22 @@
 /*
-  The heading spans the section's full row (see .columns in globals.css) and
-  shares the section's two columns ("subgrid"), so the title can run wide
-  while the intro box below it is exactly one column wide.
+  Two-column grid (one column on narrow screens). Each child takes one
+  column. Add the global "full" class to a child to span both.
 */
+.section {
+  display: grid;
+  gap: var(--row-gap) var(--column-gap);
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding: var(--section-space) var(--page-gutter) 0;
+  /* new stacking context for the halos (see Halo.tsx) */
+  isolation: isolate;
+}
+
+.section:last-child {
+  padding-bottom: var(--section-space);
+}
+
+/* subgrid: the title spans both columns, the lead takes one */
 .heading {
   grid-column: 1 / -1;
   display: grid;
@@ -10,7 +24,6 @@
   row-gap: 1rem;
 }
 
-/* the title sits on the honeycomb, so it gets a halo (see Halo.tsx) */
 .title {
   grid-column: 1 / -1;
   font-size: var(--step-4);
@@ -20,7 +33,6 @@
   color: var(--color-ink);
 }
 
-/* the intro line is one column wide, with a halo like the title */
 .lead {
   font-size: var(--step--1);
   line-height: 1.45;
@@ -38,4 +50,21 @@
 
 .lead a:hover {
   color: var(--color-red);
+}
+
+@media (min-width: 860px) {
+  .section {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .section > :global(.full) {
+    grid-column: 1 / -1;
+  }
+
+  .stickyHeading > .heading {
+    grid-column: 1;
+    align-self: start;
+    position: sticky;
+    top: 6.5rem;
+  }
 }

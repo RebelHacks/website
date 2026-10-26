@@ -1,16 +1,46 @@
 import Image from "next/image";
-import SectionHeading from "../section/SectionHeading";
+import { sectionHref } from "../header/navLinks";
+import Section from "../section/Section";
 import { sponsors } from "./sponsorData";
 import styles from "./sponsors.module.css";
 
-// A grid of sponsor logos. Logos sit in grayscale and come into color on hover.
 export default function Sponsors() {
-  return (
-    <div className="columns">
-      <SectionHeading id="sponsors-heading" title="Sponsors">
-        RebelHacks is made possible by these organizations.
-      </SectionHeading>
+  if (sponsors.length === 0) {
+    return (
+      <Section
+        id="sponsors"
+        title="Sponsors"
+        lead={
+          <>
+            RebelHacks is free for every student because of the organizations
+            that back it.
+          </>
+        }
+        stickyHeading
+      >
+        <div className={`card ${styles.invite}`}>
+          <h3 className={styles.inviteTitle}>Sponsor RebelHacks 2027</h3>
+          <p>
+            Help a weekend of university students build something new at UNLV,
+            and meet them while they do. We&apos;d love to hear from you.
+          </p>
+          <a
+            href={sectionHref("contact")}
+            className={`button ${styles.inviteButton}`}
+          >
+            Get in touch
+          </a>
+        </div>
+      </Section>
+    );
+  }
 
+  return (
+    <Section
+      id="sponsors"
+      title="Sponsors"
+      lead="RebelHacks is made possible by these organizations."
+    >
       <ul className={`full ${styles.grid}`}>
         {sponsors.map(({ name, logo, url }) => (
           <li key={name}>
@@ -31,6 +61,6 @@ export default function Sponsors() {
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
   );
 }

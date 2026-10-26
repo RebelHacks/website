@@ -1,5 +1,4 @@
-/* Fixed behind everything. 100lvh (the tallest the viewport gets) stops it
-   resizing when a phone's address bar slides in and out. */
+/* 100lvh so it doesn't resize when a phone's address bar shows or hides */
 .backdrop {
   position: fixed;
   top: 0;

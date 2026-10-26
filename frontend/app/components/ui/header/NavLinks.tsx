@@ -2,38 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import { NAV_LINKS, sectionHref } from "./navLinks";
-import { useActiveSection } from "./useActiveSection";
 import styles from "./header.module.css";
 
-// Desktop nav. One red underline slides between the links: it sits under
-// the section you've scrolled to, and previews whichever link you hover.
-export default function NavLinks() {
+interface NavLinksProps {
+  activeSection: string;
+}
+
+// desktop nav and the active tab underlines
+export default function NavLinks({ activeSection }: NavLinksProps) {
   const navRef = useRef<HTMLElement>(null);
-  const activeSection = useActiveSection();
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const underlined = hoveredSection ?? activeSection;
 
-  // Move the underline by writing its position into CSS variables; the CSS
-  // animates the change. It's placed again whenever the nav changes size
-  // (for example once the font loads and the links get wider).
   useEffect(() => {
-    const nav = navRef.current;
-    if (!nav) return;
-
-    const placeUnderline = () => {
-      const link = nav.querySelector<HTMLAnchorElement>(
-        `a[href="${sectionHref(underlined)}"]`,
-      );
-      if (!link) {
-        delete nav.dataset.underline;
-        return;
-      }
-      nav.style.setProperty("--underline-x", `${link.offsetLeft}px`);
-      nav.style.setProperty("--underline-width", `${link.offsetWidth}px`);
-      nav.dataset.underline = "on";
-    };
-
-    const observer = new ResizeObserver(placeUnderline);
+    const nav = navRef.current!;
+    const place = () => placeUnderline(nav, underlined);
+    place();
+    // re-measure when the web font loads and the links change width
+    const observer = new ResizeObserver(place);
     observer.observe(nav);
     return () => observer.disconnect();
   }, [underlined]);
@@ -45,20 +31,32 @@ export default function NavLinks() {
       aria-label="Main"
       onMouseLeave={() => setHoveredSection(null)}
     >
-      {NAV_LINKS.map(({ label, section }) => {
-        return (
-          <a
-            key={section}
-            href={sectionHref(section)}
-            className={styles.navLink}
-            aria-current={section === activeSection ? "location" : undefined}
-            onMouseEnter={() => setHoveredSection(section)}
-          >
-            {label}
-          </a>
-        );
-      })}
+      {NAV_LINKS.map(({ label, section }) => (
+        <a
+          key={section}
+          href={sectionHref(section)}
+          className={styles.navLink}
+          aria-current={section === activeSection ? "location" : undefined}
+          onMouseEnter={() => setHoveredSection(section)}
+        >
+          {label}
+        </a>
+      ))}
       <span className={styles.underline} aria-hidden="true" />
     </nav>
   );
+}
+
+// Moves the underline to the link for `section` by setting CSS variables.
+function placeUnderline(nav: HTMLElement, section: string) {
+  const link = nav.querySelector<HTMLAnchorElement>(
+    `a[href="${sectionHref(section)}"]`,
+  );
+  if (!link) {
+    delete nav.dataset.underline;
+    return;
+  }
+  nav.style.setProperty("--underline-x", `${link.offsetLeft}px`);
+  nav.style.setProperty("--underline-width", `${link.offsetWidth}px`);
+  nav.dataset.underline = "on";
 }

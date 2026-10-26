@@ -1,5 +1,5 @@
 .page {
-  /* a stacking context, so the text halos stay above the honeycomb */
+  /* new stacking context for the halos (see Halo.tsx) */
   isolation: isolate;
   display: grid;
   place-content: center;

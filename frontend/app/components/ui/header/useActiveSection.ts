@@ -1,23 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { NAV_LINKS } from "./navLinks";
 
-// Ids of the page sections the nav tracks, top to bottom.
-// "home" is the hero, which has no nav link of its own.
-const SECTION_IDS = [
-  "home",
-  "about",
-  "schedule",
-  "tracks",
-  "photos",
-  "faq",
-  "contact",
-];
+// "home" is the hero, which has no nav link of its own
+const SECTION_IDS = ["home", ...NAV_LINKS.map((link) => link.section)];
 
-// Returns the id of the section currently in the middle of the screen.
-// It watches a thin strip 45% of the way down the viewport; whichever
-// section crosses that strip becomes active. Past the last section (the
-// footer), the last one stays active.
+// Id of the section at 45% of the way down the screen.
+// Past the last section (the footer), the last one stays active.
 export function useActiveSection() {
   const [active, setActive] = useState("home");
 

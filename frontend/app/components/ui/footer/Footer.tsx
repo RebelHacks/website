@@ -1,5 +1,6 @@
 import Wordmark from "../wordmark/Wordmark";
 import { NAV_LINKS, sectionHref } from "../header/navLinks";
+import MotionToggle from "./MotionToggle";
 import styles from "./footer.module.css";
 
 // TODO: placeholders until the team confirms the real accounts
@@ -43,13 +44,16 @@ export default function Footer() {
 
         <div className={styles.bottom}>
           <p>© 2027 RebelHacks. Presented by SEC, GWC &amp; LAVA at UNLV.</p>
-          {/* "#" scrolls to the top of whichever page you're on */}
-          <a href="#" className={styles.backToTop}>
-            Back to top
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" />
-            </svg>
-          </a>
+          <div className={styles.bottomLinks}>
+            <MotionToggle />
+            {/* "#" goes to the top of the current page */}
+            <a href="#" className={styles.backToTop}>
+              Back to top
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

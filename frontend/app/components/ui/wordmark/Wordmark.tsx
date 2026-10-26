@@ -1,39 +1,41 @@
 import type { CSSProperties } from "react";
 import styles from "./wordmark.module.css";
 
-const LETTERS = "REBELHACKS".split("");
+const REBEL = "REBEL";
+const LETTERS = [...`${REBEL}HACKS`];
 
-// Per-letter timings for the "*" -> letter flips. They're fixed lists instead
-// of Math.random() so the server and the browser render the same HTML.
-// intro (ms): when each letter first appears on page load
-const INTRO_DELAYS = [970, 500, 1680, 660, 2000, 1320, 820, 1840, 1130, 1530];
-// ambient: each letter briefly flickers back to "*" once per period (in
-// seconds), starting at its own offset (in ms) so flickers stay scattered
-// instead of landing all at once
-const AMBIENT_PERIODS = [21, 31, 42, 52, 21, 42, 31, 52, 42, 31];
-const AMBIENT_OFFSETS = [
+// fixed lists, not Math.random(), so the server and browser HTML match
+// when each letter appears on load
+const INTRO_DELAYS_MS = [
+  970, 500, 1680, 660, 2000, 1320, 820, 1840, 1130, 1530,
+];
+// each letter shows "*" briefly once per period. The offsets keep them from
+// lining up.
+const FLICKER_PERIODS_S = [21, 31, 42, 52, 21, 42, 31, 52, 42, 31];
+const FLICKER_OFFSETS_MS = [
   0, 2300, 4100, 1200, 5600, 3400, 6200, 800, 4900, 2700,
 ];
+// after the intro is done
+const FLICKERS_START_MS = 3500;
 
 interface WordmarkProps {
-  // play the letter-by-letter reveal when the page loads
+  // letters appear one by one on page load
   intro?: boolean;
-  // let letters flicker every so often while the page sits open
-  ambient?: boolean;
+  // letters briefly show "*" now and then while the page is open
+  flickers?: boolean;
   className?: string;
 }
 
-// The RebelHacks name, set in the mono font with REBEL in red. Letters flip
-// to asterisks as the cursor passes over them. The animation is plain CSS
-// (see wordmark.module.css); this component only sets the timings.
+// The RebelHacks name. The animation is in wordmark.module.css. This only
+// sets each letter's timings.
 export default function Wordmark({
   intro = false,
-  ambient = false,
+  flickers = false,
   className = "",
 }: WordmarkProps) {
   let rootClassName = styles.wordmark;
   if (intro) rootClassName += ` ${styles.intro}`;
-  if (ambient) rootClassName += ` ${styles.ambient}`;
+  if (flickers) rootClassName += ` ${styles.flickers}`;
   if (className) rootClassName += ` ${className}`;
 
   return (
@@ -41,17 +43,17 @@ export default function Wordmark({
       <span className="sr-only">RebelHacks</span>
       <span className={styles.letters} aria-hidden="true">
         {LETTERS.map((letter, index) => {
+          const word = index < REBEL.length ? styles.rebel : styles.hacks;
           const timings = {
-            "--intro-delay": `${INTRO_DELAYS[index]}ms`,
-            "--ambient-period": `${AMBIENT_PERIODS[index]}s`,
-            // ambient flickers start after the intro has finished
-            "--ambient-delay": `${3500 + AMBIENT_OFFSETS[index]}ms`,
+            "--intro-delay": `${INTRO_DELAYS_MS[index]}ms`,
+            "--flicker-period": `${FLICKER_PERIODS_S[index]}s`,
+            "--flicker-delay": `${FLICKERS_START_MS + FLICKER_OFFSETS_MS[index]}ms`,
           } as CSSProperties;
 
           return (
             <span
               key={index}
-              className={`${styles.cell} ${index < 5 ? styles.rebel : styles.hacks}`}
+              className={`${styles.cell} ${word}`}
               style={timings}
             >
               <span className={styles.letter}>{letter}</span>

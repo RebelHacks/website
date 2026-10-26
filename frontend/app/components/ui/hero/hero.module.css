@@ -1,5 +1,5 @@
 .hero {
-  /* everything in the hero scales off the name's font size */
+  /* all hero sizes are based on this */
   --name-size: clamp(2.6rem, 14.6vw, 9.5rem);
 
   display: grid;
@@ -8,7 +8,7 @@
 }
 
 .center {
-  /* a stacking context, so the text halos stay above the honeycomb */
+  /* new stacking context for the halos (see Halo.tsx) */
   isolation: isolate;
   display: grid;
   place-content: center;
@@ -16,7 +16,6 @@
   gap: calc(var(--name-size) * 0.45);
 }
 
-/* the credit line sits just above the name, sharing its left edge */
 .titleBlock {
   display: inline-grid;
   gap: calc(var(--name-size) * 0.08);
@@ -24,7 +23,7 @@
 
 .presents {
   justify-self: start;
-  /* same nudge as the year, so it lines up with the letters themselves */
+  /* same offset as .year */
   padding-left: calc(var(--name-size) * 0.06);
   font-family: var(--font-display);
   font-weight: 700;
@@ -33,7 +32,7 @@
   color: var(--color-ink);
 }
 
-/* name and year share one column, so the year can stretch to the name's width */
+/* one column, so the year spans the name's width */
 .lockup {
   display: inline-grid;
   gap: calc(var(--name-size) * 0.12);
@@ -47,7 +46,7 @@
 .year {
   display: flex;
   justify-content: space-between;
-  /* nudge the outer digits in so they sit under the letters, not their padding */
+  /* inset so the end digits line up with the first and last letters */
   padding-inline: calc(var(--name-size) * 0.06);
   font-family: var(--font-display);
   font-weight: 700;
@@ -66,10 +65,8 @@
 }
 
 /*
-  Load sequence, like film credits: "SEC, GWC & LAVA present" comes in first,
-  then the name resolves over about two seconds (Wordmark handles that). The
-  year ticks in and the date rises while it's still resolving, so the key
-  facts don't wait on the effect.
+  Load order: the credit line, then the name (animated in Wordmark). The year
+  and date come in before the name finishes, so they don't wait on it.
 */
 .presents {
   animation: rise-in 300ms var(--ease-out) 150ms both;
@@ -97,4 +94,3 @@
     transform: translateY(0.25em);
   }
 }
-

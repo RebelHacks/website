@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 /*
-  Site-wide design tokens. Components should use these variables instead of
-  hard-coded colors, so a dark theme later only has to redefine this block.
+  Design tokens. Use these instead of hard-coded colors, so the dark theme
+  below only has to redefine them.
 */
 :root {
   scroll-behavior: smooth;
-  /* keeps anchored sections from hiding under the fixed header */
+  /* stops the page shifting sideways when the photo viewer locks scrolling */
+  scrollbar-gutter: stable;
+  /* room for the fixed header when jumping to a section */
   scroll-padding-top: 5rem;
   /* lets <details> and other elements animate to height: auto */
   interpolate-size: allow-keywords;
@@ -19,23 +21,34 @@
   --color-surface-muted: #f5f5f5; /* inputs, quiet panels */
   --color-ink: #141414; /* main text */
   --color-ink-soft: #4f4f4f; /* secondary text */
+  --color-ink-faint: #707070; /* placeholders and input borders, still 4.5:1 contrast */
   --color-rule: #141414; /* strong borders */
   --color-rule-soft: #d0d0d0; /* light borders and dividers */
-  --color-red: #c50909; /* brand red */
-  --color-red-deep: #9c0707; /* red hover / pressed */
+  --color-red: #c50909; /* brand red, for red text and lines */
+  --color-red-fill: #c50909; /* red backgrounds with white text on them */
+  --color-red-deep: #9c0707; /* red background hover / pressed */
   --color-on-red: #ffffff; /* text on red */
+  --color-black: #141414; /* stays dark in both themes (text on gold, etc.) */
   --color-gold: #e9a400;
   --color-silver: #a9a9a9;
   --color-bronze: #a74000;
   --color-success: #1b7a3a; /* confirmation messages */
+  --color-secondary: var(--color-ink); /* Lauren's blue at night */
+  --color-mark: var(--color-red); /* check marks; Lauren's yellow at night */
+  color-scheme: light; /* native form controls and scrollbars match */
 
   /* ---------- type ---------- */
-  /* Plex Mono is only for flair: the hero, dates and the RebelHacks name. */
+  /* Plex Mono is only for the hero, dates and the RebelHacks name */
   --font-display: var(--font-plex-mono), ui-monospace, monospace;
   --font-body: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
 
-  /* Utopia fluid type scale. step--2 is body text, step--1 is lead text. */
-  --step--2: clamp(0.95rem, 0.88rem + 0.3vw, 1.05rem);
+  /*
+    Fluid type scale: every font size on the site should be one of these.
+    step--3 small print, step--2 body text (never below 16px), step--1 lead
+    text, step-0 to step-2 subheadings, step-3 and up big headings.
+  */
+  --step--3: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);
+  --step--2: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --step--1: clamp(1.1rem, 1.02rem + 0.45vw, 1.35rem);
   --step-0: clamp(1.25rem, 1.15rem + 0.6vw, 1.6rem);
   --step-1: clamp(1.55rem, 1.35rem + 0.9vw, 2.1rem);
@@ -47,36 +60,59 @@
   /* ---------- layout ---------- */
   --page-max: 75rem; /* widest content column (1200px) */
   --page-gutter: clamp(1rem, 4vw, 3rem); /* side padding on every section */
+  /* the content column plus its side padding: sections and the header use it */
+  --page-width: calc(var(--page-max) + 2 * var(--page-gutter));
   --section-space: clamp(6rem, 14vw, 11.5rem); /* gap between sections */
-  --column-gap: clamp(1rem, 2.5vw, 2rem); /* between the two columns of a section */
+  /* between the two columns of a section */
+  --column-gap: clamp(1rem, 2.5vw, 2rem);
   --row-gap: clamp(2rem, 5vw, 3.5rem); /* between rows inside a section */
   --radius: 6px;
 
-  /* ---------- halo ---------- */
+  /* ---------- shadows ---------- */
   /*
-    The glow around text that sits on the honeycomb. Don't use these
-    directly: wrap the text in the <Halo> component, which explains how it
-    works. Many layers of the page color, so the area right around the
-    letters is solid and the edge is soft.
+    Hard shadows, no blur. --shadow for cards and windows, --shadow-small for
+    buttons, --shadow-inset for text fields.
   */
-  --halo:
-    0 0 1px var(--color-page), 0 0 2px var(--color-page),
-    0 0 3px var(--color-page), 0 0 5px var(--color-page),
-    0 0 7px var(--color-page), 0 0 10px var(--color-page),
-    0 0 14px var(--color-page), 0 0 19px var(--color-page),
-    0 0 25px var(--color-page);
-  /* a wider one for the very large hero text */
-  --halo-large:
-    0 0 2px var(--color-page), 0 0 4px var(--color-page),
-    0 0 7px var(--color-page), 0 0 11px var(--color-page),
-    0 0 16px var(--color-page), 0 0 22px var(--color-page),
-    0 0 30px var(--color-page), 0 0 40px var(--color-page),
-    0 0 52px var(--color-page);
+  --shadow-color: #b8b8b8;
+  --shadow: 4px 4px 0 var(--shadow-color);
+  --shadow-small: 3px 3px 0 var(--shadow-color);
+  --shadow-inset: inset 2px 2px 0 var(--shadow-color);
 
   /* ---------- motion ---------- */
-  /* quick start, soft landing: used for nearly every transition */
+  /* default easing for transitions */
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* overshoots slightly */
+  --ease-snap: cubic-bezier(0.3, 1.45, 0.5, 1);
   --duration-quick: 120ms;
+}
+
+/*
+  Dark theme, from sunset to sunrise in Las Vegas. lib/startupScript.ts sets
+  data-theme on <html> before the page renders. The blue and yellow are from
+  Lauren's dark design.
+  Components with dark-only changes (like the FAQ sparkles) use a
+  :root[data-theme="dark"] selector.
+  --color-red-fill stays the same: white text needs the darker red.
+*/
+:root[data-theme="dark"] {
+  --color-page: #0f0f0f;
+  --color-grid: #222222;
+  --color-grid-trace: #565656;
+  --color-surface: #181818;
+  --color-surface-muted: #222222;
+  --color-ink: #efefef;
+  --color-ink-soft: #a3a3a3;
+  --color-ink-faint: #8a8a8a;
+  --color-rule: #efefef;
+  --color-rule-soft: #343434;
+  --color-red: #ff5a5a;
+  --color-success: #4cc27a;
+  /* Lauren's blue, lightened to match the red's perceived brightness */
+  --color-secondary: #3e9aed;
+  --color-mark: #ffda48;
+  /* lighter than the page, since a dark shadow wouldn't show */
+  --shadow-color: #333333;
+  color-scheme: dark;
 }
 
 body {
@@ -91,44 +127,52 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-red);
+  background-color: var(--color-red-fill);
   color: var(--color-on-red);
 }
 
 /*
-  Shared building blocks. Add these class names next to a component's own
-  CSS module class (className={`card ${styles.story}`}), and keep only the
-  differences in the module.
+  Shared classes. Use them alongside a module class, like
+  className={`card ${styles.story}`}, and put only the differences in the
+  module.
 */
 
-/* a white card: reading text that sits on the honeycomb goes on one of these */
+/* for text that would otherwise sit on the honeycomb */
 .card {
   border: 1px solid var(--color-rule-soft);
   border-radius: var(--radius);
   background-color: var(--color-surface);
+  box-shadow: var(--shadow);
 }
 
 /* the red button */
 .button {
+  position: relative; /* for the ::after brackets */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
   border-radius: var(--radius);
-  background-color: var(--color-red);
+  background-color: var(--color-red-fill);
   color: var(--color-on-red);
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color var(--duration-quick) var(--ease-out);
+  box-shadow: var(--shadow-small);
+  transition:
+    background-color var(--duration-quick) var(--ease-out),
+    transform 60ms var(--ease-out),
+    box-shadow 60ms var(--ease-out);
 }
 
 .button:hover {
   background-color: var(--color-red-deep);
 }
 
+/* pressed: move by the shadow offset and drop the shadow */
 .button:active {
-  transform: translateY(1px);
+  transform: translate(3px, 3px);
+  box-shadow: none;
 }
 
 .button:disabled {
@@ -137,37 +181,68 @@ body {
 }
 
 /*
-  Section layout. Every page section is a two-column grid (one column on
-  narrow screens), so boxes line up the same way across the whole page.
-  Put it on a section component's root element:
-    className="columns"          heading on top, content below it
-    className="columns sticky"   heading on the left (it stays in view while
-                                 you scroll), content on the right
-  Each block inside takes one column, so two boxes side by side get half the
-  width each. Add "full" to a block to make it span both columns.
+  Selection brackets from Lauren's design: red corners around a button on
+  hover and focus. Per-button settings:
+    --bracket-rest          inset while hidden (default -11px)
+    --bracket-shown         inset on hover and focus (default -6px)
+    --bracket-rest-opacity  1 to always show them, like on Register
 */
-.columns {
-  display: grid;
-  gap: var(--row-gap) var(--column-gap);
-  /* a stacking context, so text halos (see Halo.tsx) stay above the honeycomb */
-  isolation: isolate;
+.button::after {
+  --corner: 0.6rem; /* corner arm length */
+  --line: 2px;
+  /* red at both ends, transparent in between */
+  --across: linear-gradient(
+    to right,
+    var(--color-red) var(--corner),
+    transparent var(--corner) calc(100% - var(--corner)),
+    var(--color-red) calc(100% - var(--corner))
+  );
+  --down: linear-gradient(
+    to bottom,
+    var(--color-red) var(--corner),
+    transparent var(--corner) calc(100% - var(--corner)),
+    var(--color-red) calc(100% - var(--corner))
+  );
+
+  content: "";
+  position: absolute;
+  inset: var(--bracket-rest, -11px);
+  pointer-events: none;
+  /* one gradient per edge, so the red ends form the corners */
+  background:
+    var(--across) top / 100% var(--line),
+    var(--across) bottom / 100% var(--line),
+    var(--down) left / var(--line) 100%,
+    var(--down) right / var(--line) 100%;
+  background-repeat: no-repeat;
+  opacity: var(--bracket-rest-opacity, 0);
+  transition:
+    inset 220ms var(--ease-snap),
+    opacity 120ms var(--ease-out);
 }
 
-@media (min-width: 860px) {
-  .columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.button:focus-visible::after {
+  inset: var(--bracket-shown, -6px);
+  opacity: 1;
+}
 
-  .columns > .full {
-    grid-column: 1 / -1;
+/* real mouse only, or a tap would leave them stuck on touch screens */
+@media (hover: hover) {
+  .button:not(:disabled):hover::after {
+    inset: var(--bracket-shown, -6px);
+    opacity: 1;
   }
+}
 
-  .sticky > :first-child {
-    grid-column: 1;
-    align-self: start;
-    position: sticky;
-    top: 6.5rem;
-  }
+/* the brackets replace the focus outline */
+.button:focus-visible {
+  outline: none;
+}
+
+/* speed of the photo viewer's "open window" view transition (see Photos.tsx) */
+::view-transition-group(photo-window) {
+  animation-duration: 280ms;
+  animation-timing-function: var(--ease-out);
 }
 
 /* one focus style for every interactive element, keyboard only */
@@ -176,7 +251,10 @@ body {
   outline-offset: 3px;
 }
 
-/* respect the OS "reduce motion" setting everywhere */
+/*
+  Reduced motion (OS setting) or "Pause animations" (footer button): every
+  animation skips to its end state, and loops stop.
+*/
 @media (prefers-reduced-motion: reduce) {
   :root {
     scroll-behavior: auto;
@@ -190,4 +268,12 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
   }
+}
+
+:root[data-motion="paused"] *,
+:root[data-motion="paused"] *::before,
+:root[data-motion="paused"] *::after {
+  animation-duration: 1ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
 }
