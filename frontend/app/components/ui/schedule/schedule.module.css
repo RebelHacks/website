@@ -1,11 +1,3 @@
-.container {
-  display: grid;
-  gap: clamp(2.5rem, 6vw, 4rem);
-  max-width: var(--page-max);
-  margin-inline: auto;
-  padding-inline: var(--page-gutter);
-}
-
 /* four steps in a row, joined by a line that runs through the markers */
 .timeline {
   position: relative;

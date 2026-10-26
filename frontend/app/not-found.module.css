@@ -1,6 +1,6 @@
 .page {
-  /* one halo under all the text */
-  filter: var(--halo-large);
+  /* a stacking context, so the text halos stay above the honeycomb */
+  isolation: isolate;
   display: grid;
   place-content: center;
   justify-items: center;

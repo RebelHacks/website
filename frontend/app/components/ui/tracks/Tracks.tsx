@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Halo from "../halo/Halo";
 import HexGlyph from "./HexGlyph";
 import SectionHeading from "../section/SectionHeading";
 import Reveal from "../reveal/Reveal";
@@ -42,7 +43,10 @@ function PrizeList() {
               <div className={styles.bar}>
                 <span className={styles.prizeName}>{award.name}</span>
               </div>
-              <Amount value={award.prize} className={styles.prizeAmount} />
+              {/* the amount sits on the honeycomb */}
+              <Halo>
+                <Amount value={award.prize} className={styles.prizeAmount} />
+              </Halo>
             </li>
           );
         })}
@@ -97,29 +101,38 @@ function TrackCard({
 
 export default function Tracks() {
   return (
-    <div className={styles.container}>
+    <div className="columns">
       <SectionHeading id="tracks-heading" title="Tracks & prizes">
-        We're offering a total of $5,000 cash in prizes: three grand prizes, plus a prize for the winner of each track!
+        We&apos;re offering a total of $5,000 cash in prizes: three grand
+        prizes, plus a prize for the winner of each track!
       </SectionHeading>
-      <section className={styles.group} aria-labelledby="prizes-heading">
+      <section
+        className={`full ${styles.group}`}
+        aria-labelledby="prizes-heading"
+      >
         <header className={styles.groupHeader}>
           <h3 id="prizes-heading" className={styles.groupTitle}>
-            Grand prizes
+            <Halo>Grand prizes</Halo>
           </h3>
           <p className={styles.groupText}>
-            Awarded to the top three projects overall among any track.
+            <Halo>
+              Awarded to the top three projects overall among any track.
+            </Halo>
           </p>
         </header>
         <PrizeList />
       </section>
 
-      <section className={styles.group} aria-labelledby="track-list-heading">
+      <section
+        className={`full ${styles.group}`}
+        aria-labelledby="track-list-heading"
+      >
         <header className={styles.groupHeader}>
           <h3 id="track-list-heading" className={styles.groupTitle}>
-            Tracks
+            <Halo>Tracks</Halo>
           </h3>
           <p className={styles.groupText}>
-            Pick a track to build for!
+            <Halo>Pick a track to build for!</Halo>
           </p>
         </header>
         <Reveal className={styles.trackGrid}>

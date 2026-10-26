@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Halo from "../halo/Halo";
 import styles from "./section.module.css";
 
 interface SectionHeadingProps {
@@ -19,9 +20,13 @@ export default function SectionHeading({
   return (
     <header className={styles.heading}>
       <h2 id={id} className={styles.title}>
-        {title}
+        <Halo>{title}</Halo>
       </h2>
-      {children && <p className={styles.lead}>{children}</p>}
+      {children && (
+        <p className={styles.lead}>
+          <Halo>{children}</Halo>
+        </p>
+      )}
     </header>
   );
 }

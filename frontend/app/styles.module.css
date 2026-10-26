@@ -1,6 +1,8 @@
-/* spacing between the page's sections; each component handles its own width */
+/* every page section: centered, at most --page-max wide, with side padding */
 .section {
-  padding-top: var(--section-space);
+  max-width: calc(var(--page-max) + 2 * var(--page-gutter));
+  margin-inline: auto;
+  padding: var(--section-space) var(--page-gutter) 0;
 }
 
 .section:last-child {

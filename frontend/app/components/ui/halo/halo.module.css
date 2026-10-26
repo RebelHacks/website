@@ -1,0 +1,24 @@
+.halo {
+  position: relative;
+  display: block;
+}
+
+/* the invisible copy: same text, same layout, only its glow shows */
+.copy {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  text-shadow: var(--halo);
+  pointer-events: none;
+  user-select: none;
+}
+
+.large {
+  text-shadow: var(--halo-large);
+}
+
+/* !important so colored text inside (like the RebelHacks name) stays invisible */
+.copy,
+.copy * {
+  color: transparent !important;
+}

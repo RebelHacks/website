@@ -75,6 +75,17 @@ const IDLE_FRAME_MS = 32; // ~30fps when the mouse isn't moving, to save battery
 const CONTENT_TRACE_STRENGTH = 0.7; // lines are quieter once you scroll past the hero
 const PIXEL_BUDGET = 8_000_000; // max canvas pixels, so huge screens stay light
 
+// Slower devices: the animation watches how fast the browser is drawing
+// frames. If it averages slower than SLOW_FRAME_MS (about 35fps) it steps
+// down a quality level: FULL -> LIGHT (half the lines, no cursor glow,
+// always 30fps) -> STILL (stops, leaving the honeycomb as it is).
+const FULL = 2;
+const LIGHT = 1;
+const STILL = 0;
+const SLOW_FRAME_MS = 28;
+const CHECK_EVERY_MS = 2000; // how much time each frame-rate check covers
+const CHECK_AFTER_MS = 3000; // skip the busy first seconds of page load
+
 interface Grower {
   x: number; // corner the current edge starts from
   y: number;
@@ -148,6 +159,11 @@ export function startHexGrid(
   let lastDraw = 0;
   let lastTrailRefresh = 0;
   let trailOpacity = -1;
+  let quality = startingQuality();
+  let lastCallback = 0; // for measuring the browser's frame rate
+  let checkFrom = 0;
+  let frameTimeTotal = 0;
+  let framesCounted = 0;
 
   // ---------- sizing + the resting grid ----------
   function resize() {
@@ -292,7 +308,12 @@ export function startHexGrid(
 
   // how many lines should be growing at once on this screen
   function growerTarget() {
-    return clamp(Math.round(GROWERS * sizeScale), MIN_GROWERS, MAX_GROWERS);
+    const target = clamp(
+      Math.round(GROWERS * sizeScale),
+      MIN_GROWERS,
+      MAX_GROWERS,
+    );
+    return quality === FULL ? target : Math.ceil(target / 2);
   }
 
   // finish the current edge and pick the next one; returns false when the line ends
@@ -464,9 +485,12 @@ export function startHexGrid(
 
   function frame(now: number) {
     frameId = requestAnimationFrame(frame);
-    const mouseIsActive = now - lastPointerMove < 1500;
-    const introIsRunning = now < introEndsAt;
-    if (!mouseIsActive && !introIsRunning && now - lastDraw < IDLE_FRAME_MS)
+    measureFrameRate(now);
+    if (quality === STILL) return;
+
+    // full speed only while something is happening; otherwise ~30fps
+    const isBusy = now - lastPointerMove < 1500 || now < introEndsAt;
+    if ((quality === LIGHT || !isBusy) && now - lastDraw < IDLE_FRAME_MS)
       return;
 
     // cap the step so a long pause (e.g. a background tab) doesn't jump ahead
@@ -474,14 +498,46 @@ export function startHexGrid(
     lastFrame = now;
     lastDraw = now;
     updateGrowers(now, elapsed);
-    updateLitCells(elapsed);
+    if (quality === FULL) updateLitCells(elapsed);
     if (now - lastTrailRefresh >= TRAIL_REFRESH_MS) redrawTrails(now);
     draw(now);
   }
 
   function start() {
-    lastFrame = performance.now();
+    if (quality === STILL) return;
+    lastFrame = lastCallback = performance.now();
+    checkFrom = lastFrame + CHECK_AFTER_MS;
     frameId = requestAnimationFrame(frame);
+  }
+
+  // ---------- adapting to slower devices ----------
+  // Low-memory devices, and anyone with data saver on, start in LIGHT.
+  function startingQuality() {
+    const device = navigator as Navigator & {
+      deviceMemory?: number;
+      connection?: { saveData?: boolean };
+    };
+    const lowMemory = (device.deviceMemory ?? 8) <= 2;
+    return lowMemory || device.connection?.saveData ? LIGHT : FULL;
+  }
+
+  // Average the time between frames; step down a level if it's too slow.
+  function measureFrameRate(now: number) {
+    const sinceLast = now - lastCallback;
+    lastCallback = now;
+    if (now < checkFrom) return;
+    frameTimeTotal += sinceLast;
+    framesCounted += 1;
+    if (frameTimeTotal < CHECK_EVERY_MS) return;
+
+    if (frameTimeTotal / framesCounted > SLOW_FRAME_MS) {
+      quality -= 1;
+      litCells.clear();
+      if (quality === STILL) stop();
+    }
+    liveCanvas.dataset.quality = String(quality); // handy when debugging
+    frameTimeTotal = 0;
+    framesCounted = 0;
   }
 
   function stop() {

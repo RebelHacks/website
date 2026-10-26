@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Halo from "../halo/Halo";
 import Wordmark from "../wordmark/Wordmark";
 import styles from "./hero.module.css";
 
@@ -12,30 +13,38 @@ export default function Hero() {
       <div className={styles.center}>
         {/* the credit line and the name share a left edge, as in Lauren's design */}
         <div className={styles.titleBlock}>
-          <p className={styles.presents}>SEC, GWC &amp; LAVA present</p>
+          <p className={styles.presents}>
+            <Halo large>SEC, GWC &amp; LAVA present</Halo>
+          </p>
           <h1 id="hero-title" className={styles.lockup}>
-            <Wordmark intro ambient className={styles.name} />
-            <span className={styles.year}>
-              <span className="sr-only"> 2027</span>
-              {YEAR_DIGITS.map((digit, index) => (
-                <span
-                  key={index}
-                  className={styles.digit}
-                  style={{ "--index": index } as CSSProperties}
-                  aria-hidden="true"
-                >
-                  {digit}
-                </span>
-              ))}
-            </span>
+            <Halo large>
+              <Wordmark intro ambient className={styles.name} />
+            </Halo>
+            <Halo large>
+              <span className={styles.year}>
+                <span className="sr-only"> 2027</span>
+                {YEAR_DIGITS.map((digit, index) => (
+                  <span
+                    key={index}
+                    className={styles.digit}
+                    style={{ "--index": index } as CSSProperties}
+                    aria-hidden="true"
+                  >
+                    {digit}
+                  </span>
+                ))}
+              </span>
+            </Halo>
           </h1>
         </div>
 
         <p className={styles.date}>
-          <time dateTime="2027-02-20">Feb 20</time>
-          <span aria-hidden="true"> – </span>
-          <span className="sr-only"> to </span>
-          <time dateTime="2027-02-21">21</time>
+          <Halo large>
+            <time dateTime="2027-02-20">Feb 20</time>
+            <span aria-hidden="true"> – </span>
+            <span className="sr-only"> to </span>
+            <time dateTime="2027-02-21">21</time>
+          </Halo>
         </p>
       </div>
     </section>

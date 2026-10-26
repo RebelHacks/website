@@ -47,33 +47,31 @@
   /* ---------- layout ---------- */
   --page-max: 75rem; /* widest content column (1200px) */
   --page-gutter: clamp(1rem, 4vw, 3rem); /* side padding on every section */
-  --section-space: clamp(5rem, 12vw, 10rem); /* gap between sections */
+  --section-space: clamp(6rem, 14vw, 11.5rem); /* gap between sections */
+  --column-gap: clamp(1rem, 2.5vw, 2rem); /* between the two columns of a section */
+  --row-gap: clamp(2rem, 5vw, 3.5rem); /* between rows inside a section */
   --radius: 6px;
 
   /* ---------- halo ---------- */
   /*
-    A glow in the page color around text that sits on the honeycomb, so the
-    grid (and anything drawn on it) fades out behind the letters instead of
-    crossing them. Use it as `filter: var(--halo)`.
-
-    Put it on the element that wraps a whole cluster of text (a heading and
-    its intro line, the hero's name and dates), not on each piece: a filter
-    draws its glow underneath everything inside the element, so one shared
-    halo can never fog the neighbouring text. (A per-element halo, or a
-    text-shadow, paints each glow over whatever came before it.)
-
-    Each drop-shadow builds on the ones before it, so the area right around
-    the letters is solid and the edge is soft.
+    The glow around text that sits on the honeycomb. Don't use these
+    directly: wrap the text in the <Halo> component, which explains how it
+    works. Many layers of the page color, so the area right around the
+    letters is solid and the edge is soft.
   */
   --halo:
-    drop-shadow(0 0 1px var(--color-page)) drop-shadow(0 0 3px var(--color-page))
-    drop-shadow(0 0 6px var(--color-page)) drop-shadow(0 0 12px var(--color-page))
-    drop-shadow(0 0 20px var(--color-page));
+    0 0 1px var(--color-page), 0 0 2px var(--color-page),
+    0 0 3px var(--color-page), 0 0 5px var(--color-page),
+    0 0 7px var(--color-page), 0 0 10px var(--color-page),
+    0 0 14px var(--color-page), 0 0 19px var(--color-page),
+    0 0 25px var(--color-page);
   /* a wider one for the very large hero text */
   --halo-large:
-    drop-shadow(0 0 2px var(--color-page)) drop-shadow(0 0 6px var(--color-page))
-    drop-shadow(0 0 12px var(--color-page)) drop-shadow(0 0 24px var(--color-page))
-    drop-shadow(0 0 40px var(--color-page));
+    0 0 2px var(--color-page), 0 0 4px var(--color-page),
+    0 0 7px var(--color-page), 0 0 11px var(--color-page),
+    0 0 16px var(--color-page), 0 0 22px var(--color-page),
+    0 0 30px var(--color-page), 0 0 40px var(--color-page),
+    0 0 52px var(--color-page);
 
   /* ---------- motion ---------- */
   /* quick start, soft landing: used for nearly every transition */
@@ -136,6 +134,40 @@ body {
 .button:disabled {
   opacity: 0.6;
   cursor: progress;
+}
+
+/*
+  Section layout. Every page section is a two-column grid (one column on
+  narrow screens), so boxes line up the same way across the whole page.
+  Put it on a section component's root element:
+    className="columns"          heading on top, content below it
+    className="columns sticky"   heading on the left (it stays in view while
+                                 you scroll), content on the right
+  Each block inside takes one column, so two boxes side by side get half the
+  width each. Add "full" to a block to make it span both columns.
+*/
+.columns {
+  display: grid;
+  gap: var(--row-gap) var(--column-gap);
+  /* a stacking context, so text halos (see Halo.tsx) stay above the honeycomb */
+  isolation: isolate;
+}
+
+@media (min-width: 860px) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .columns > .full {
+    grid-column: 1 / -1;
+  }
+
+  .sticky > :first-child {
+    grid-column: 1;
+    align-self: start;
+    position: sticky;
+    top: 6.5rem;
+  }
 }
 
 /* one focus style for every interactive element, keyboard only */

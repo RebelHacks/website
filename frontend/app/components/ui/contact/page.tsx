@@ -51,7 +51,7 @@ export default function Contact() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="columns sticky">
       <SectionHeading id="contact-heading" title="Contact">
         Have a question that isn&apos;t answered above? Send us a message and an
         organizer will get back to you.

@@ -11,12 +11,10 @@ interface AccordionArgs {
 // Giving every item the same `name` makes the browser keep only one open.
 export default function Accordion({ questions, allowMultiple }: AccordionArgs) {
   return (
-    <div className={styles.container}>
-      <div className={styles.intro}>
-        <SectionHeading id="faq-heading" title="FAQ">
-          Something we missed? <a href="#contact">Send us a message.</a>
-        </SectionHeading>
-      </div>
+    <div className="columns sticky">
+      <SectionHeading id="faq-heading" title="FAQ">
+        Something we missed? <a href="#contact">Send us a message.</a>
+      </SectionHeading>
 
       <div className={`card ${styles.list}`}>
         {questions.map(({ question, answer }) => (

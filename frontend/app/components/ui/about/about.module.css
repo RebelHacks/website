@@ -1,21 +1,6 @@
-.container {
-  display: grid;
-  gap: clamp(2.5rem, 6vw, 4rem);
-  max-width: var(--page-max);
-  margin-inline: auto;
-  padding-inline: var(--page-gutter);
-}
-
 /* the name inside the heading, sized to sit on the heading's baseline */
 .name {
   font-size: 0.92em;
-}
-
-.columns {
-  display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-  align-items: start;
-  gap: clamp(2rem, 6vw, 6rem);
 }
 
 .story {
@@ -57,8 +42,3 @@
   color: var(--color-red);
 }
 
-@media (max-width: 860px) {
-  .columns {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}

@@ -74,13 +74,11 @@ export default function Photos() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.intro}>
-        <SectionHeading id="photos-heading" title="Photos">
-          Moments from RebelHacks 2026. Tap a photo to see it full size, or hit
-          More to flip through them.
-        </SectionHeading>
-      </div>
+    <div className="columns sticky">
+      <SectionHeading id="photos-heading" title="Photos">
+        Moments from RebelHacks 2026. Tap a photo to see it full size, or hit
+        More to flip through them.
+      </SectionHeading>
 
       <div className={styles.captcha}>
         <header className={styles.banner}>

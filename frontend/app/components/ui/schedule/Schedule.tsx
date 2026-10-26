@@ -27,12 +27,12 @@ const STEPS = [
 
 export default function Schedule() {
   return (
-    <div className={styles.container}>
+    <div className="columns">
       <SectionHeading id="schedule-heading" title="Schedule">
         TODO
       </SectionHeading>
 
-      <Reveal>
+      <Reveal className="full">
         <ol className={styles.timeline}>
           {STEPS.map(({ when, what, isNight }, index) => (
             <li

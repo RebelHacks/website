@@ -6,12 +6,12 @@ import styles from "./sponsors.module.css";
 // A grid of sponsor logos. Logos sit in grayscale and come into color on hover.
 export default function Sponsors() {
   return (
-    <div className={styles.container}>
+    <div className="columns">
       <SectionHeading id="sponsors-heading" title="Sponsors">
         RebelHacks is made possible by these organizations.
       </SectionHeading>
 
-      <ul className={styles.grid}>
+      <ul className={`full ${styles.grid}`}>
         {sponsors.map(({ name, logo, url }) => (
           <li key={name}>
             <a
