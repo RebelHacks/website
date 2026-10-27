@@ -19,13 +19,13 @@
   gap: 2rem 3rem;
 }
 
-/* REBEL can't be red on the red footer */
 .brand {
-  --wordmark-rebel: var(--color-on-red);
-  --wordmark-hacks: var(--color-black);
+  display: flex;
+}
 
-  font-size: var(--step-4);
-  text-decoration: none;
+.logo {
+  width: clamp(9rem, 6rem + 10vw, 13rem);
+  height: auto;
 }
 
 .linkGroups {

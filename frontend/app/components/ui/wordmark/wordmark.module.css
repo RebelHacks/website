@@ -49,11 +49,11 @@
 }
 
 .rebel {
-  color: var(--wordmark-rebel, var(--color-red));
+  color: var(--color-red);
 }
 
 .hacks {
-  color: var(--wordmark-hacks, var(--color-secondary));
+  color: var(--color-secondary);
 }
 
 /* ---------- intro + flickers ---------- */

@@ -1,7 +1,7 @@
 "use client";
 
-import Wordmark from "../wordmark/Wordmark";
 import Hamburger from "../hamburger/Hamburger";
+import Logo from "../logo/Logo";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import { REGISTER_URL, sectionHref } from "./navLinks";
@@ -23,7 +23,7 @@ export default function Header() {
           className={styles.brand}
           aria-label="RebelHacks home"
         >
-          <Wordmark />
+          <Logo className={styles.logo} />
         </a>
 
         <NavLinks activeSection={activeSection} />

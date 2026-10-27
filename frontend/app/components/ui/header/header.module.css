@@ -22,8 +22,12 @@
 
 .brand {
   justify-self: start;
-  font-size: var(--step--1);
-  text-decoration: none;
+  display: flex;
+}
+
+.logo {
+  width: auto;
+  height: 3.5rem;
 }
 
 .nav {
@@ -158,6 +162,10 @@
 
   .nav {
     display: none;
+  }
+
+  .logo {
+    height: 3rem;
   }
 }
 

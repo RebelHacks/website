@@ -1,5 +1,5 @@
-import Wordmark from "../wordmark/Wordmark";
 import { NAV_LINKS, sectionHref } from "../header/navLinks";
+import Logo from "../logo/Logo";
 import MotionToggle from "./MotionToggle";
 import styles from "./footer.module.css";
 
@@ -19,7 +19,7 @@ export default function Footer() {
             className={styles.brand}
             aria-label="RebelHacks home"
           >
-            <Wordmark />
+            <Logo className={styles.logo} />
           </a>
 
           <div className={styles.linkGroups}>
