@@ -1,10 +1,6 @@
 // Where messages go. Mail to rebelhacks.com is forwarded by Cloudflare Email Routing.
 export const CONTACT_EMAIL = "info@rebelhacks.com";
 
-// TODO: get the key at web3forms.com by entering info@rebelhacks.com.
-// It's public by design, so it's fine to commit.
-export const WEB3FORMS_ACCESS_KEY = "";
-
 export interface ContactRole {
   label: string;
   // put in the message box when this role is picked

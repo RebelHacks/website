@@ -3,12 +3,6 @@ import Logo from "../logo/Logo";
 import MotionToggle from "./MotionToggle";
 import styles from "./footer.module.css";
 
-// TODO: placeholders until the team confirms the real accounts
-const SOCIAL_LINKS = [
-  { label: "Instagram", href: "#" },
-  { label: "Discord", href: "#" },
-];
-
 export default function Footer() {
   return (
     <footer className={styles.footer}>
@@ -22,24 +16,14 @@ export default function Footer() {
             <Logo className={styles.logo} />
           </a>
 
-          <div className={styles.linkGroups}>
-            <nav className={styles.links} aria-label="Footer">
-              {NAV_LINKS.map(({ label, section }) => (
-                <a key={section} href={sectionHref(section)}>
-                  {label}
-                </a>
-              ))}
-              <a href="/code-of-conduct">Code of Conduct</a>
-            </nav>
-
-            <ul className={styles.links} aria-label="Social media">
-              {SOCIAL_LINKS.map(({ label, href }) => (
-                <li key={label}>
-                  <a href={href}>{label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <nav className={styles.links} aria-label="Footer">
+            {NAV_LINKS.map(({ label, section }) => (
+              <a key={section} href={sectionHref(section)}>
+                {label}
+              </a>
+            ))}
+            <a href="/code-of-conduct">Code of Conduct</a>
+          </nav>
         </div>
 
         <div className={styles.bottom}>

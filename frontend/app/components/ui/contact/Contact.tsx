@@ -1,20 +1,12 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
-import FlashMessage from "../FlashMessage";
 import Section from "../section/Section";
 import { CONTACT_EMAIL, contactRoles } from "./contactData";
-import { sendMessage } from "./sendMessage";
 import styles from "./contact.module.css";
 
-// Same message for every failure. The visitor's fix is the same either way.
-const ERROR_MESSAGE = `Your message couldn't be sent. Try again in a moment, or email us at ${CONTACT_EMAIL}.`;
-
 export default function Contact() {
-  const [isSending, setIsSending] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  // the address an organizer will reply to, once the message is sent
-  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [hasOpenedEmail, setHasOpenedEmail] = useState(false);
 
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const lastTemplate = useRef("");
@@ -30,29 +22,18 @@ export default function Contact() {
     lastTemplate.current = template;
   };
 
-  // Fields are read on submit. Nothing needs them in state while typing.
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  // TODO: send through a form service once the organizers pick one.
+  // Until then, this opens the visitor's email app with everything filled in.
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const email = String(formData.get("email"));
+    const name = String(formData.get("name"));
+    const role = String(formData.get("role") ?? "Not picked");
+    const subject = `Website message from ${name} (${role})`;
+    const body = `${formData.get("message")}\n\n${name}\n${formData.get("email")}`;
 
-    setIsSending(true);
-    setHasError(false);
-    const isSent = await sendMessage({
-      name: String(formData.get("name")),
-      email,
-      role: String(formData.get("role") ?? "Not picked"),
-      message: String(formData.get("message")),
-      botcheck: formData.has("botcheck"),
-    });
-    setIsSending(false);
-
-    if (isSent) {
-      lastTemplate.current = "";
-      setSentTo(email);
-    } else {
-      setHasError(true);
-    }
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setHasOpenedEmail(true);
   };
 
   return (
@@ -68,102 +49,68 @@ export default function Contact() {
       }
       stickyHeading
     >
-      {sentTo ? (
-        <div className={`card ${styles.sent}`} role="status">
-          <svg
-            className={styles.sentTick}
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M5 13l4 4L19 7" />
-          </svg>
-          <h3 className={styles.sentTitle}>Message sent</h3>
-          <p>An organizer will reply to {sentTo}.</p>
-          <button
-            type="button"
-            className={`button ${styles.submit}`}
-            onClick={() => setSentTo(null)}
-          >
-            Send another
-          </button>
-        </div>
-      ) : (
-        <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
-          {hasError && (
-            <FlashMessage
-              type="error"
-              message={ERROR_MESSAGE}
-              onClose={() => setHasError(false)}
-            />
-          )}
-          <fieldset className={styles.roles}>
-            <legend className={styles.label}>I&apos;m writing as</legend>
-            <div className={styles.roleList}>
-              {contactRoles.map(({ label, template }) => (
-                <label key={label} className={styles.role}>
-                  <input
-                    type="radio"
-                    name="role"
-                    value={label}
-                    onChange={() => fillTemplate(template)}
-                  />
-                  {label}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-          <div className={styles.row}>
-            <label className={styles.label}>
-              Name
-              <input
-                name="name"
-                type="text"
-                autoComplete="name"
-                className={styles.input}
-                required
-                placeholder="Your name"
-              />
-            </label>
-            <label className={styles.label}>
-              Email
-              <input
-                name="email"
-                type="email"
-                autoComplete="email"
-                className={styles.input}
-                required
-                placeholder="email@example.com"
-              />
-            </label>
+      <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
+        <fieldset className={styles.roles}>
+          <legend className={styles.label}>I&apos;m writing as</legend>
+          <div className={styles.roleList}>
+            {contactRoles.map(({ label, template }) => (
+              <label key={label} className={styles.role}>
+                <input
+                  type="radio"
+                  name="role"
+                  value={label}
+                  onChange={() => fillTemplate(template)}
+                />
+                {label}
+              </label>
+            ))}
           </div>
+        </fieldset>
+        <div className={styles.row}>
           <label className={styles.label}>
-            Message
-            <textarea
-              ref={messageRef}
-              name="message"
-              className={styles.textarea}
-              rows={6}
-              placeholder="Your message here..."
+            Name
+            <input
+              name="name"
+              type="text"
+              autoComplete="name"
+              className={styles.input}
               required
+              placeholder="Your name"
             />
           </label>
-          {/* spam trap: hidden from people, so only bots tick it */}
-          <input
-            type="checkbox"
-            name="botcheck"
-            className={styles.botcheck}
-            tabIndex={-1}
-            aria-hidden="true"
+          <label className={styles.label}>
+            Email
+            <input
+              name="email"
+              type="email"
+              autoComplete="email"
+              className={styles.input}
+              required
+              placeholder="email@example.com"
+            />
+          </label>
+        </div>
+        <label className={styles.label}>
+          Message
+          <textarea
+            ref={messageRef}
+            name="message"
+            className={styles.textarea}
+            rows={6}
+            placeholder="Your message here..."
+            required
           />
-          <button
-            type="submit"
-            className={`button ${styles.submit}`}
-            disabled={isSending}
-          >
-            {isSending ? "Sending…" : "Send message"}
-          </button>
-        </form>
-      )}
+        </label>
+        <button type="submit" className={`button ${styles.submit}`}>
+          Open in email app
+        </button>
+        {hasOpenedEmail && (
+          <p className={styles.note} role="status">
+            Your email app should open with this message ready to send. If it
+            didn&apos;t, email us at {CONTACT_EMAIL}.
+          </p>
+        )}
+      </form>
     </Section>
   );
 }

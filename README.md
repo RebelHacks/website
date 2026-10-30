@@ -25,7 +25,7 @@ Open **http://localhost:3000**. Keep this terminal running; Ctrl+C stops the ser
 
 `NEXT_PUBLIC_API_URL` tells the frontend where to send API requests. The example uses `http://127.0.0.1:8000/api`. Restart the frontend after editing `.env.local`. Visitors can read values beginning with `NEXT_PUBLIC_`, so keep passwords and private keys out of them.
 
-The contact form sends messages through Web3Forms (`app/components/ui/contact/`), so it works without the backend.
+The contact form opens the visitor's email app with their message filled in (`app/components/ui/contact/`), so it works without the backend.
 
 ### Start the backend when needed
 

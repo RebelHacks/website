@@ -28,12 +28,6 @@
   height: auto;
 }
 
-.linkGroups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem 4rem;
-}
-
 /* four links per column, read top to bottom */
 .links {
   display: grid;
