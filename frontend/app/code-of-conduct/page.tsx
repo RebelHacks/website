@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import HexGrid from "../components/ui/hexgrid/HexGrid";
 import Header from "../components/ui/header/Header";
 import Footer from "../components/ui/footer/Footer";
 import styles from "./code-of-conduct.module.css";
 
 export const metadata: Metadata = {
-  title: "Code of Conduct · RebelHacks 2027",
+  title: "Code of Conduct - RebelHacks 2027",
   description:
     "The rules everyone at RebelHacks agrees to: be respectful, no harassment, build fairly, and how to report a problem.",
 };
 
-// TODO: first draft, needs organizer review before launch
 export default function CodeOfConductPage() {
   return (
     <>
@@ -34,8 +32,8 @@ export default function CodeOfConductPage() {
             <h2>Be kind and respectful</h2>
             <p>
               Treat everyone with respect. Welcome beginners, share what you
-              know, and keep feedback constructive. Disagreements happen; work
-              through them politely.
+              know, and keep feedback constructive. Please be respectful towards
+              the other hackers and folks at the event - on or off the premises!
             </p>
           </section>
 
@@ -45,17 +43,15 @@ export default function CodeOfConductPage() {
             <ul>
               <li>
                 Offensive comments about gender, gender identity or expression,
-                sexual orientation, disability, appearance, body size, race,
-                ethnicity, religion or nationality
+                sexual orientation, disability, appearance, body size, age,
+                race, ethnicity, religion or nationality
               </li>
               <li>Deliberate intimidation, stalking or following</li>
-              <li>
-                Photographing or recording someone who has asked you not to
-              </li>
               <li>
                 Sustained disruption of talks, presentations or other teams
               </li>
               <li>Unwelcome physical contact or sexual attention</li>
+              <li>Violence, threats, coercion, or other forms of abuse</li>
             </ul>
             <p>
               Sexual language and imagery aren&apos;t appropriate anywhere at
@@ -87,15 +83,18 @@ export default function CodeOfConductPage() {
             <p>
               If you experience or witness behavior that breaks this code, or
               anything else makes you feel unsafe, tell any organizer right
-              away. You can also reach us through the{" "}
-              <Link href="/#contact">contact form</Link> or at
-              info@rebelhacks.com. We&apos;ll handle every report discreetly.
+              away. You can also email us at info@rebelhacks.com. We&apos;ll
+              handle every report discreetly.
             </p>
-            <p>In an emergency, call 911.</p>
+            <p>
+              There is onsite security provided by the university which may also assist you
+              at any point in time, even if the problems occur overnight.
+            </p>
+            <p>In an emergency, please dial 911 or use one of the many RebelSAFE emergency phones or the RebelSAFE app for help.</p>
           </section>
 
           <section className={styles.rule}>
-            <h2>What happens next</h2>
+            <h2>Incident Handling</h2>
             <p>
               Organizers may take any action they think is appropriate,
               including a warning, disqualification from prizes, or removal from
