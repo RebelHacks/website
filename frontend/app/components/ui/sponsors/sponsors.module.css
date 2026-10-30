@@ -1,0 +1,76 @@
+.logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 1rem;
+}
+
+.sponsor {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 2;
+  transition: border-color var(--duration-quick) var(--ease-out);
+}
+
+.sponsor:hover {
+  border-color: var(--color-rule);
+}
+
+.logo {
+  object-fit: contain;
+  padding: 1.5rem;
+  filter: grayscale(1);
+  opacity: 0.8;
+  transition:
+    filter 200ms var(--ease-out),
+    opacity 200ms var(--ease-out);
+}
+
+.sponsor:hover .logo {
+  filter: none;
+  opacity: 1;
+}
+
+.callout {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  font-size: var(--step--1);
+  text-wrap: pretty;
+}
+
+.calloutTitle {
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.calloutButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.calloutButton {
+  padding: 0.8rem 1.4rem;
+  font-size: var(--step--2);
+}
+
+/*
+  The card on the right, the logos under the description on the left.
+  The card spans both rows, so its height doesn't push the logos down.
+*/
+@media (min-width: 860px) {
+  .callout {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+  }
+
+  .logos {
+    grid-column: 1;
+  }
+}

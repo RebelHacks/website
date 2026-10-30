@@ -1,92 +1,123 @@
-/* contact.module.css */
-
-.container {
-  position: relative;
-  background-color: transparent;
-  padding: 1rem 1.5rem;
+.form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 75vh;
-}
-
-.container::before {
-  content: '';
-  position: absolute;
-  /* inset: 50%; */
-  /* width: 400px;
-  height: 400px; */
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.title {
-  font-size: var(--step-3);
-  font-weight: 450;
-  text-shadow: 0 0 16px rgba(0, 208, 243, 0.35);
-  color: var(--sub-header);
-  margin-bottom: 2rem;
+  gap: 1.25rem;
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
 }
 
 .label {
-  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: var(--step--2);
 }
 
-.input, .textarea {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(
-    135deg,
-    rgba(18, 22, 57, 0.9),
-    rgba(8, 8, 8, 0.9)
-  );
-  color: #fff;
-  border-radius: 8px;
-  /* text-shadow: 0 0 2px #ffffff; */
-  transition: 0.3s;
+.input,
+.textarea {
+  width: 100%;
+  font: inherit;
+  font-size: var(--step--2);
+  font-weight: 400;
+  color: var(--color-ink);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-inset);
+  padding: 0.75rem 0.9rem;
+  transition:
+    border-color var(--duration-quick) var(--ease-out),
+    background var(--duration-quick) var(--ease-out);
 }
 
-.input:focus, .textarea:focus {
-  border-color:#fea70a99;
-  box-shadow: 0 0 5px #fea70a99, 0 0 10px #fea70a99;
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-ink-faint);
+  opacity: 1;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: var(--color-ink-soft);
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--color-ink);
+  background: var(--color-surface);
 }
 
 .textarea {
-  min-height: 120px;
-  resize: none;
+  resize: vertical;
 }
 
-.button {
-  border: 2px solid  #fea70a99;
-  color: #ffffff;
-  background: transparent;
-  border-radius: 8px;
-  /* text-shadow: 0 0 5px #ffffff, 0 0 10px #ff7f50; */
-  transition: 0.3s;
+.submit {
+  align-self: flex-start;
+  padding: 0.8rem 1.4rem;
 }
 
-.button:hover {
-  background-color: #fea70a;
-  color: #0d1b2a;
-  box-shadow: 0 0 14px #fea70a99;
+.roles {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-/* 
-   Responsive adjustments
-    */
-
-/* Tablet screens: max-width 768px */
-@media (max-width: 768px) {
-  /* .title { font-size: 2.5rem; } Smaller heading */
-  .label { font-size: 1.1rem; } /* Smaller labels */
-  .input, .textarea { padding: 0.7rem; font-size: 0.95rem; } /* Smaller inputs */
-  .button { padding: 0.9rem 1.8rem; font-size: 1.1rem; } /* Smaller button */
+.roles legend {
+  margin-bottom: 0.45rem;
+  padding: 0;
 }
 
-/* Mobile screens: max-width 480px */
-@media (max-width: 480px) {
-  /* .title { font-size: 2rem; } Even smaller heading */
-  .label { font-size: 1rem; } /* Smaller labels */
-  .input, .textarea { padding: 0.6rem; font-size: 0.9rem; } /* Adjust inputs for small screens */
-  .button { padding: 0.8rem 1.5rem; font-size: 1rem; } /* Compact button */
+.roleList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* grows so each row of options fills the form's width */
+.role {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  font-size: var(--step--2);
+  color: var(--color-ink);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-quick) var(--ease-out),
+    background var(--duration-quick) var(--ease-out);
+}
+
+.role:hover {
+  border-color: var(--color-ink-soft);
+}
+
+.role:has(:checked) {
+  border-color: var(--color-ink);
+  background: var(--color-surface);
+}
+
+.role input {
+  margin: 0;
+  accent-color: var(--color-red);
+}
+
+/* name and email side by side when there's room */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1.25rem;
+}
+
+/* shown after the email app opens */
+.note {
+  font-size: var(--step--2);
+  color: var(--color-ink-soft);
 }

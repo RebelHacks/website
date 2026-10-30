@@ -1,109 +1,78 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import styles from './FlashMessage.module.css';
+import { useEffect, useState } from "react";
+import styles from "./FlashMessage.module.css";
 
 interface FlashMessageProps {
   message: string;
-  type: 'success' | 'error';
+  type: "success" | "error";
   onClose?: () => void;
+  // on by default for success only, so errors aren't missed
   autoClose?: boolean;
   duration?: number;
 }
 
-export default function FlashMessage({ 
-  message, 
-  type, 
+const TICK = "M5 13l4 4L19 7";
+const CROSS = "M6 18L18 6M6 6l12 12";
+
+// Give each new message a new `key` so the entrance animation replays.
+export default function FlashMessage({
+  message,
+  type,
   onClose,
-  autoClose = true,
-  duration = 5000 
+  autoClose = type === "success",
+  duration = 5000,
 }: FlashMessageProps) {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isAnimating, setIsAnimating] = useState(false);
+  // set on dismiss. onClose runs after the exit animation.
+  const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
-    // Reset and trigger animation when message changes
-    setIsVisible(true);
-    setIsAnimating(true);
-
-    if (autoClose) {
-      const timer = setTimeout(() => {
-        handleClose();
-      }, duration);
-
-      return () => clearTimeout(timer);
-    }
-  }, [message, autoClose, duration]);
-
-  const handleClose = () => {
-    setIsAnimating(false);
-    setTimeout(() => {
-      setIsVisible(false);
-      onClose?.();
-    }, 300); // Match animation duration
-  };
-
-  if (!isVisible) return null;
+    if (!autoClose) return;
+    const timer = setTimeout(() => setIsLeaving(true), duration);
+    return () => clearTimeout(timer);
+  }, [autoClose, duration]);
 
   return (
-    <div 
-      className={`${styles.flashMessage} ${styles[type]} ${isAnimating ? styles.animateIn : styles.animateOut}`}
-      role="alert"
+    <div
+      className={`${styles.flashMessage} ${styles[type]} ${isLeaving ? styles.animateOut : styles.animateIn}`}
+      role={type === "success" ? "status" : "alert"}
+      onAnimationEnd={() => {
+        if (isLeaving) onClose?.();
+      }}
     >
       <div className={styles.iconWrapper}>
-        {type === 'success' ? (
-          <svg 
-            className={styles.icon} 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              d="M5 13l4 4L19 7" 
-            />
-          </svg>
-        ) : (
-          <svg 
-            className={styles.icon} 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              d="M6 18L18 6M6 6l12 12" 
-            />
-          </svg>
-        )}
+        <Icon
+          path={type === "success" ? TICK : CROSS}
+          className={styles.icon}
+        />
       </div>
-      
+
       <div className={styles.content}>
         <p className={styles.message}>{message}</p>
       </div>
 
-      <button 
+      <button
+        type="button"
         className={styles.closeButton}
-        onClick={handleClose}
+        onClick={() => setIsLeaving(true)}
         aria-label="Close notification"
       >
-        <svg 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            d="M6 18L18 6M6 6l12 12" 
-          />
-        </svg>
+        <Icon path={CROSS} />
       </button>
     </div>
+  );
+}
+
+interface IconProps {
+  // SVG path in a 24x24 viewBox
+  path: string;
+  className?: string;
+}
+
+function Icon({ path, className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path d={path} />
+    </svg>
   );
 }

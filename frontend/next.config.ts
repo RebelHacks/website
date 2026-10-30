@@ -1,16 +1,15 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
-  // Optional: Proxy API requests during development
-  // This allows you to call /api/* from the frontend and have it forwarded to Symfony
-  async rewrites() {
-    return [
-      {
-        source: '/backend-api/:path*',
-        destination: 'https://127.0.0.1:8000/api/:path*',
-      },
-    ];
-  },
+  // don't advertise what the site runs on
+  poweredByHeader: false,
+  // page.dev.tsx files are pages only in `npm run dev`, so test pages like
+  // /api-demo never ship with the site
+  pageExtensions: isDev
+    ? ["dev.tsx", "tsx", "ts", "jsx", "js"]
+    : ["tsx", "ts", "jsx", "js"],
 };
 
 export default nextConfig;

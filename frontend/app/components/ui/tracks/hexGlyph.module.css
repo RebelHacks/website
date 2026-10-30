@@ -1,0 +1,66 @@
+.glyph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.empty {
+  fill: var(--color-grid);
+}
+
+.filled {
+  fill: var(--color-ink);
+}
+
+/*
+  Filled cells start empty and fill in once Reveal sets data-revealed.
+  --index is the card's position, set on the card in Tracks.tsx.
+
+  Glyphs with a motion (MOTIONS in HexGlyph.tsx) keep moving after that.
+  Each line cell has its own --wave delay, so the lines travel across the grid.
+*/
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-revealed] .filled {
+    animation: fill-in 120ms var(--ease-out)
+      calc(var(--index, 0) * 45ms + 100ms + var(--fill-delay) * 1.6) both;
+  }
+
+  /* the 1: three solid lines leave the block, one column per step */
+  [data-revealed] [data-motion="emit"] .empty[data-line] {
+    animation: line 3s steps(1, end) calc(1s + var(--wave)) infinite;
+  }
+}
+
+@keyframes fill-in {
+  from {
+    fill: var(--color-grid);
+  }
+}
+
+/*
+  Fully on or fully off, never in between (steps). Each cell is black for one
+  110ms step, three times, 330ms apart, then rests for the rest of the 3s loop.
+  It ends at rest, so "Pause animations" leaves the art still.
+*/
+@keyframes line {
+  0% {
+    fill: var(--color-ink);
+  }
+  3.67% {
+    fill: var(--color-grid);
+  }
+  11% {
+    fill: var(--color-ink);
+  }
+  14.67% {
+    fill: var(--color-grid);
+  }
+  22% {
+    fill: var(--color-ink);
+  }
+  25.67%,
+  100% {
+    fill: var(--color-grid);
+  }
+}
