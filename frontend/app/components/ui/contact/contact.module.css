@@ -57,3 +57,112 @@
   align-self: flex-start;
   padding: 0.8rem 1.4rem;
 }
+
+.roles {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.roles legend {
+  margin-bottom: 0.45rem;
+  padding: 0;
+}
+
+.roleList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* grows so each row of options fills the form's width */
+.role {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  font-size: var(--step--2);
+  color: var(--color-ink);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-quick) var(--ease-out),
+    background var(--duration-quick) var(--ease-out);
+}
+
+.role:hover {
+  border-color: var(--color-ink-soft);
+}
+
+.role:has(:checked) {
+  border-color: var(--color-ink);
+  background: var(--color-surface);
+}
+
+.role input {
+  margin: 0;
+  accent-color: var(--color-red);
+}
+
+/* name and email side by side when there's room */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1.25rem;
+}
+
+.botcheck {
+  display: none;
+}
+
+/* ---------- after sending ---------- */
+.sent {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  font-size: var(--step--1);
+}
+
+.sentTick {
+  width: 3rem;
+  height: 3rem;
+  fill: none;
+  stroke: var(--color-success);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sentTitle {
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.sent .submit {
+  margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* the tick draws itself */
+  .sentTick path {
+    stroke-dasharray: 24;
+    animation: draw 420ms var(--ease-out) 120ms both;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

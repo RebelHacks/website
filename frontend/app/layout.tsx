@@ -20,7 +20,7 @@ const schibsted = Schibsted_Grotesk({
 export const metadata: Metadata = {
   title: "RebelHacks 2027",
   description:
-    "RebelHacks is UNLV's first large-scale student hackathon! This event will take place on February 20-21, 2027. Team up, build something new, and compete for $5,000 in prizes. Free for university students.",
+    "RebelHacks is UNLV's first large-scale student hackathon! This event will take place on February 20-21, 2027. Team up, build something new, and compete for $5,000+ in prizes. Free for university students.",
 };
 
 export default function RootLayout({

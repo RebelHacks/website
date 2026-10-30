@@ -25,6 +25,8 @@ Open **http://localhost:3000**. Keep this terminal running; Ctrl+C stops the ser
 
 `NEXT_PUBLIC_API_URL` tells the frontend where to send API requests. The example uses `http://127.0.0.1:8000/api`. Restart the frontend after editing `.env.local`. Visitors can read values beginning with `NEXT_PUBLIC_`, so keep passwords and private keys out of them.
 
+The contact form sends messages through Web3Forms (`app/components/ui/contact/`), so it works without the backend.
+
 ### Start the backend when needed
 
 In another terminal, start from the website repository root:
@@ -50,13 +52,13 @@ In another terminal, check:
 curl http://127.0.0.1:8000/api/health
 ```
 
-Expect JSON containing `"status":"ok"`. Open **http://localhost:3000/api-demo** to check a browser request to the backend.
+Expect JSON containing `"status":"ok"`. Open **http://localhost:3000/api-demo** to check a browser request to the backend. That page only exists while `npm run dev` is running, so it never ships with the site.
 
-`MAILER_DSN=null://null` turns off email delivery. You can submit the contact form, but it won't send an email. Ask a maintainer for mail-server settings if your task involves sending email.
+`MAILER_DSN=null://null` turns off email delivery.
 
 ### Starting again tomorrow
 
-From `website/frontend`, run `npm run dev -- --port 3000`. If your task needs the backend, run `php -S 127.0.0.1:8000 -t public` from `website/backend` in a second terminal. You do not need to copy environment files or reinstall dependencies every day.
+From `website/frontend`, run `npm run dev -- --port 3000`. If your task needs the backend, run `php -S 127.0.0.1:8000 -t public` from `website/backend` in a second terminal.
 
 ## Quick Links
 

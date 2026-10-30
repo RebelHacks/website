@@ -1,11 +1,5 @@
 import type { GlyphName } from "./HexGlyph";
 
-// overall placements, not tied to a track
-export interface Prize {
-  name: string;
-  dollars: number;
-}
-
 export interface Track {
   // leave out until the track is announced. The card shows asterisks.
   name?: string;
@@ -15,26 +9,27 @@ export interface Track {
   glyph?: GlyphName;
 }
 
-// in rank order (first = gold bar)
-export const grandPrizes: Prize[] = [
-  { name: "1st place", dollars: 1500 },
-  { name: "2nd place", dollars: 1000 },
-  { name: "3rd place", dollars: 750 },
-];
+// shown above the tracks, on a gold card
+export const grandPrize: Track = {
+  name: "Best project overall",
+  description: "Every team is entered automatically, whatever track it picks.",
+  dollars: 2500,
+  glyph: "1",
+};
 
 // one array per row of cards. A card alone in its row is shown wide.
 export const trackRows: Track[][] = [
   [
     // keep unrevealed categories out of our source! only prize numbers are public for now
-    { dollars: 500 },
-    { dollars: 500 },
-    { dollars: 500 },
+    { dollars: 750 },
+    { dollars: 750 },
+    { dollars: 750 },
   ],
   [
     {
       name: "Beginner",
       description: "For participants attending their first RebelHacks event",
-      dollars: 250,
+      dollars: 500,
       glyph: "heart",
     },
   ],

@@ -33,96 +33,6 @@
   margin-right: 0.06em;
 }
 
-/* ---------- grand prizes ---------- */
-.prizeList {
-  display: grid;
-  gap: 0.75rem;
-}
-
-/*
-  The bar, then the amount right after it. The bar's width is --share (set in
-  Tracks.tsx) of the space left, with a minimum so the label fits.
-*/
-.prize {
-  --metal: var(--color-gold);
-  --on-metal: var(--color-black);
-  --bar-height: 3.75rem;
-  --amount-room: 9rem; /* space kept on the right for the amount */
-  --min-bar: 12rem;
-
-  display: grid;
-  grid-template-columns:
-    max(var(--min-bar), calc((100% - var(--amount-room)) * var(--share)))
-    auto;
-  align-items: center;
-  gap: 1rem;
-}
-
-.prize[data-place="1"] {
-  --bar-height: 5rem;
-  --amount-room: 11rem;
-}
-
-.prize[data-place="2"] {
-  --metal: var(--color-silver);
-}
-
-.prize[data-place="3"] {
-  --metal: var(--color-bronze);
-  --on-metal: var(--color-on-red);
-}
-
-/* drop-shadow follows the hexagon's shape. Zero blur keeps it hard. */
-.barShadow {
-  filter: drop-shadow(var(--shadow));
-}
-
-/* long hexagon. 0.2887 (tan 30° / 2) gives the ends the same angle as a
-   honeycomb cell. */
-.bar {
-  --tip: calc(var(--bar-height) * 0.2887);
-
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: var(--bar-height);
-  padding-inline: calc(var(--tip) + 0.6rem);
-  overflow: hidden;
-  background-color: var(--metal);
-  color: var(--on-metal);
-  white-space: nowrap;
-  clip-path: polygon(
-    var(--tip) 0,
-    calc(100% - var(--tip)) 0,
-    100% 50%,
-    calc(100% - var(--tip)) 100%,
-    var(--tip) 100%,
-    0 50%
-  );
-}
-
-.prizeName {
-  font-size: var(--step-0);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.prize[data-place="1"] .prizeName {
-  font-size: var(--step-2);
-  letter-spacing: -0.03em;
-}
-
-.prizeAmount {
-  font-family: var(--font-display);
-  font-size: var(--step-1);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.prize[data-place="1"] .prizeAmount {
-  font-size: var(--step-3);
-}
-
 /* ---------- tracks ---------- */
 .trackGrid {
   display: grid;
@@ -204,28 +114,16 @@
   padding: clamp(1.25rem, 3vw, 2rem);
 }
 
-/* phones: smaller bars and less room for the amount */
-@media (max-width: 600px) {
-  .prize {
-    --bar-height: 3.25rem;
-    --amount-room: 5.5rem;
-    --min-bar: 9.5rem;
-    gap: 0.6rem;
-  }
+/* the grand prize. The glyph reads these colors, so the star turns black on gold. */
+.featured .trackArt {
+  --color-grid: color-mix(in srgb, var(--color-gold), var(--color-black) 14%);
+  --color-ink: var(--color-black);
 
-  .prize[data-place="1"] {
-    --bar-height: 4rem;
-    --amount-room: 6.5rem;
-  }
+  background-color: var(--color-gold);
+}
 
-  .prizeName,
-  .prize[data-place="1"] .prizeName {
-    font-size: var(--step--1);
-  }
-
-  .prize[data-place="1"] .prizeAmount {
-    font-size: var(--step-2);
-  }
+.featured .trackAmount {
+  font-size: var(--step-3);
 }
 
 @media (max-width: 760px) {
@@ -252,47 +150,13 @@
   on, so nothing stays hidden without it.
 */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  /* bars grow from the left, then the amounts fade in */
-  .bar {
-    width: 0;
-  }
-
-  .prizeAmount,
   .track {
     opacity: 0;
-  }
-
-  [data-revealed] .bar {
-    animation: grow 420ms var(--ease-out) both;
-    animation-delay: calc(var(--index) * 90ms);
-  }
-
-  [data-revealed] .prizeAmount {
-    animation: fade-in 200ms ease-out both;
-    animation-delay: calc(var(--index) * 90ms + 330ms);
   }
 
   [data-revealed] .track {
     animation: pop-up 95ms var(--ease-out) both;
     animation-delay: calc(var(--index) * 45ms);
-  }
-}
-
-@keyframes grow {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 

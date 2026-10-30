@@ -88,8 +88,8 @@ export default function CodeOfConductPage() {
               If you experience or witness behavior that breaks this code, or
               anything else makes you feel unsafe, tell any organizer right
               away. You can also reach us through the{" "}
-              <Link href="/#contact">contact form</Link>. We&apos;ll handle
-              every report discreetly.
+              <Link href="/#contact">contact form</Link> or at
+              info@rebelhacks.com. We&apos;ll handle every report discreetly.
             </p>
             <p>In an emergency, call 911.</p>
           </section>

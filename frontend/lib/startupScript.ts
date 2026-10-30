@@ -6,15 +6,11 @@ import {
 } from "./theme";
 
 /*
-  Runs in <head> before the page renders, so the theme never flashes wrong.
+  Runs in <head> before the page renders
 
-  Theme: dark from sunset to sunrise in Las Vegas, switching on time if the
-  page stays open. A theme picked with the header button overrides the sun
-  until the visitor switches back to the sun's pick.
+  Switches to dark mode from sunset to sunrise and then switches back
 
-  Do not use anything from outside startup(). It's turned into a string for
-  an inline <script> (same approach as next-themes), so shared names are
-  passed in as `names`.
+  Don't use anything from outside startup()! It's turned into a string for  an inline <script> (same approach as next-themes), so shared names are passed in as `names`.
 */
 
 interface SharedNames {

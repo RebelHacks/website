@@ -1,6 +1,6 @@
-.grid {
+.logos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
   gap: 1rem;
 }
 
@@ -30,7 +30,7 @@
   opacity: 1;
 }
 
-.invite {
+.callout {
   display: grid;
   gap: 1rem;
   justify-items: start;
@@ -39,7 +39,7 @@
   text-wrap: pretty;
 }
 
-.inviteTitle {
+.calloutTitle {
   font-size: var(--step-1);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -47,8 +47,30 @@
   text-wrap: balance;
 }
 
-.inviteButton {
+.calloutButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-top: 0.5rem;
+}
+
+.calloutButton {
   padding: 0.8rem 1.4rem;
   font-size: var(--step--2);
+}
+
+/*
+  The card on the right, the logos under the description on the left.
+  The card spans both rows, so its height doesn't push the logos down.
+*/
+@media (min-width: 860px) {
+  .callout {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+  }
+
+  .logos {
+    grid-column: 1;
+  }
 }

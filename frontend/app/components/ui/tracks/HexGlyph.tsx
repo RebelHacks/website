@@ -1,9 +1,9 @@
 import type { CSSProperties } from "react";
 import styles from "./hexGlyph.module.css";
 
-export type GlyphName = "?" | "heart";
+export type GlyphName = "?" | "heart" | "1";
 
-// track thumbnail hexgrid, 7 rows tall, where "#" = a filled cell
+// track thumbnail hexgrid, where "#" = a filled cell. Most glyphs are 7 rows tall.
 // Rows marked "shifted" are offset half a cell to the right. A vertical
 // stroke is two cells wide on plain rows and one cell on shifted rows.
 const GLYPHS: Record<GlyphName, string[]> = {
@@ -26,7 +26,33 @@ const GLYPHS: Record<GlyphName, string[]> = {
     "..##...", // shifted
     "...#...",
   ],
+  // the grand prize: a solid block, full height, with the 1 cut out of it.
+  // The first column is the half cells along the card's left edge.
+  "1": [
+    "#########",
+    "###..####", // shifted
+    "###..####",
+    "##...####", // shifted
+    "####.####",
+    "###..####", // shifted
+    "####.####",
+    "###..####", // shifted
+    "##.....##",
+    "#########", // shifted
+    "#########",
+  ],
 };
+
+// Glyphs that keep moving after they fill in. The rest stay still.
+// - emit: sits at the left edge and sends solid lines out to the right
+type Motion = "emit";
+const MOTIONS: Partial<Record<GlyphName, Motion>> = {
+  "1": "emit",
+};
+
+// how long an emitted line takes to move one column. The line keyframes in
+// hexGlyph.module.css are timed for this.
+const LINE_STEP_MS = 110;
 
 // Bigger than any card. The SVG crops it (slice), keeping the glyph centered.
 const COLUMNS = 21;
@@ -36,42 +62,35 @@ const CELL_WIDTH = Math.sqrt(3);
 const ROW_HEIGHT = 1.5;
 const CELL_SCALE = 0.86; // below 1 leaves gaps between cells
 
-interface HexGlyphProps {
-  glyph: GlyphName;
-  // so cards with the same glyph don't blink in sync
-  seed?: number;
-}
-
-// Card art: a glyph drawn in hexagon cells. A few cells blink red now and then.
-export default function HexGlyph({ glyph, seed = 0 }: HexGlyphProps) {
+// Card art: a glyph drawn in hexagon cells.
+export default function HexGlyph({ glyph }: { glyph: GlyphName }) {
   const bitmap = GLYPHS[glyph];
+  const motion = MOTIONS[glyph];
   // start on an even row so the shifted rows match GLYPHS
   const top = Math.floor((ROWS - bitmap.length) / 4) * 2;
-  const left = Math.floor((COLUMNS - bitmap[0].length) / 2);
+  // emitting glyphs sit at the left edge, so their lines have room to travel
+  const left =
+    motion === "emit" ? -1 : Math.floor((COLUMNS - bitmap[0].length) / 2);
+  const lastColumn = left + bitmap[0].length - 1;
 
   const cells = [];
-  let filledCount = 0;
   for (let row = 0; row < ROWS; row++) {
-    for (let column = 0; column < COLUMNS; column++) {
-      const key = `${row}-${column}`;
-      const points = hexPoints(row, column);
+    // one extra column on each side, so the edges show half cells instead of gaps
+    for (let column = -1; column <= COLUMNS; column++) {
       const isFilled = bitmap[row - top]?.[column - left] === "#";
-      if (!isFilled) {
-        cells.push(
-          <polygon key={key} points={points} className={styles.empty} />,
-        );
-        continue;
-      }
+      const style: Record<string, string> = {};
+      if (isFilled) style["--fill-delay"] = fillDelay(row, column);
+      // emitted lines copy the block's right edge, one column further out each step
+      const lineStep = motion === "emit" ? column - lastColumn : 0;
+      if (lineStep > 0) style["--wave"] = `${lineStep * LINE_STEP_MS}ms`;
 
-      const { blinks, style } = cellAnimation(row, column, filledCount, seed);
-      filledCount++;
       cells.push(
         <polygon
-          key={key}
-          points={points}
-          className={styles.filled}
-          data-blink={blinks || undefined}
-          style={style}
+          key={`${row}-${column}`}
+          points={hexPoints(row, column)}
+          className={isFilled ? styles.filled : styles.empty}
+          style={style as CSSProperties}
+          data-line={lineStep > 0 || undefined}
         />,
       );
     }
@@ -85,6 +104,7 @@ export default function HexGlyph({ glyph, seed = 0 }: HexGlyphProps) {
       viewBox={`0 0 ${width.toFixed(3)} ${height}`}
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
+      data-motion={motion}
     >
       {cells}
     </svg>
@@ -107,23 +127,9 @@ function hexPoints(row: number, column: number) {
     .join(" ");
 }
 
-// Animation timing for a filled cell. Not Math.random(), so the server and
+// Fill-in order when the card appears. Not Math.random(), so the server and
 // browser render the same thing. The multipliers just scatter the values.
-function cellAnimation(
-  row: number,
-  column: number,
-  filledIndex: number,
-  seed: number,
-) {
-  const style: Record<string, string> = {
-    // fill-in order when the card appears
-    "--fill-delay": `${((column * 7 + row * 13) % 9) * 22}ms`,
-  };
-  // about 1 in 8 filled cells blinks
-  const blinks = (filledIndex * 5 + seed * 3) % 8 === 0;
-  if (blinks) {
-    style["--blink-period"] = `${19 + ((filledIndex * 7 + seed * 11) % 23)}s`;
-    style["--blink-delay"] = `${2 + ((filledIndex * 3 + seed * 5) % 13)}s`;
-  }
-  return { blinks, style: style as CSSProperties };
+function fillDelay(row: number, column: number) {
+  const scatter = (((column * 7 + row * 13) % 9) + 9) % 9; // stays 0-8 for column -1
+  return `${scatter * 22}ms`;
 }

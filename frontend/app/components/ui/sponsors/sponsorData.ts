@@ -5,5 +5,8 @@ export interface Sponsor {
   url: string;
 }
 
-// While this is empty, the section shows a "sponsor us" card instead.
+// shown as logos under the section's description, in this order
 export const sponsors: Sponsor[] = [];
+
+// TODO: our campaign page on Rebel Raiser, UNLV's crowdfunding site, once it's live
+export const DONATE_URL = "#";

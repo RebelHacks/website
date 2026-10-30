@@ -35,8 +35,8 @@ export default function About() {
         <p>
           The theme drops at the opening ceremony. From there, you have until
           Sunday to turn the theme into something that works, building through
-          the night if you want, then demo it for a panel of judges with $5,000
-          in prizes on the line.
+          the night if you want, then demo it for a panel of judges with over
+          $5,000 in prizes on the line.
         </p>
         <p>
           It&apos;s free, every major is welcome, and food&apos;s going to be on

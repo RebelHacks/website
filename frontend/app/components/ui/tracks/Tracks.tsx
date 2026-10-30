@@ -3,7 +3,7 @@ import Halo from "../halo/Halo";
 import Reveal from "../reveal/Reveal";
 import Section from "../section/Section";
 import HexGlyph from "./HexGlyph";
-import { grandPrizes, trackRows, type Track } from "./trackData";
+import { grandPrize, trackRows, type Track } from "./trackData";
 import styles from "./tracks.module.css";
 
 export default function Tracks() {
@@ -13,20 +13,22 @@ export default function Tracks() {
       title="Tracks & prizes"
       lead={
         <>
-          We&apos;re offering a total of $5,000 cash in prizes: three grand
-          prizes, plus a prize for the winner of each track!
+          We&apos;re offering over $5,000 cash in prizes: a grand prize, plus a
+          prize for the winner of each track!
         </>
       }
     >
-      <Group
-        id="grand-prizes"
-        title="Grand prizes"
-        text="Awarded to the top three projects overall among any track."
-      >
-        <PrizeBars />
+      <Group id="grand-prize" title="Grand prize">
+        <Reveal>
+          <TrackCard track={grandPrize} order={0} wide featured />
+        </Reveal>
       </Group>
 
-      <Group id="track-list" title="Tracks" text="Pick a track to build for!">
+      <Group
+        id="track-list"
+        title="Tracks"
+        text="Each team picks one track to build for!"
+      >
         <TrackGrid />
       </Group>
     </Section>
@@ -37,7 +39,7 @@ export default function Tracks() {
 interface GroupProps {
   id: string;
   title: string;
-  text: string;
+  text?: string;
   children: ReactNode;
 }
 
@@ -54,48 +56,14 @@ function Group({ id, title, text, children }: GroupProps) {
         <h3 id={headingId} className={styles.groupTitle}>
           <Halo>{title}</Halo>
         </h3>
-        <p className={styles.groupText}>
-          <Halo>{text}</Halo>
-        </p>
+        {text && (
+          <p className={styles.groupText}>
+            <Halo>{text}</Halo>
+          </p>
+        )}
       </header>
       {children}
     </section>
-  );
-}
-
-// -------------- grand prizes --------------
-// bar chart: bar length = prize / top prize
-function PrizeBars() {
-  const topDollars = Math.max(...grandPrizes.map((prize) => prize.dollars));
-
-  return (
-    <Reveal>
-      <ol className={styles.prizeList}>
-        {grandPrizes.map((prize, index) => (
-          <li
-            key={prize.name}
-            className={styles.prize}
-            data-place={index + 1}
-            style={
-              {
-                "--index": index,
-                "--share": prize.dollars / topDollars,
-              } as CSSProperties
-            }
-          >
-            {/* clip-path would cut off the bar's own shadow, so the wrapper has it */}
-            <div className={styles.barShadow}>
-              <div className={styles.bar}>
-                <span className={styles.prizeName}>{prize.name}</span>
-              </div>
-            </div>
-            <Halo>
-              <Amount dollars={prize.dollars} className={styles.prizeAmount} />
-            </Halo>
-          </li>
-        ))}
-      </ol>
-    </Reveal>
   );
 }
 
@@ -124,19 +92,21 @@ function TrackGrid() {
 
 interface TrackCardProps {
   track: Track;
-  // reading-order index, for animation delays and the glyph's seed
+  // reading-order index, for animation delays
   order: number;
   wide: boolean;
+  // gold version, for the grand prize
+  featured?: boolean;
 }
 
-function TrackCard({ track, order, wide }: TrackCardProps) {
+function TrackCard({ track, order, wide, featured }: TrackCardProps) {
   return (
     <article
-      className={`card ${styles.track} ${wide ? styles.wideTrack : ""}`}
+      className={`card ${styles.track} ${wide ? styles.wideTrack : ""} ${featured ? styles.featured : ""}`}
       style={{ "--index": order } as CSSProperties}
     >
       <div className={styles.trackArt}>
-        <HexGlyph glyph={track.glyph ?? "?"} seed={order} />
+        <HexGlyph glyph={track.glyph ?? "?"} />
       </div>
       <div className={styles.trackBody}>
         <h4 className={styles.trackName}>{track.name ?? <MysteryName />}</h4>

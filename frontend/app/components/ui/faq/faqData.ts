@@ -29,14 +29,19 @@ export const faqQuestions: Question[] = [
     answer: "Anywhere from 1 to 5, so you can also go solo.",
   },
   {
+    question: "Can a team win the grand prize and a track prize?",
+    answer:
+      "No. If the grand prize winner also places first in its track, that track's prize goes to the runner-up.",
+  },
+  {
     question: "Where is it?",
     answer:
-      "In the SEB Auditorium at UNLV. Overnight, hacking moves to the first floor of AEB.",
+      "In the SEB Auditorium at UNLV. Overnight, the event will be at the first floor of the AEB.",
   },
   {
     question: "Is it overnight?",
     answer:
-      "Yes. The first floor of AEB is booked for us, so you can keep building through Saturday night.",
+      "Yes. The first floor of the AEB is booked for us, so you can keep building through Saturday night.",
   },
   {
     question: "Is there a theme?",
