@@ -30,6 +30,11 @@
   opacity: 1;
 }
 
+/* most logos are dark ink, so on dark cards they become white marks */
+:global(:root[data-theme="dark"]) .logo {
+  filter: brightness(0) invert(1);
+}
+
 .callout {
   display: grid;
   gap: 1rem;
