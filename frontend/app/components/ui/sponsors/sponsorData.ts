@@ -6,7 +6,18 @@ export interface Sponsor {
 }
 
 // shown as logos under the section's description, in this order
-export const sponsors: Sponsor[] = [];
+export const sponsors: Sponsor[] = [
+  {
+    name: "Anthropic",
+    logo: "/images/sponsors/anthropic.svg",
+    url: "https://www.anthropic.com",
+  },
+  {
+    name: "College of Southern Nevada",
+    logo: "/images/sponsors/csn.png",
+    url: "https://www.csn.edu",
+  },
+];
 
-// TODO: our campaign page on Rebel Raiser, UNLV's crowdfunding site, once it's live
-export const DONATE_URL = "#";
+// our campaign page on Rebel Raiser, UNLV's crowdfunding site
+export const DONATE_URL = "https://impact.unlv.edu/campaign/861116/donate";
