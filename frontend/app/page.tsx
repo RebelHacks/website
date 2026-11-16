@@ -5,6 +5,7 @@ import About from "./components/ui/about/About";
 import Schedule from "./components/ui/schedule/Schedule";
 import Tracks from "./components/ui/tracks/Tracks";
 import Photos from "./components/ui/photos/Photos";
+import Team from "./components/ui/team/Team";
 import Sponsors from "./components/ui/sponsors/Sponsors";
 import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/Contact";
@@ -21,6 +22,7 @@ export default function Home() {
         <Schedule />
         <Tracks />
         <Photos />
+        <Team />
         <Sponsors />
         <FAQ />
         <Contact />
