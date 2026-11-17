@@ -64,6 +64,39 @@
   color: var(--color-red);
 }
 
+.dates {
+  display: grid;
+  justify-items: center;
+  gap: calc(var(--name-size) * 0.14);
+}
+
+.countdown {
+  /* one line tall even while it's empty (see Countdown.tsx) */
+  min-height: 1lh;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: max(0.95rem, calc(var(--name-size) * 0.15));
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--color-ink);
+}
+
+.timeLeft {
+  white-space: nowrap;
+}
+
+/* a number changing every second counts as motion */
+@media (prefers-reduced-motion: reduce) {
+  .seconds {
+    display: none;
+  }
+}
+
+:global(:root[data-motion="paused"]) .seconds {
+  display: none;
+}
+
 /*
   Load order: the credit line, then the name (animated in Wordmark). The year
   and date come in before the name finishes, so they don't wait on it.
@@ -77,7 +110,8 @@
   animation-delay: calc(1000ms + var(--index) * 90ms);
 }
 
-.date {
+/* One animation for both. Animated separately, the countdown's halo covers the date. */
+.dates {
   animation: rise-in 240ms var(--ease-out) 1.35s both;
 }
 
