@@ -1,6 +1,9 @@
 // Where messages go. Mail to rebelhacks.com is forwarded by Cloudflare Email Routing.
 export const CONTACT_EMAIL = "info@rebelhacks.com";
 
+// Longest text each field takes, in characters. The form and the server both use these.
+export const MAX_LENGTHS = { name: 100, email: 254, role: 50, message: 5000 };
+
 export interface ContactRole {
   label: string;
   // put in the message box when this role is picked
