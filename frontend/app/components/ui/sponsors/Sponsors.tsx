@@ -15,7 +15,8 @@ export default function Sponsors() {
           back it.
         </>
       }
-      stickyHeading
+      // not sticky, since the logos sit under the heading
+      sideHeading
     >
       {sponsors.length > 0 && (
         <ul className={styles.logos}>
