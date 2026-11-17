@@ -8,7 +8,10 @@ interface SectionProps {
   title: ReactNode;
   // paragraph under the title
   lead?: ReactNode;
-  // heading in the left column with position: sticky (wide screens only)
+  // heading in the left column (wide screens only)
+  sideHeading?: boolean;
+  // a side heading that follows the scroll. Only for sections with nothing
+  // else in the left column.
   stickyHeading?: boolean;
   children: ReactNode;
 }
@@ -18,6 +21,7 @@ export default function Section({
   id,
   title,
   lead,
+  sideHeading = false,
   stickyHeading = false,
   children,
 }: SectionProps) {
@@ -26,7 +30,7 @@ export default function Section({
   return (
     <section
       id={id}
-      className={`${styles.section} ${stickyHeading ? styles.stickyHeading : ""}`}
+      className={`${styles.section} ${sideHeading ? styles.sideHeading : ""} ${stickyHeading ? styles.stickyHeading : ""}`}
       aria-labelledby={headingId}
     >
       <header className={styles.heading}>

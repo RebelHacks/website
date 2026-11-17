@@ -61,9 +61,13 @@
     grid-column: 1 / -1;
   }
 
+  .sideHeading > .heading,
   .stickyHeading > .heading {
     grid-column: 1;
     align-self: start;
+  }
+
+  .stickyHeading > .heading {
     position: sticky;
     top: 6.5rem;
   }
