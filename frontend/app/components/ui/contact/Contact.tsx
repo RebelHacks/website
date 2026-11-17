@@ -3,7 +3,7 @@
 import { useRef, useState, type FormEvent } from "react";
 import FlashMessage from "../FlashMessage";
 import Section from "../section/Section";
-import { CONTACT_EMAIL, contactRoles } from "./contactData";
+import { CONTACT_EMAIL, MAX_LENGTHS, contactRoles } from "./contactData";
 import { sendMessage } from "./sendMessage";
 import styles from "./contact.module.css";
 
@@ -121,6 +121,7 @@ export default function Contact() {
                 autoComplete="name"
                 className={styles.input}
                 required
+                maxLength={MAX_LENGTHS.name}
                 placeholder="Your name"
               />
             </label>
@@ -132,6 +133,7 @@ export default function Contact() {
                 autoComplete="email"
                 className={styles.input}
                 required
+                maxLength={MAX_LENGTHS.email}
                 placeholder="email@example.com"
               />
             </label>
@@ -145,6 +147,7 @@ export default function Contact() {
               rows={6}
               placeholder="Your message here..."
               required
+              maxLength={MAX_LENGTHS.message}
             />
           </label>
           {/* spam trap: hidden from people, so only bots tick it */}
