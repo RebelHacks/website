@@ -9,6 +9,7 @@ import Sponsors from "./components/ui/sponsors/Sponsors";
 import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/Contact";
 import Footer from "./components/ui/footer/Footer";
+import PastWinners from "./components/ui/pastwinners/PastWinners";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <Schedule />
         <Tracks />
         <Photos />
+        <PastWinners />
         <Sponsors />
         <FAQ />
         <Contact />
