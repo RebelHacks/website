@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Halo from "../halo/Halo";
 import Wordmark from "../wordmark/Wordmark";
+import Countdown from "./Countdown";
 import styles from "./hero.module.css";
 
 const YEAR = "2027";
@@ -12,7 +13,7 @@ export default function Hero() {
         {/* credit line left-aligned with the name, per Lauren's design */}
         <div className={styles.titleBlock}>
           <p className={styles.presents}>
-            <Halo large>SEC, GWC &amp; LAVA present</Halo>
+            <Halo large>SEC, GWC, LAVA &amp; CBC present</Halo>
           </p>
           <h1 id="hero-title" className={styles.lockup}>
             <Halo large>
@@ -36,14 +37,17 @@ export default function Hero() {
           </h1>
         </div>
 
-        <p className={styles.date}>
-          <Halo large>
-            <time dateTime="2027-02-20">Feb 20</time>
-            <span aria-hidden="true"> – </span>
-            <span className="sr-only"> to </span>
-            <time dateTime="2027-02-21">21</time>
-          </Halo>
-        </p>
+        <div className={styles.dates}>
+          <p className={styles.date}>
+            <Halo large>
+              <time dateTime="2027-02-20">Feb 20</time>
+              <span aria-hidden="true"> – </span>
+              <span className="sr-only"> to </span>
+              <time dateTime="2027-02-21">21</time>
+            </Halo>
+          </p>
+          <Countdown />
+        </div>
       </div>
     </section>
   );
