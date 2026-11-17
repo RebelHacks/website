@@ -14,6 +14,5 @@ export function sectionHref(section: string) {
   return `/#${section}`;
 }
 
-// TODO: switch to the portal's sign-up page once it's live
 export const REGISTER_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLScotK89gO_uAouUM7qMJhMtDo7vux1IHj0iIVFiT0UT3AwMBQ/viewform?usp=header";
+  "https://portal.rebelhacks.com/";
