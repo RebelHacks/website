@@ -5,6 +5,8 @@ import About from "./components/ui/about/About";
 import Schedule from "./components/ui/schedule/Schedule";
 import Tracks from "./components/ui/tracks/Tracks";
 import Photos from "./components/ui/photos/Photos";
+/* Uncomment when the team content is ready for production. */
+// import Team from "./components/ui/team/Team";
 import Sponsors from "./components/ui/sponsors/Sponsors";
 import FAQ from "./components/ui/faq/Faq";
 import Contact from "./components/ui/contact/Contact";
@@ -21,6 +23,8 @@ export default function Home() {
         <Schedule />
         <Tracks />
         <Photos />
+        {/* Uncomment when the team content is ready for production. */}
+        {/* <Team /> */}
         <Sponsors />
         <FAQ />
         <Contact />
