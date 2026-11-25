@@ -14,7 +14,7 @@ export const sponsors: Sponsor[] = [
   },
   {
     name: "College of Southern Nevada",
-    logo: "/images/sponsors/csn.png",
+    logo: "/images/sponsors/csn-t.png",
     url: "https://www.csn.edu",
   },
 ];
