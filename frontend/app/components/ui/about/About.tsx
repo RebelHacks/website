@@ -10,7 +10,7 @@ const FACTS = [
   { label: "Who", value: "University students, any major" },
   { label: "Cost", value: "Free!" },
   { label: "Teams", value: "1 to 5 people" },
-  { label: "Hosted by", value: "SEC, GWC and LAVA" },
+  { label: "Hosted by", value: "SEC, CBC, GWC & LAVA" },
 ];
 
 export default function About() {
