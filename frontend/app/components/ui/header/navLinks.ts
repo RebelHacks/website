@@ -4,6 +4,8 @@ export const NAV_LINKS = [
   { label: "Schedule", section: "schedule" },
   { label: "Tracks", section: "tracks" },
   { label: "Photos", section: "photos" },
+  /* Uncomment when the team content is ready for production. */
+  // { label: "Team", section: "team" },
   { label: "Sponsors", section: "sponsors" },
   { label: "FAQ", section: "faq" },
   { label: "Contact", section: "contact" },
