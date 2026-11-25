@@ -13,7 +13,7 @@ export default function Hero() {
         {/* credit line left-aligned with the name, per Lauren's design */}
         <div className={styles.titleBlock}>
           <p className={styles.presents}>
-            <Halo large>SEC, GWC, LAVA &amp; CBC present</Halo>
+            <Halo large>SEC, CBC, GWC &amp; LAVA present</Halo>
           </p>
           <h1 id="hero-title" className={styles.lockup}>
             <Halo large>

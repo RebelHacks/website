@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <p>© 2027 RebelHacks. Presented by SEC, GWC &amp; LAVA at UNLV.</p>
+          <p>© 2027 RebelHacks. Presented by SEC, CBC, GWC &amp; LAVA at UNLV.</p>
           <div className={styles.bottomLinks}>
             <MotionToggle />
             {/* "#" goes to the top of the current page */}
